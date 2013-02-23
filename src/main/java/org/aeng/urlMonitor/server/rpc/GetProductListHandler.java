@@ -14,49 +14,50 @@
  * the License.
  */
 
-package org.aeng.urlMonitor.server;
-
-import org.aeng.urlMonitor.shared.Product;
+package org.aeng.urlMonitor.server.rpc;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
-import org.aeng.urlMonitor.shared.GetProductAction;
-import org.aeng.urlMonitor.shared.GetProductResult;
+
+import org.aeng.urlMonitor.shared.GetProductListAction;
+import org.aeng.urlMonitor.shared.GetProductListResult;
 
 import com.google.inject.Inject;
+
+import java.util.ArrayList;
+
+import org.aeng.urlMonitor.shared.Product;
 
 /**
  * @author Philippe Beaudoin
  */
-public class GetProductHandler implements
-    ActionHandler<GetProductAction, GetProductResult> {
+public class GetProductListHandler implements
+    ActionHandler<GetProductListAction, GetProductListResult> {
 
   private final ProductDatabase database;
 
   @Inject
-  public GetProductHandler(ProductDatabase database) {
+  public GetProductListHandler(ProductDatabase database) {
     this.database = database;
   }
 
   @Override
-  public GetProductResult execute(final GetProductAction action,
+  public GetProductListResult execute(final GetProductListAction action,
       final ExecutionContext context) throws ActionException {
-    Product product = database.get(action.getId());
-    if (product == null) {
-      throw new ActionException("Product not found");
-    }
-    return new GetProductResult(product);
+    ArrayList<Product> products = database.getMatching(action.getFlags());
+    return new GetProductListResult(products);
   }
 
   @Override
-  public Class<GetProductAction> getActionType() {
-    return GetProductAction.class;
+  public Class<GetProductListAction> getActionType() {
+    return GetProductListAction.class;
   }
 
   @Override
-  public void undo(final GetProductAction action, final GetProductResult result,
-      final ExecutionContext context) throws ActionException {
+  public void undo(final GetProductListAction action,
+      final GetProductListResult result, final ExecutionContext context)
+      throws ActionException {
     // No undo
   }
 }

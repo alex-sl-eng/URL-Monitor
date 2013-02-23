@@ -16,8 +16,8 @@
 
 package org.aeng.urlMonitor.server.guice;
 
-import org.aeng.urlMonitor.server.GetProductHandler;
-import org.aeng.urlMonitor.server.GetProductListHandler;
+import org.aeng.urlMonitor.server.rpc.GetProductHandler;
+import org.aeng.urlMonitor.server.rpc.GetProductListHandler;
 
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 import org.aeng.urlMonitor.shared.GetProductAction;

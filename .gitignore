@@ -1,0 +1,55 @@
+# NB be careful ignoring anything under src/ (especially directories or .jar files)
+# because ignoring files under these directories can make it
+# difficult to debug build problems.  At the very least, we should ensure
+# 'mvn clean' will clean such directories.
+
+
+*~
+*.patch
+*.sedbak
+zanatasearchindex/
+test-output/
+hs_err_pid*.log
+localDB.log
+localDB.properties
+
+/.pc/
+/.ant-targets-build.xml
+/.pages.xml.spdia
+temp-testng-customsuite.xml
+*_qc.properties
+
+# eclipse and maven stuff
+.classpath
+.metadata/
+.settings/
+.project
+bin/
+/target/
+/*/target/
+/*/*/target/
+*.orig
+.pages.xml.spdia
+# eclipse scrapbook page:
+*.jpage
+
+
+# idea
+*.idea/
+*.iml
+
+# kde related
+*.directory
+
+#gwt related
+.gwt-log
+*.gwt-tmp
+/zanata-war/src/main/webapp/WEB-INF/deploy/
+/zanata-war/src/main/webapp/webtrans/
+
+# vim
+*.swp
+
+*.log
+/tmp*
+*.bak

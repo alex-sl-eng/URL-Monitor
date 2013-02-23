@@ -14,7 +14,7 @@
  * the License.
  */
 
-package org.aeng.urlMonitor.server;
+package org.aeng.urlMonitor.server.rpc;
 
 
 import com.google.inject.Singleton;

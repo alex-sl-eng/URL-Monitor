@@ -4,18 +4,19 @@ import java.util.Date;
 
 import org.aeng.urlMonitor.shared.model.type.AccessType;
 
+
 /**
- * @author aeng
+ * @author aeng Alex Eng - loones1595@gmail.com
  *
  */
-public class Service extends BaseModel
+public class UrlMonitor extends BaseModel
 {
    private String name;
    private String description;
    
    private String url;
    private AccessType access;
-   private String regexcCheck;
+   private String regexCheck;
    private String emailToIfFail;
 
    private Date startTime;
@@ -54,13 +55,13 @@ public class Service extends BaseModel
    {
       this.access = access;
    }
-   public String getRegexcCheck()
+   public String getRegexCheck()
    {
-      return regexcCheck;
+      return regexCheck;
    }
-   public void setRegexcCheck(String regexcCheck)
+   public void setRegexCheck(String regexCheck)
    {
-      this.regexcCheck = regexcCheck;
+      this.regexCheck = regexCheck;
    }
    public String getEmailToIfFail()
    {
