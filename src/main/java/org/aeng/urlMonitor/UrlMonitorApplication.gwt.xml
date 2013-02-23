@@ -33,4 +33,11 @@
   <!-- This is required for Gwt-Platform Proxy's generator        -->
   <define-configuration-property name="gin.ginjector" is-multi-valued="false" />
   <set-configuration-property name="gin.ginjector" value="org.aeng.urlMonitor.client.gin.ClientGinjector" />
+
+
+  <!-- Logging -->
+  <inherits name="com.google.gwt.logging.Logging"/>
+  <set-property name="gwt.logging.enabled" value="TRUE"/>
+  <set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
+
 </module>

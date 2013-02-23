@@ -16,7 +16,11 @@ public class UrlMonitor extends BaseModel
    
    private String url;
    private AccessType access;
-   private String regexCheck;
+   
+   /**
+    * see http://en.wikipedia.org/wiki/Cron#CRON_expression
+    */
+   private String cronExpression = "0/5 * * * * ?"; // every 5 seconds
    private String emailToIfFail;
 
    private Date startTime;
@@ -55,13 +59,13 @@ public class UrlMonitor extends BaseModel
    {
       this.access = access;
    }
-   public String getRegexCheck()
+   public String getCronExpression()
    {
-      return regexCheck;
+      return cronExpression;
    }
-   public void setRegexCheck(String regexCheck)
+   public void setCronExpression(String cronExpression)
    {
-      this.regexCheck = regexCheck;
+      this.cronExpression = cronExpression;
    }
    public String getEmailToIfFail()
    {

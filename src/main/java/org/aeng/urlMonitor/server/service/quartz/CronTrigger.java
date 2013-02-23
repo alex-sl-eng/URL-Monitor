@@ -9,6 +9,7 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
@@ -21,29 +22,54 @@ import org.quartz.impl.matchers.KeyMatcher;
  */
 public class CronTrigger
 {
-   public static void initTrigger(UrlMonitor urlMonitor) throws Exception
+   private final Scheduler scheduler;
+   
+   public CronTrigger() throws SchedulerException
+   {
+      scheduler = new StdSchedulerFactory().getScheduler();
+      scheduler.start();
+   }
+   
+   public JobKey scheduleMonitor(UrlMonitor urlMonitor) throws SchedulerException
    {
       if(urlMonitor != null)
       {
          JobKey jobKey = new JobKey(urlMonitor.getName());
-         JobDetail job = JobBuilder.newJob(UrlMonitorJob.class)
+         JobDetail jobDetail = JobBuilder.newJob(UrlMonitorJob.class)
          .withIdentity(jobKey).build();
+         
+         jobDetail.getJobDataMap().put("value", urlMonitor);
    
          Trigger trigger = TriggerBuilder
          .newTrigger()
          .withIdentity("Trigger:" + urlMonitor.getName())
          .withSchedule(
-            CronScheduleBuilder.cronSchedule("0/5 * * * * ?")) // every 5 seconds
+            CronScheduleBuilder.cronSchedule(urlMonitor.getCronExpression()))
          .build();
-   
-         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-   
+         
          scheduler.getListenerManager().addJobListener(
-            new MonitorJobListener(), KeyMatcher.keyEquals(jobKey)
-         );
-   
-         scheduler.start();
-         scheduler.scheduleJob(job, trigger);
+               new MonitorJobListener(), KeyMatcher.keyEquals(jobKey)
+            );
+         
+         scheduler.scheduleJob(jobDetail, trigger);
+         
+         return jobKey;
       }
+      return null;
+   }
+   
+   public void pauseJob(JobKey jobKey) throws SchedulerException
+   {
+      scheduler.pauseJob(jobKey);
+   }
+   
+   public void resumeJob(JobKey jobKey) throws SchedulerException
+   {
+      scheduler.resumeJob(jobKey);
+   }
+   
+   public void pauseAll() throws SchedulerException
+   {
+      scheduler.pauseAll();
    }
 }
