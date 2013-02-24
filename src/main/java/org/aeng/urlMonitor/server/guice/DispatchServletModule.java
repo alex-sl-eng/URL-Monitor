@@ -16,13 +16,14 @@
 
 package org.aeng.urlMonitor.server.guice;
 
+import org.aeng.urlMonitor.server.service.UrlMonitorServiceImpl;
+
+import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.crawler.server.CrawlFilter;
 import com.gwtplatform.crawler.server.ServiceKey;
 import com.gwtplatform.crawler.server.ServiceUrl;
 import com.gwtplatform.dispatch.server.guice.DispatchServiceImpl;
 import com.gwtplatform.dispatch.shared.ActionImpl;
-
-import com.google.inject.servlet.ServletModule;
 
 /**
  * @author Philippe Beaudoin
@@ -36,6 +37,13 @@ public class DispatchServletModule extends ServletModule {
     filter("/*").through(CrawlFilter.class);
     serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
         DispatchServiceImpl.class);
+    
+    startMainService();
+  }
+  
+  private void startMainService()
+  {
+     UrlMonitorServiceImpl mainService = new UrlMonitorServiceImpl();
   }
 
 }

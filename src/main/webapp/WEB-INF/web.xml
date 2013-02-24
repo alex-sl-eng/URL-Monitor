@@ -23,7 +23,8 @@
     filter(String).through(Class<? extends Filter)
   -->
   <listener>
-    <listener-class>org.aeng.urlMonitor.server.guice.MyGuiceServletContextListener
+    <listener-class>
+    	org.aeng.urlMonitor.server.guice.MyGuiceServletContextListener
     </listener-class>
   </listener>
 
@@ -31,5 +32,5 @@
   <welcome-file-list>
     <welcome-file>urlMonitor.html</welcome-file>
   </welcome-file-list>
-
+  
 </web-app>

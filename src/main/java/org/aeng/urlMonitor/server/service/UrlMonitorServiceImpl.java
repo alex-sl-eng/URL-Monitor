@@ -3,6 +3,7 @@
  */
 package org.aeng.urlMonitor.server.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,25 +15,22 @@ import org.aeng.urlMonitor.shared.model.UrlMonitor;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 
-import com.google.inject.Singleton;
-
 
 
 /**
  * @author aeng Alex Eng - loones1595@gmail.com
  *
  */
-@Singleton
-public class MainService
+public class UrlMonitorServiceImpl
 {
-   public final Logger logger = Logger.getLogger(MainService.class.getName());
+   public final Logger logger = Logger.getLogger(UrlMonitorServiceImpl.class.getName());
 
    private CronTrigger cronTrigger;
    
-   private List<UrlMonitor> urlMonitorList;
+   private List<UrlMonitor> urlMonitorList = new ArrayList<UrlMonitor>();
    private Map<JobKey, UrlMonitor> urlMonitorMap = new HashMap<JobKey, UrlMonitor>();
    
-   public MainService()
+   public UrlMonitorServiceImpl()
    {
       try
       {
