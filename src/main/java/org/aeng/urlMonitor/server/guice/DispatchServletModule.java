@@ -16,7 +16,7 @@
 
 package org.aeng.urlMonitor.server.guice;
 
-import org.aeng.urlMonitor.server.service.UrlMonitorServiceImpl;
+import org.aeng.urlMonitor.server.service.UrlMonitorService;
 
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.crawler.server.CrawlFilter;
@@ -43,7 +43,8 @@ public class DispatchServletModule extends ServletModule {
   
   private void startMainService()
   {
-     UrlMonitorServiceImpl mainService = new UrlMonitorServiceImpl();
+      UrlMonitorService mainService = new UrlMonitorService();
+      mainService.init();
   }
 
 }
