@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.aeng.urlMonitor.server.service.quartz.CronTrigger;
 import org.aeng.urlMonitor.shared.model.UrlMonitor;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -26,7 +27,10 @@ import com.google.inject.Singleton;
 @Singleton
 public class UrlMonitorService
 {
-   public final Logger logger = Logger.getLogger(UrlMonitorService.class.getName());
+   private final Logger logger =  LoggerFactory.getLogger(UrlMonitorService.class);
+   
+   //this is client side logging
+//   public final Logger logger = Logger.getLogger(UrlMonitorService.class.getName());
 
    private CronTrigger cronTrigger;
    
@@ -69,7 +73,7 @@ public class UrlMonitorService
       }
       catch (SchedulerException e)
       {
-         logger.log(Level.SEVERE, e.getMessage());
+         logger.error(e.getMessage());
       }
    }
 

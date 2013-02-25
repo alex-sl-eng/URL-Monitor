@@ -1,16 +1,19 @@
 package org.aeng.urlMonitor.server.service.quartz;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.aeng.urlMonitor.server.service.UrlMonitorService;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MonitorJobListener implements JobListener 
 {
    public static final String LISTENER_NAME = "MonitorJobListener";
-   public final Logger logger = Logger.getLogger(MonitorJobListener.class.getName());
+   
+   private final Logger logger =  LoggerFactory.getLogger(MonitorJobListener.class);
  
    @Override
    public String getName() {
@@ -22,7 +25,7 @@ public class MonitorJobListener implements JobListener
    public void jobToBeExecuted(JobExecutionContext context) {
  
       String jobName = context.getJobDetail().getKey().toString();
-      logger.log(Level.INFO, "Job : " + jobName + " starting...");
+      logger.info("Job : " + jobName + " starting...");
  
    }
  
@@ -30,7 +33,7 @@ public class MonitorJobListener implements JobListener
    @Override
    public void jobExecutionVetoed(JobExecutionContext context) {
       String jobName = context.getJobDetail().getKey().toString();
-      logger.log(Level.INFO, "jobExecutionVetoed: " + jobName);
+      logger.info("jobExecutionVetoed: " + jobName);
    }
  
    //Run this after job has been executed
@@ -38,10 +41,10 @@ public class MonitorJobListener implements JobListener
    public void jobWasExecuted(JobExecutionContext context,
          JobExecutionException jobException) {
       String jobName = context.getJobDetail().getKey().toString();
-      logger.log(Level.INFO, "Job : " + jobName + " is finished...");
+      logger.info("Job : " + jobName + " is finished...");
  
       if (!jobException.getMessage().equals("")) {
-         logger.log(Level.SEVERE, "Exception thrown by: " + jobName + " Exception: " + jobException.getMessage());
+         logger.info("Exception thrown by: " + jobName + " Exception: " + jobException.getMessage());
       }
  
    }
