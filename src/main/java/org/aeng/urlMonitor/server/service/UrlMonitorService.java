@@ -38,17 +38,25 @@ public class UrlMonitorService
 
    public void init()
    {
+      logger.info("====================================");
+      logger.info("======URL Monitor Initialise========");
+      logger.info("====================================");
       initConnection();
       initJobs();
    }
 
    private void initConnection()
    {
-
+      logger.info("====================================");
+      logger.info("==== Initialise DB Connection ======");
+      logger.info("====================================");
    }
 
    private void initJobs()
    {
+      logger.info("====================================");
+      logger.info("========= Initialise Jobs ==========");
+      logger.info("====================================");
       try
       {
          cronTrigger = new CronTrigger();

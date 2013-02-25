@@ -38,6 +38,14 @@
   <!-- Logging -->
   <inherits name="com.google.gwt.logging.Logging"/>
   <set-property name="gwt.logging.enabled" value="TRUE"/>
-  <set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
+  <set-property name="gwt.logging.logLevel" value="INFO"/> # To change the default logLevel
+  
+  <set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+  <set-property name="gwt.logging.developmentModeHandler" value="ENABLED" />
+  <set-property name="gwt.logging.firebugHandler" value="ENABLED" />
+  <set-property name="gwt.logging.popupHandler" value="ENABLED" />
+  <set-property name="gwt.logging.systemHandler" value="ENABLED" />
+  
+<!--   <define-property name="gwt.logging.logLevel" values="ALL, FINEST, FINER, FINE, CONFIG, INFO, WARNING, SEVERE" /> -->
 
 </module>

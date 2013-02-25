@@ -24,7 +24,7 @@
   -->
   <listener>
     <listener-class>
-    	org.aeng.urlMonitor.server.guice.MyGuiceServletContextListener
+    	org.aeng.urlMonitor.server.guice.ServletContextListener
     </listener-class>
   </listener>
 

@@ -14,9 +14,7 @@
  * the License.
  */
 
-package org.aeng.urlMonitor.server.guice;
-
-import org.aeng.urlMonitor.server.service.UrlMonitorService;
+package org.aeng.urlMonitor.server.guice.module;
 
 import com.google.inject.servlet.ServletModule;
 import com.gwtplatform.crawler.server.CrawlFilter;
@@ -37,14 +35,6 @@ public class DispatchServletModule extends ServletModule {
     filter("/*").through(CrawlFilter.class);
     serve("/" + ActionImpl.DEFAULT_SERVICE_NAME + "*").with(
         DispatchServiceImpl.class);
-    
-    startMainService();
-  }
-  
-  private void startMainService()
-  {
-      UrlMonitorService mainService = new UrlMonitorService();
-      mainService.init();
   }
 
 }

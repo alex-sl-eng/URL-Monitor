@@ -14,7 +14,7 @@
  * the License.
  */
 
-package org.aeng.urlMonitor.server.guice;
+package org.aeng.urlMonitor.server.guice.module;
 
 import org.aeng.urlMonitor.server.rpc.GetProductHandler;
 import org.aeng.urlMonitor.server.rpc.GetProductListHandler;
@@ -28,7 +28,7 @@ import org.aeng.urlMonitor.shared.GetProductListAction;
  *
  * @author Philippe Beaudoin
  */
-public class ServerModule extends HandlerModule {
+public class ServerHandlerModule extends HandlerModule {
 
   @Override
   protected void configureHandlers() {

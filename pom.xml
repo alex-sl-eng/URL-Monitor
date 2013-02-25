@@ -34,6 +34,7 @@
 		<gwt.style>OBFUSCATED</gwt.style> <!-- Can make this DETAILED for debugging. -->
 		<gwtp.version>0.7</gwtp.version>
 		<quartz.version>2.1.5</quartz.version>
+		<mongoDB.version>2.10.1</mongoDB.version>
 		
 		<!-- NOT used at the moment -->
 		<lifecycle-mapping-plugin.version>1.0.0</lifecycle-mapping-plugin.version>
@@ -230,6 +231,13 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>${quartz.version}</version>
+		</dependency>
+		
+		<!-- Mongo DB -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>${mongoDB.version}</version>
 		</dependency>
 	</dependencies>
 
