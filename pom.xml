@@ -44,6 +44,13 @@
 
 	</properties>
 	<build>
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -239,6 +246,17 @@
 			<artifactId>mongo-java-driver</artifactId>
 			<version>${mongoDB.version}</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+            <dependency>
+           <groupId>ch.qos.logback</groupId>
+           <artifactId>logback-classic</artifactId>
+           <version>1.0.0</version>
+       </dependency>
 	</dependencies>
 
 	<profiles>

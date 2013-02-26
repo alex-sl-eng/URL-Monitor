@@ -1,18 +1,33 @@
 package org.aeng.urlMonitor.server.guice;
 
-import org.aeng.urlMonitor.server.guice.module.DispatchServletModule;
-import org.aeng.urlMonitor.server.guice.module.ServerHandlerModule;
-import org.aeng.urlMonitor.server.guice.module.UrlMonitorModule;
+import javax.servlet.ServletContextEvent;
 
-import com.google.inject.Guice;
+import org.aeng.urlMonitor.server.service.UrlMonitorService;
+
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
+public class ServletContextListener extends GuiceServletContextListener
+{
 
-public class ServletContextListener extends GuiceServletContextListener {
+   @Override
+   protected Injector getInjector()
+   {
+      return GuiceInjectorFactory.getInjector();
+   }
 
-  @Override
-  protected Injector getInjector() {
-      return Guice.createInjector(new ServerHandlerModule(), new DispatchServletModule(), new UrlMonitorModule());
-  }
+   @Override
+   public void contextInitialized(ServletContextEvent servletContextEvent)
+   {
+      super.contextInitialized(servletContextEvent);
+      
+      startMainService();
+   }
+   
+   private void startMainService()
+   {
+      UrlMonitorService mainService = getInjector().getInstance(UrlMonitorService.class);
+      mainService.init();
+   }
+
 }

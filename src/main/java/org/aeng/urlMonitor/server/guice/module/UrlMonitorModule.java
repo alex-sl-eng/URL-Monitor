@@ -12,14 +12,6 @@ public class UrlMonitorModule extends AbstractModule
    {
       binder().bind(UrlMonitorService.class);
       binder().bind(DBService.class);
-
-      startMainService();
-   }
-   
-   private void startMainService()
-   {
-      UrlMonitorService mainService = new UrlMonitorService();
-      mainService.init();
    }
 
 }

@@ -3,11 +3,13 @@
  */
 package org.aeng.urlMonitor.server.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+import java.util.Properties;
 
 import org.aeng.urlMonitor.server.service.quartz.CronTrigger;
 import org.aeng.urlMonitor.shared.model.UrlMonitor;
@@ -27,7 +29,8 @@ import com.google.inject.Singleton;
 @Singleton
 public class UrlMonitorService
 {
-   private final Logger logger =  LoggerFactory.getLogger(UrlMonitorService.class);
+   private final Logger logger =  LoggerFactory.getLogger(this.getClass());
+   private final static String CONFIG_FILE_NAME = "/urlMonitor.properties";
    
    //this is client side logging
 //   public final Logger logger = Logger.getLogger(UrlMonitorService.class.getName());
@@ -42,25 +45,39 @@ public class UrlMonitorService
 
    public void init()
    {
-      logger.info("====================================");
-      logger.info("======URL Monitor Initialise========");
-      logger.info("====================================");
-      initConnection();
+      logger.info("\n\n======URL Monitor Initialise========");
+      initApplicationConfig();
+      initDBConnection();
       initJobs();
    }
-
-   private void initConnection()
+   
+   private void initApplicationConfig()
    {
-      logger.info("====================================");
-      logger.info("==== Initialise DB Connection ======");
-      logger.info("====================================");
+      try
+      {
+         Properties properties = new Properties();
+         properties.load(this.getClass().getResourceAsStream(CONFIG_FILE_NAME));
+         ApplicationConfigFactory.init(properties);
+      }
+      catch (FileNotFoundException e)
+      {
+         logger.error("urlMonitor.properties not found:" + e);
+      }
+      catch (IOException e)
+      {
+         logger.error("error reading urlMonitor.properties:" + e);
+      }
+   }
+
+   private void initDBConnection()
+   {
+      logger.info("\n\n==== Initialise DB Connection ======");
+      dbService.loadConnection();
    }
 
    private void initJobs()
    {
-      logger.info("====================================");
-      logger.info("========= Initialise Jobs ==========");
-      logger.info("====================================");
+      logger.info("\n\n========= Initialise Jobs ==========");
       try
       {
          cronTrigger = new CronTrigger();
