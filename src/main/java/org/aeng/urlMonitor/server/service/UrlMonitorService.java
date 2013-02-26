@@ -3,13 +3,10 @@
  */
 package org.aeng.urlMonitor.server.service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.aeng.urlMonitor.server.service.quartz.CronTrigger;
 import org.aeng.urlMonitor.shared.model.UrlMonitor;
@@ -30,7 +27,6 @@ import com.google.inject.Singleton;
 public class UrlMonitorService
 {
    private final Logger logger =  LoggerFactory.getLogger(this.getClass());
-   private final static String CONFIG_FILE_NAME = "/urlMonitor.properties";
    
    //this is client side logging
 //   public final Logger logger = Logger.getLogger(UrlMonitorService.class.getName());
@@ -53,20 +49,8 @@ public class UrlMonitorService
    
    private void initApplicationConfig()
    {
-      try
-      {
-         Properties properties = new Properties();
-         properties.load(this.getClass().getResourceAsStream(CONFIG_FILE_NAME));
-         ApplicationConfigFactory.init(properties);
-      }
-      catch (FileNotFoundException e)
-      {
-         logger.error("urlMonitor.properties not found:" + e);
-      }
-      catch (IOException e)
-      {
-         logger.error("error reading urlMonitor.properties:" + e);
-      }
+      logger.info("\n\n==== Initialise Application Config ======");
+      ApplicationConfigFactory.init();
    }
 
    private void initDBConnection()

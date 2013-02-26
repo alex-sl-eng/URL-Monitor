@@ -4,11 +4,14 @@ import javax.servlet.ServletContextEvent;
 
 import org.aeng.urlMonitor.server.service.UrlMonitorService;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
 public class ServletContextListener extends GuiceServletContextListener
 {
+   @Inject
+   private UrlMonitorService urlMonitorService;
 
    @Override
    protected Injector getInjector()
@@ -26,8 +29,7 @@ public class ServletContextListener extends GuiceServletContextListener
    
    private void startMainService()
    {
-      UrlMonitorService mainService = getInjector().getInstance(UrlMonitorService.class);
-      mainService.init();
+      urlMonitorService.init();
    }
 
 }
