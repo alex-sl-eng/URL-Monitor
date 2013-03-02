@@ -12,7 +12,7 @@ public class UrlMonitorJob implements Job
    public void execute(JobExecutionContext context) throws JobExecutionException
    {
       UrlMonitor urlMonitor = (UrlMonitor)context.getJobDetail().getJobDataMap().get("value");
-      System.out.println("running job:" + urlMonitor.getName());
+      System.out.println("===================running job:" + urlMonitor.getName());
    }
 
 }

@@ -1,8 +1,6 @@
 package org.aeng.urlMonitor.server.service.quartz;
 
-import java.util.logging.Level;
-
-import org.aeng.urlMonitor.server.service.UrlMonitorService;
+import org.apache.commons.lang.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
@@ -25,7 +23,7 @@ public class MonitorJobListener implements JobListener
    public void jobToBeExecuted(JobExecutionContext context) {
  
       String jobName = context.getJobDetail().getKey().toString();
-      logger.info("Job : " + jobName + " starting...");
+      logger.debug("Job : " + jobName + " starting...");
  
    }
  
@@ -33,19 +31,17 @@ public class MonitorJobListener implements JobListener
    @Override
    public void jobExecutionVetoed(JobExecutionContext context) {
       String jobName = context.getJobDetail().getKey().toString();
-      logger.info("jobExecutionVetoed: " + jobName);
+      logger.debug("jobExecutionVetoed: " + jobName);
    }
  
    //Run this after job has been executed
    @Override
-   public void jobWasExecuted(JobExecutionContext context,
-         JobExecutionException jobException) {
+   public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
       String jobName = context.getJobDetail().getKey().toString();
-      logger.info("Job : " + jobName + " is finished...");
- 
-      if (!jobException.getMessage().equals("")) {
-         logger.info("Exception thrown by: " + jobName + " Exception: " + jobException.getMessage());
+      logger.debug("Job : " + jobName + " is finished...");
+      
+      if (jobException != null && !StringUtils.isEmpty(jobException.getMessage())) {
+         logger.error("Exception thrown by: " + jobName + " Exception: " + jobException.getMessage());
       }
- 
    }
 }

@@ -6,8 +6,7 @@ package org.aeng.urlMonitor.server.service;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aeng.urlMonitor.server.exception.LoadApplicationConfigException;
 
 /**
  * @author Alex Eng(aeng) - loones1595@gmail.com
@@ -15,9 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ApplicationConfigFactory
 {
-   private static final String CONFIG_FILE_NAME = "/urlMonitor.properties";
-
-   private final static Logger logger = LoggerFactory.getLogger(ApplicationConfigFactory.class);
+   private static final String CONFIG_FILE_NAME = "urlMonitor.properties";
 
    private static final Properties APPLICATION_PROPERTIES = new Properties();
    private static final String DB_HOST = "db.host";
@@ -39,7 +36,7 @@ public class ApplicationConfigFactory
       return APPLICATION_PROPERTIES.getProperty(DB_NAME);
    }
 
-   public static void init()
+   public static void init() throws LoadApplicationConfigException
    {
       try
       {
@@ -47,7 +44,7 @@ public class ApplicationConfigFactory
       }
       catch (IOException e)
       {
-         logger.error("error reading urlMonitor.properties:" + e);
+         throw new LoadApplicationConfigException("Error loading url.properties", e);
       }
    }
 

@@ -18,7 +18,7 @@ public class BaseModel implements IsSerializable
    private String lastModifiedBy;
    private Date lastModifiedDate;
    
-   private String createdBy;
+   private Account createdBy;
    private Date createdDate;
    
    
@@ -38,11 +38,11 @@ public class BaseModel implements IsSerializable
    {
       this.lastModifiedDate = lastModifiedDate;
    }
-   public String getCreatedBy()
+   public Account getCreatedBy()
    {
       return createdBy;
    }
-   public void setCreatedBy(String createdBy)
+   public void setCreatedBy(Account createdBy)
    {
       this.createdBy = createdBy;
    }

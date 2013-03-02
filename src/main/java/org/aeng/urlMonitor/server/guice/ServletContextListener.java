@@ -10,8 +10,8 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 public class ServletContextListener extends GuiceServletContextListener
 {
-   @Inject
-   private UrlMonitorService urlMonitorService;
+//   @Inject
+//   private UrlMonitorService urlMonitorService;
 
    @Override
    protected Injector getInjector()
@@ -29,7 +29,8 @@ public class ServletContextListener extends GuiceServletContextListener
    
    private void startMainService()
    {
-      urlMonitorService.init();
+      UrlMonitorService mainService = getInjector().getInstance(UrlMonitorService.class);
+      mainService.init();
    }
 
 }

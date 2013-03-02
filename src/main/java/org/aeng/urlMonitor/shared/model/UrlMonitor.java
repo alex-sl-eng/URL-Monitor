@@ -1,7 +1,5 @@
 package org.aeng.urlMonitor.shared.model;
 
-import java.util.Date;
-
 import org.aeng.urlMonitor.shared.model.type.AccessType;
 
 
@@ -21,12 +19,11 @@ public class UrlMonitor extends BaseModel
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
    private String cronExpression = "0/5 * * * * ?"; // every 5 seconds
-   private String emailToIfFail;
+   
+   private String contentRegex;
+   
+   private String emailTo;
 
-   private Date startTime;
-   private Date endTime;
-   
-   
    public String getName()
    {
       return name;
@@ -67,30 +64,20 @@ public class UrlMonitor extends BaseModel
    {
       this.cronExpression = cronExpression;
    }
-   public String getEmailToIfFail()
+   public String getEmailTo()
    {
-      return emailToIfFail;
+      return emailTo;
    }
-   public void setEmailToIfFail(String emailToIfFail)
+   public void setEmailTo(String emailTo)
    {
-      this.emailToIfFail = emailToIfFail;
+      this.emailTo = emailTo;
    }
-   public Date getStartTime()
+   public String getContentRegex()
    {
-      return startTime;
+      return contentRegex;
    }
-   public void setStartTime(Date startTime)
+   public void setContentRegex(String contentRegex)
    {
-      this.startTime = startTime;
+      this.contentRegex = contentRegex;
    }
-   public Date getEndTime()
-   {
-      return endTime;
-   }
-   public void setEndTime(Date endTime)
-   {
-      this.endTime = endTime;
-   }
-   
-   
 }
