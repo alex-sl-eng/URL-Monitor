@@ -1,14 +1,11 @@
-/**
- * 
- */
 package org.aeng.urlMonitor.shared.model.type;
 
-
 /**
- * @author aeng
- *
+ * 
+ * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
+ * 
  */
 public enum StatusType 
 {
-   Active, Checking, Failed, Unknown;
+   Pass, Failed, Unknown;
 }

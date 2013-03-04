@@ -1,6 +1,7 @@
 package org.aeng.urlMonitor.shared.model;
 
 import org.aeng.urlMonitor.shared.model.type.AccessType;
+import org.aeng.urlMonitor.shared.model.type.StatusType;
 
 
 /**
@@ -14,6 +15,7 @@ public class UrlMonitor extends BaseModel
    
    private String url;
    private AccessType access;
+   private StatusType status;
    
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
@@ -79,5 +81,13 @@ public class UrlMonitor extends BaseModel
    public void setContentRegex(String contentRegex)
    {
       this.contentRegex = contentRegex;
+   }
+   public StatusType getStatus()
+   {
+      return status;
+   }
+   public void setStatus(StatusType status)
+   {
+      this.status = status;
    }
 }

@@ -50,7 +50,6 @@ public class UrlMonitorService
       {
          logger.info("======URL Monitor========");
          initApplicationConfig();
-         initDBConnection();
          initJobs();
       }
       catch (LoadApplicationConfigException e)
@@ -58,6 +57,10 @@ public class UrlMonitorService
          logger.error(e.getMessage());
       }
       catch (DatabaseException e)
+      {
+         logger.error(e.getMessage());
+      }
+      catch (SchedulerException e)
       {
          logger.error(e.getMessage());
       }
@@ -75,24 +78,20 @@ public class UrlMonitorService
       dbService.loadConnection();
    }
 
-   private void initJobs()
+   private void initJobs() throws DatabaseException, SchedulerException
    {
-      initDummyJob();
       logger.info("initialising jobs...");
-      try
-      {
-         cronTrigger = new CronTrigger();
+      initDummyJob();
+//      initDBConnection();
 
-         for (UrlMonitor urlMonitor : urlMonitorList)
-         {
-            JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
-            urlMonitorMap.put(jobKey, urlMonitor);
-         }
-      }
-      catch (SchedulerException e)
+      cronTrigger = new CronTrigger();
+
+      for (UrlMonitor urlMonitor : urlMonitorList)
       {
-         logger.error(e.getMessage());
+         JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
+         urlMonitorMap.put(jobKey, urlMonitor);
       }
+
    }
 
    private void initDummyJob()
