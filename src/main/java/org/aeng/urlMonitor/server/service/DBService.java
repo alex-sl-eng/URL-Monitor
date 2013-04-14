@@ -1,8 +1,10 @@
 package org.aeng.urlMonitor.server.service;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.aeng.urlMonitor.server.exception.DatabaseException;
 import org.aeng.urlMonitor.shared.model.Account;
@@ -62,19 +64,42 @@ public class DBService
 
    public HashMap<Long, UrlMonitor> getMyJobList(Long accountId)
    {
-      return getDummyJob();
+      HashMap<Long, UrlMonitor> result = new HashMap<Long, UrlMonitor>();
+      
+      for(UrlMonitor urlMonitor: loadAllJobs())
+      {
+         if(urlMonitor.getCreatedBy().getId() == accountId)
+         {
+            result.put(urlMonitor.getId(), urlMonitor);
+         }
+      }
+      return result;
    }
    
    public HashMap<Long, UrlMonitor> getPublicJobList()
    {
-      return new HashMap<Long, UrlMonitor>();
+      HashMap<Long, UrlMonitor> result = new HashMap<Long, UrlMonitor>();
+      
+      for(UrlMonitor urlMonitor: loadAllJobs())
+      {
+         if(urlMonitor.getAccess().equals(AccessType.Public))
+         {
+            result.put(urlMonitor.getId(), urlMonitor);
+         }
+      }
+      return result;
+   }
+   
+   public List<UrlMonitor> loadAllJobs()
+   {
+      return getDummyJob();
    }
 
-   private HashMap<Long, UrlMonitor> getDummyJob()
+   private List<UrlMonitor> getDummyJob()
    {
-      HashMap<Long, UrlMonitor> result = new HashMap<Long, UrlMonitor>();
+      List<UrlMonitor> result = new ArrayList<UrlMonitor>();
 
-      for (int i = 0; i < 2; i++)
+      for (int i = 0; i < 10; i++)
       {
          UrlMonitor urlMonitor = new UrlMonitor();
          urlMonitor.setName("Name:" + i);
@@ -86,11 +111,12 @@ public class DBService
          urlMonitor.setContentRegex("google");
 
          Account DummyAccount = new Account();
+         DummyAccount.setId(new Long(1));
          DummyAccount.setActivate(true);
          DummyAccount.setUsername("dummy person");
 
          urlMonitor.setCreatedBy(DummyAccount);
-         result.put(new Long(i), urlMonitor);
+         result.add(urlMonitor);
       }
       return result;
    }

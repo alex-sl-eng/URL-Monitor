@@ -5,6 +5,7 @@ package org.aeng.urlMonitor.client.service;
 
 import java.util.HashMap;
 
+import org.aeng.urlMonitor.client.event.JobListUpdateEvent;
 import org.aeng.urlMonitor.client.event.NotificationEvent;
 import org.aeng.urlMonitor.client.event.NotificationEvent.Severity;
 import org.aeng.urlMonitor.shared.GetMyJobListAction;
@@ -16,7 +17,6 @@ import org.aeng.urlMonitor.shared.model.UrlMonitor;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.web.bindery.event.shared.Event;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 
@@ -55,6 +55,7 @@ public class JobListProvider
          public void onSuccess(GetMyJobListResult result)
          {
             myJobMap = result.getMyJobMap();
+            eventBus.fireEvent(new JobListUpdateEvent(true));
          }
       });
    }
@@ -73,7 +74,7 @@ public class JobListProvider
          public void onSuccess(GetPublicJobListResult result)
          {
             publicJobMap = result.getPublicJobMap();
-          //eventBus.fireEvent
+            eventBus.fireEvent(new JobListUpdateEvent(false));
          }
       });
    }

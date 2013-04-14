@@ -21,7 +21,14 @@ public class BaseModel implements IsSerializable
    private Account createdBy;
    private Date createdDate;
    
-   
+   public void setId(Long id)
+   {
+      this.id = id;
+   }
+   public Long getId()
+   {
+      return id;
+   }
    public String getLastModifiedBy()
    {
       return lastModifiedBy;

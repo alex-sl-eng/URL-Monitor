@@ -9,5 +9,5 @@ package org.aeng.urlMonitor.shared.model.type;
  */
 public enum AccessType
 {
-   Public, AllMembers, MyMembers, Private;
+   Public, Private;
 }

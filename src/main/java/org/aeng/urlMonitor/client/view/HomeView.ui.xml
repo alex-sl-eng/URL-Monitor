@@ -3,8 +3,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel>
 		<h1>Choose one of the following...</h1>
-    <g:Button ui:field='all'>All Products</g:Button>
-    <g:Button ui:field='favorites'>Favorite Products</g:Button>
-    <g:Button ui:field='specials'>Specials</g:Button>
+    <g:PushButton ui:field='myJobs'>My Jobs</g:PushButton>
+    <g:PushButton ui:field='publicJobs'>Public Jobs</g:PushButton>
+    <g:PushButton ui:field='all'>All Jobs</g:PushButton>
 	</g:HTMLPanel>
 </ui:UiBinder> 

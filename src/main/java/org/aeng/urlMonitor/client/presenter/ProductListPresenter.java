@@ -39,16 +39,14 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import org.aeng.urlMonitor.shared.GetProductListAction;
 import org.aeng.urlMonitor.shared.GetProductListResult;
 
-/**
- * @author Philippe Beaudoin
- */
+
 public class ProductListPresenter extends Presenter<ProductListPresenter.MyView, ProductListPresenter.MyProxy>
 {
    /**
     * {@link ProductListPresenter}'s proxy.
     */
    @ProxyCodeSplit
-   @NameToken(NameTokens.productList)
+   @NameToken(NameTokens.jobList)
    public interface MyProxy extends ProxyPlace<ProductListPresenter>
    {
    }
@@ -70,11 +68,11 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
    public final Logger logger = Logger.getLogger(ProductListPresenter.class.getName());
 
    public static final String TOKEN_TYPE = "type";
-   public static final String TYPE_ALL_PRODUCTS = "all";
+   public static final String TYPE_ALL_JOBS = "all";
 
-   public static final String TYPE_FAVORITE_PRODUCTS = "fav";
+   public static final String TYPE_PUBLIC_JOBS = "pub";
 
-   public static final String TYPE_SPECIALS = "spec";
+   public static final String TYPE_MY_JOBS = "my";
 
    @TitleFunction
    public static String getListTitle(PlaceRequest request)
@@ -84,21 +82,21 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
 
    private static String getTitleFor(String type)
    {
-      if (type.equals(TYPE_FAVORITE_PRODUCTS))
+      if (type.equals(TYPE_PUBLIC_JOBS))
       {
-         return "Favorite products";
+         return "Public Jobs";
       }
-      else if (type.equals(TYPE_SPECIALS))
+      else if (type.equals(TYPE_MY_JOBS))
       {
-         return "Specials";
+         return "My Jobs";
       }
       else
       {
-         return "All products";
+         return "All Jobs";
       }
    }
 
-   private String currentType = TYPE_ALL_PRODUCTS;
+   private String currentType = TYPE_ALL_JOBS;
 
    private final DispatchAsync dispatcher;
 
@@ -119,18 +117,18 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
    public void prepareFromRequest(PlaceRequest request)
    {
       super.prepareFromRequest(request);
-      String type = request.getParameter(TOKEN_TYPE, TYPE_ALL_PRODUCTS);
-      if (type.equals(TYPE_FAVORITE_PRODUCTS))
+      String type = request.getParameter(TOKEN_TYPE, TYPE_ALL_JOBS);
+      if (type.equals(TYPE_PUBLIC_JOBS))
       {
-         currentType = TYPE_FAVORITE_PRODUCTS;
+         currentType = TYPE_PUBLIC_JOBS;
       }
-      else if (type.equals(TYPE_SPECIALS))
+      else if (type.equals(TYPE_MY_JOBS))
       {
-         currentType = TYPE_SPECIALS;
+         currentType = TYPE_MY_JOBS;
       }
       else
       {
-         currentType = TYPE_ALL_PRODUCTS;
+         currentType = TYPE_ALL_JOBS;
       }
 
       setViewTitle();
@@ -168,11 +166,11 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
 
    private int getFlags()
    {
-      if (currentType.equals(TYPE_FAVORITE_PRODUCTS))
+      if (currentType.equals(TYPE_PUBLIC_JOBS))
       {
          return Product.FLAG_FAVORITE;
       }
-      else if (currentType.equals(TYPE_SPECIALS))
+      else if (currentType.equals(TYPE_MY_JOBS))
       {
          return Product.FLAG_SPECIAL;
       }

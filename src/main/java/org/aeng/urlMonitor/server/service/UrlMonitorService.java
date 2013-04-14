@@ -3,8 +3,15 @@
  */
 package org.aeng.urlMonitor.server.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.aeng.urlMonitor.server.exception.DatabaseException;
 import org.aeng.urlMonitor.server.exception.LoadApplicationConfigException;
+import org.aeng.urlMonitor.server.service.quartz.CronTrigger;
+import org.aeng.urlMonitor.shared.model.UrlMonitor;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +33,9 @@ public class UrlMonitorService
 
    @Inject
    private DBService dbService;
+   
+   private CronTrigger cronTrigger;
+   private Map<JobKey, UrlMonitor> urlMonitorMap = new HashMap<JobKey, UrlMonitor>();
 
    public void init()
    {
@@ -34,6 +44,7 @@ public class UrlMonitorService
          logger.info("======URL Monitor========");
          initApplicationConfig();
          initDBConnection();
+         initJobs();
       }
       catch (LoadApplicationConfigException e)
       {
@@ -57,4 +68,17 @@ public class UrlMonitorService
       logger.info("initialising database connection...");
 //      dbService.loadConnection();
    }
+   
+   private void initJobs() throws DatabaseException, SchedulerException
+   {
+      logger.info("initialising jobs...");
+
+      cronTrigger = new CronTrigger();
+
+      for (UrlMonitor urlMonitor : dbService.loadAllJobs())
+      {
+         JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
+         urlMonitorMap.put(jobKey, urlMonitor);
+      }
+
 }

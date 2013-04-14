@@ -48,6 +48,4 @@ public class Account extends BaseModel
    {
       this.activate = activate;
    }
-   
-   
 }

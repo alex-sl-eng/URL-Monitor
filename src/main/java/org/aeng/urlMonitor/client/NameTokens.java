@@ -36,14 +36,14 @@ public class NameTokens {
 
   public static final String product = "!product";
 
-  public static final String productList = "!productList";
+  public static final String jobList = "!jobList";
 
   public static String getHomePage() {
     return homePage;
   }
 
   public static String getProductListPage() {
-    return productList;
+    return jobList;
   }
 
   public static String getProductPage() {
