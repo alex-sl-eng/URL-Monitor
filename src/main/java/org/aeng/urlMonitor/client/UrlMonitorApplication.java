@@ -39,5 +39,12 @@ public class UrlMonitorApplication implements EntryPoint {
     DelayedBindRegistry.bind(ginjector);
 
     ginjector.getPlaceManager().revealCurrentPlace();
+    initJob();
+  }
+  
+  private void initJob()
+  {
+     ginjector.getJobListProvider().resetPublicJob();
+     ginjector.getJobListProvider().resetMyJob();
   }
 }

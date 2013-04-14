@@ -16,12 +16,17 @@
 
 package org.aeng.urlMonitor.server.guice.module;
 
+import org.aeng.urlMonitor.server.rpc.GetMyJobListHandler;
 import org.aeng.urlMonitor.server.rpc.GetProductHandler;
 import org.aeng.urlMonitor.server.rpc.GetProductListHandler;
+import org.aeng.urlMonitor.server.rpc.GetPublicJobListHandler;
 
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
+
+import org.aeng.urlMonitor.shared.GetMyJobListAction;
 import org.aeng.urlMonitor.shared.GetProductAction;
 import org.aeng.urlMonitor.shared.GetProductListAction;
+import org.aeng.urlMonitor.shared.GetPublicJobListAction;
 
 /**
  * Module which binds the handlers and configurations.
@@ -34,5 +39,8 @@ public class ServerHandlerModule extends HandlerModule {
   protected void configureHandlers() {
     bindHandler(GetProductAction.class, GetProductHandler.class);
     bindHandler(GetProductListAction.class, GetProductListHandler.class);
+    
+    bindHandler(GetMyJobListAction.class, GetMyJobListHandler.class);
+    bindHandler(GetPublicJobListAction.class, GetPublicJobListHandler.class);
   }
 }

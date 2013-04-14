@@ -14,20 +14,18 @@
  * the License.
  */
 
-package org.aeng.urlMonitor.client.gin;
+package org.aeng.urlMonitor.shared;
 
-import com.google.gwt.inject.client.GinModules;
-import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
+import java.util.HashMap;
 
-/**
- * The goal of this empty ginjector class is to illustrate GWTP's support for
- * hierarchical ginjectors. Check out {@link ClientGinjectorBase} for more
- * information on this.
- * 
- * @author Philippe Beaudoin
- * @author Christian Goudreau
- */
-@GinModules({ DispatchAsyncModule.class, ClientModule.class })
-public interface ClientGinjector extends ClientGinjectorBase
+import org.aeng.urlMonitor.shared.model.UrlMonitor;
+
+import com.gwtplatform.dispatch.annotation.GenDispatch;
+import com.gwtplatform.dispatch.annotation.Out;
+
+@GenDispatch(isSecure = false)
+public class GetPublicJobList 
 {
+  @Out(1)
+  HashMap<Long, UrlMonitor> publicJobMap;
 }

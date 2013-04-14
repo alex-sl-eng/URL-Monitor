@@ -20,6 +20,7 @@ import org.aeng.urlMonitor.client.presenter.BreadcrumbsPresenter;
 import org.aeng.urlMonitor.client.presenter.HomePresenter;
 import org.aeng.urlMonitor.client.presenter.ProductListPresenter;
 import org.aeng.urlMonitor.client.presenter.ProductPresenter;
+import org.aeng.urlMonitor.client.service.JobListProvider;
 
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -57,4 +58,5 @@ public interface ClientGinjectorBase extends Ginjector {
   PlaceManager getPlaceManager();
   AsyncProvider<ProductListPresenter> getProductListPresenter();
   AsyncProvider<ProductPresenter> getProductPresenter();
+  JobListProvider getJobListProvider();
 }

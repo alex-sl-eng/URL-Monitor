@@ -44,7 +44,7 @@ public class ApplicationConfigFactory
       }
       catch (IOException e)
       {
-         throw new LoadApplicationConfigException("Error loading url.properties", e);
+         throw new LoadApplicationConfigException("Error loading urlMonitor.properties", e);
       }
    }
 

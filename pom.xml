@@ -33,7 +33,6 @@
 		<gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
 		<gwt.style>OBFUSCATED</gwt.style> <!-- Can make this DETAILED for debugging. -->
 		<gwtp.version>0.7</gwtp.version>
-		<quartz.version>2.1.5</quartz.version>
 		<mongoDB.version>2.10.1</mongoDB.version>
 
 		<!-- NOT used at the moment -->
@@ -233,11 +232,6 @@
 			<artifactId>gin</artifactId>
 			<version>${gin.version}</version>
 			<scope>provided</scope> <!-- Not needed server-side -->
-		</dependency>
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>${quartz.version}</version>
 		</dependency>
 
 		<!-- Mongo DB -->
