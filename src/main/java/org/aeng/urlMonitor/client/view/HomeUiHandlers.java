@@ -19,7 +19,6 @@ package org.aeng.urlMonitor.client.view;
 import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface HomeUiHandlers extends UiHandlers {
-  void revealAllJobsList();
   void revealPublicJobsList();
   void revealMyJobsList();
 }

@@ -54,6 +54,10 @@ public class UrlMonitorService
       {
          logger.error(e.getMessage());
       }
+      catch (SchedulerException e)
+      {
+         logger.error(e.getMessage());
+      }
     
    }
 
@@ -80,5 +84,5 @@ public class UrlMonitorService
          JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
          urlMonitorMap.put(jobKey, urlMonitor);
       }
-
+   }
 }

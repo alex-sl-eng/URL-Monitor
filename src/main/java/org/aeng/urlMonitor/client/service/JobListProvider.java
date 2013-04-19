@@ -41,7 +41,7 @@ public class JobListProvider
       this.eventBus = eventBus;
    }
 
-   public void resetMyJob()
+   public void initMyJob()
    {
       dispatcher.execute(new GetMyJobListAction(new Long(1)), new AsyncCallback<GetMyJobListResult>()
       {
@@ -60,7 +60,7 @@ public class JobListProvider
       });
    }
    
-   public void resetPublicJob()
+   public void initPublicJob()
    {
       dispatcher.execute(new GetPublicJobListAction(), new AsyncCallback<GetPublicJobListResult>()
       {

@@ -34,7 +34,7 @@ package org.aeng.urlMonitor.client;
 public class NameTokens {
   public static final String homePage = "!homePage";
 
-  public static final String product = "!product";
+  public static final String job = "!job";
 
   public static final String jobList = "!jobList";
 
@@ -42,11 +42,11 @@ public class NameTokens {
     return homePage;
   }
 
-  public static String getProductListPage() {
+  public static String getJobListPage() {
     return jobList;
   }
 
-  public static String getProductPage() {
-    return product;
+  public static String getJobPage() {
+    return job;
   }
 }

@@ -45,7 +45,7 @@ public class ProductPresenter extends
    * {@link ProductPresenter}'s proxy.
    */
   @ProxyCodeSplit
-  @NameToken(NameTokens.product)
+  @NameToken(NameTokens.job)
   public interface MyProxy extends ProxyPlace<ProductPresenter> {
   }
 

@@ -18,7 +18,7 @@ package org.aeng.urlMonitor.client.gin;
 
 import org.aeng.urlMonitor.client.presenter.BreadcrumbsPresenter;
 import org.aeng.urlMonitor.client.presenter.HomePresenter;
-import org.aeng.urlMonitor.client.presenter.ProductListPresenter;
+import org.aeng.urlMonitor.client.presenter.JobListPresenter;
 import org.aeng.urlMonitor.client.presenter.ProductPresenter;
 import org.aeng.urlMonitor.client.service.JobListProvider;
 
@@ -56,7 +56,7 @@ public interface ClientGinjectorBase extends Ginjector {
   AsyncProvider<HomePresenter> getHomePresenter();
   Provider<BreadcrumbsPresenter> getBreadcrumbsPresenter();
   PlaceManager getPlaceManager();
-  AsyncProvider<ProductListPresenter> getProductListPresenter();
+  AsyncProvider<JobListPresenter> getProductListPresenter();
   AsyncProvider<ProductPresenter> getProductPresenter();
   JobListProvider getJobListProvider();
 }

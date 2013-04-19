@@ -38,9 +38,6 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements MyVi
    private static HomeViewUiBinder uiBinder = GWT.create(HomeViewUiBinder.class);
 
    @UiField
-   PushButton all;
-
-   @UiField
    PushButton myJobs;
 
    @UiField
@@ -58,12 +55,6 @@ public class HomeView extends ViewWithUiHandlers<HomeUiHandlers> implements MyVi
    public Widget asWidget()
    {
       return widget;
-   }
-
-   @UiHandler("all")
-   void onAllClicked(ClickEvent event)
-   {
-      getUiHandlers().revealAllJobsList();
    }
 
    @UiHandler("publicJobs")

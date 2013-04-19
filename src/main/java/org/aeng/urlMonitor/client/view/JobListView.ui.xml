@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel>
 		<h1 ui:field="title" />
-    <g:FlowPanel ui:field="productList" />
+    <g:FlowPanel ui:field="jobList" />
     <br />
     <g:Hyperlink ui:field="backLink">&laquo; Go back</g:Hyperlink>
 	</g:HTMLPanel>

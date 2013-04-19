@@ -20,11 +20,11 @@ import org.aeng.urlMonitor.client.NameTokens;
 import org.aeng.urlMonitor.client.UrlMonitorPlaceManager;
 import org.aeng.urlMonitor.client.presenter.BreadcrumbsPresenter;
 import org.aeng.urlMonitor.client.presenter.HomePresenter;
-import org.aeng.urlMonitor.client.presenter.ProductListPresenter;
+import org.aeng.urlMonitor.client.presenter.JobListPresenter;
 import org.aeng.urlMonitor.client.presenter.ProductPresenter;
 import org.aeng.urlMonitor.client.view.BreadcrumbsView;
 import org.aeng.urlMonitor.client.view.HomeView;
-import org.aeng.urlMonitor.client.view.ProductListView;
+import org.aeng.urlMonitor.client.view.JobListView;
 import org.aeng.urlMonitor.client.view.ProductView;
 
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
@@ -45,7 +45,7 @@ public class ClientModule extends AbstractPresenterModule {
     // Presenters
     bindPresenter(BreadcrumbsPresenter.class, BreadcrumbsPresenter.MyView.class, BreadcrumbsView.class, BreadcrumbsPresenter.MyProxy.class);
     bindPresenter(HomePresenter.class, HomePresenter.MyView.class, HomeView.class, HomePresenter.MyProxy.class);
-    bindPresenter(ProductListPresenter.class, ProductListPresenter.MyView.class, ProductListView.class, ProductListPresenter.MyProxy.class);
+    bindPresenter(JobListPresenter.class, JobListPresenter.MyView.class, JobListView.class, JobListPresenter.MyProxy.class);
     bindPresenter(ProductPresenter.class, ProductPresenter.MyView.class, ProductView.class, ProductPresenter.MyProxy.class);
   }
 }

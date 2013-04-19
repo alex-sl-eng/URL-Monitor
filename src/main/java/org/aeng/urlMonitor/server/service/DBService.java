@@ -68,7 +68,7 @@ public class DBService
       
       for(UrlMonitor urlMonitor: loadAllJobs())
       {
-         if(urlMonitor.getCreatedBy().getId() == accountId)
+         if(urlMonitor.getCreatedBy().getId().equals(accountId))
          {
             result.put(urlMonitor.getId(), urlMonitor);
          }
@@ -102,6 +102,7 @@ public class DBService
       for (int i = 0; i < 10; i++)
       {
          UrlMonitor urlMonitor = new UrlMonitor();
+         urlMonitor.setId(new Long(i));
          urlMonitor.setName("Name:" + i);
          urlMonitor.setDescription("dummy job");
          urlMonitor.setUrl("http://google.com");

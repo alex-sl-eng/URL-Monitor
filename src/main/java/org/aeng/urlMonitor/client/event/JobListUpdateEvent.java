@@ -12,7 +12,7 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class JobListUpdateEvent extends GwtEvent<JobListUpdateEventHandler>
 {
-   private static Type<JobListUpdateEventHandler> TYPE = new Type<JobListUpdateEventHandler>();
+   public static Type<JobListUpdateEventHandler> TYPE = new Type<JobListUpdateEventHandler>();
 
    private boolean isMyJob;
    

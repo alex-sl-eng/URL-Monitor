@@ -5,6 +5,5 @@
 		<h1>Choose one of the following...</h1>
     <g:PushButton ui:field='myJobs'>My Jobs</g:PushButton>
     <g:PushButton ui:field='publicJobs'>Public Jobs</g:PushButton>
-    <g:PushButton ui:field='all'>All Jobs</g:PushButton>
 	</g:HTMLPanel>
 </ui:UiBinder> 

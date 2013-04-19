@@ -53,21 +53,15 @@ public class HomePresenter extends Presenter<HomePresenter.MyView, HomePresenter
    }
 
    @Override
-   public void revealAllJobsList()
-   {
-      placeManager.revealRelativePlace(new PlaceRequest(NameTokens.jobList).with(ProductListPresenter.TOKEN_TYPE, ProductListPresenter.TYPE_ALL_JOBS));
-   }
-
-   @Override
    public void revealPublicJobsList()
    {
-      placeManager.revealRelativePlace(new PlaceRequest(NameTokens.jobList).with(ProductListPresenter.TOKEN_TYPE, ProductListPresenter.TYPE_PUBLIC_JOBS));
+      placeManager.revealRelativePlace(new PlaceRequest(NameTokens.jobList).with(JobListPresenter.TOKEN_TYPE, JobListPresenter.TYPE_PUBLIC_JOBS));
    }
 
    @Override
    public void revealMyJobsList()
    {
-      placeManager.revealRelativePlace(new PlaceRequest(NameTokens.jobList).with(ProductListPresenter.TOKEN_TYPE, ProductListPresenter.TYPE_MY_JOBS));
+      placeManager.revealRelativePlace(new PlaceRequest(NameTokens.jobList).with(JobListPresenter.TOKEN_TYPE, JobListPresenter.TYPE_MY_JOBS));
    }
 
 }

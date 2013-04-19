@@ -16,16 +16,17 @@
 
 package org.aeng.urlMonitor.client.presenter;
 
-import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.aeng.urlMonitor.client.NameTokens;
+import org.aeng.urlMonitor.client.event.JobListUpdateEvent;
+import org.aeng.urlMonitor.client.event.JobListUpdateEventHandler;
 import org.aeng.urlMonitor.client.service.JobListProvider;
-import org.aeng.urlMonitor.shared.Product;
+import org.aeng.urlMonitor.shared.model.UrlMonitor;
 
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -36,39 +37,38 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
-import org.aeng.urlMonitor.shared.GetProductListAction;
-import org.aeng.urlMonitor.shared.GetProductListResult;
 
 
-public class ProductListPresenter extends Presenter<ProductListPresenter.MyView, ProductListPresenter.MyProxy>
+public class JobListPresenter extends Presenter<JobListPresenter.MyView, JobListPresenter.MyProxy> implements JobListUpdateEventHandler
 {
    /**
-    * {@link ProductListPresenter}'s proxy.
+    * {@link JobListPresenter}'s proxy.
     */
    @ProxyCodeSplit
    @NameToken(NameTokens.jobList)
-   public interface MyProxy extends ProxyPlace<ProductListPresenter>
+   public interface MyProxy extends ProxyPlace<JobListPresenter>
    {
    }
 
    /**
-    * {@link ProductListPresenter}'s view.
+    * {@link JobListPresenter}'s view.
     */
    public interface MyView extends View
    {
       void setBackLinkHistoryToken(String historyToken);
 
-      void setList(List<Product> products);
-
       void setMessage(String string);
 
       void setTitle(String title);
+      
+      void setMyJobList(Map<Long, UrlMonitor> myJobList);
+      
+      void setPublicJobList(Map<Long, UrlMonitor> publicJobList);
    }
    
-   public final Logger logger = Logger.getLogger(ProductListPresenter.class.getName());
+   public final Logger logger = Logger.getLogger(JobListPresenter.class.getName());
 
    public static final String TOKEN_TYPE = "type";
-   public static final String TYPE_ALL_JOBS = "all";
 
    public static final String TYPE_PUBLIC_JOBS = "pub";
 
@@ -82,21 +82,17 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
 
    private static String getTitleFor(String type)
    {
-      if (type.equals(TYPE_PUBLIC_JOBS))
-      {
-         return "Public Jobs";
-      }
-      else if (type.equals(TYPE_MY_JOBS))
+      if (type.equals(TYPE_MY_JOBS))
       {
          return "My Jobs";
       }
       else
       {
-         return "All Jobs";
+         return "Public Jobs";
       }
    }
 
-   private String currentType = TYPE_ALL_JOBS;
+   private String currentType = TYPE_PUBLIC_JOBS;
 
    private final DispatchAsync dispatcher;
 
@@ -105,30 +101,24 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
    private final JobListProvider jobListProvider;
 
    @Inject
-   public ProductListPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager, final DispatchAsync dispatcher, final JobListProvider jobListProvider)
+   public JobListPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager, final DispatchAsync dispatcher, final JobListProvider jobListProvider)
    {
       super(eventBus, view, proxy);
       this.placeManager = placeManager;
       this.dispatcher = dispatcher;
       this.jobListProvider= jobListProvider;
+      
+      eventBus.addHandler(JobListUpdateEvent.TYPE, this);
    }
 
    @Override
    public void prepareFromRequest(PlaceRequest request)
    {
       super.prepareFromRequest(request);
-      String type = request.getParameter(TOKEN_TYPE, TYPE_ALL_JOBS);
-      if (type.equals(TYPE_PUBLIC_JOBS))
-      {
-         currentType = TYPE_PUBLIC_JOBS;
-      }
-      else if (type.equals(TYPE_MY_JOBS))
+      String type = request.getParameter(TOKEN_TYPE, TYPE_PUBLIC_JOBS);
+      if (type.equals(TYPE_MY_JOBS))
       {
          currentType = TYPE_MY_JOBS;
-      }
-      else
-      {
-         currentType = TYPE_ALL_JOBS;
       }
 
       setViewTitle();
@@ -141,21 +131,7 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
       getView().setMessage("Loading list...");
       getView().setBackLinkHistoryToken(placeManager.buildRelativeHistoryToken(-1));
       
-      logger.info("==================" + jobListProvider.getMyJobMap().size());
-      dispatcher.execute(new GetProductListAction(getFlags()), new AsyncCallback<GetProductListResult>()
-      {
-         @Override
-         public void onFailure(Throwable caught)
-         {
-            getView().setMessage("Loading error!");
-         }
-
-         @Override
-         public void onSuccess(GetProductListResult result)
-         {
-            getView().setList(result.getProducts());
-         }
-      });
+      jobListProvider.initMyJob();
    }
 
    @Override
@@ -164,22 +140,22 @@ public class ProductListPresenter extends Presenter<ProductListPresenter.MyView,
       RevealContentEvent.fire(this, BreadcrumbsPresenter.TYPE_SetMainContent, this);
    }
 
-   private int getFlags()
-   {
-      if (currentType.equals(TYPE_PUBLIC_JOBS))
-      {
-         return Product.FLAG_FAVORITE;
-      }
-      else if (currentType.equals(TYPE_MY_JOBS))
-      {
-         return Product.FLAG_SPECIAL;
-      }
-      return 0;
-   }
-
    private void setViewTitle()
    {
       getView().setTitle(getTitleFor(currentType));
+   }
+
+   @Override
+   public void onJobListUpdate(JobListUpdateEvent event)
+   {
+      if(event.isMyJob())
+      {
+         getView().setMyJobList(jobListProvider.getMyJobMap());
+      }
+      else
+      {
+         getView().setPublicJobList(jobListProvider.getMyJobMap());
+      }
    }
 
 }
