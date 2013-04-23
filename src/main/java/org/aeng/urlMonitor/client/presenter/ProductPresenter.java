@@ -39,94 +39,106 @@ import org.aeng.urlMonitor.shared.GetProductResult;
 /**
  * @author Christian Goudreau
  */
-public class ProductPresenter extends
-    Presenter<ProductPresenter.MyView, ProductPresenter.MyProxy> {
-  /**
-   * {@link ProductPresenter}'s proxy.
-   */
-  @ProxyCodeSplit
-  @NameToken(NameTokens.job)
-  public interface MyProxy extends ProxyPlace<ProductPresenter> {
-  }
+public class ProductPresenter extends Presenter<ProductPresenter.MyView, ProductPresenter.MyProxy>
+{
+   /**
+    * {@link ProductPresenter}'s proxy.
+    */
+   @ProxyCodeSplit
+   @NameToken(NameTokens.job)
+   public interface MyProxy extends ProxyPlace<ProductPresenter>
+   {
+   }
 
-  /**
-   * {@link ProductPresenter}'s view.
-   */
-  public interface MyView extends View {
-    void setBackLinkHistoryToken(String historyToken);
-    void setMessage(String string);
-    void setProductDetails(Product product);
-  }
+   /**
+    * {@link ProductPresenter}'s view.
+    */
+   public interface MyView extends View
+   {
+      void setBackLinkHistoryToken(String historyToken);
 
-  public static final String TOKEN_ID = "id";
+      void setMessage(String string);
 
-  private final DispatchAsync dispatcher;
-  private int id;
+      void setProductDetails(Product product);
+   }
 
-  private final PlaceManager placeManager;
+   public static final String TOKEN_ID = "id";
 
-  @Inject
-  public ProductPresenter(final EventBus eventBus, final MyView view,
-      final MyProxy proxy, final PlaceManager placeManager,
-      final DispatchAsync dispatcher) {
-    super(eventBus, view, proxy);
-    this.placeManager = placeManager;
-    this.dispatcher = dispatcher;
-  }
+   private final DispatchAsync dispatcher;
+   private int id;
 
-  @TitleFunction
-  public void getListTitle(PlaceRequest request,
-      final SetPlaceTitleHandler handler) {
-    prepareFromRequest(request);
-    dispatcher.execute(new GetProductAction(id),
-        new AsyncCallback<GetProductResult>() {
+   private final PlaceManager placeManager;
 
-          @Override
-          public void onFailure(Throwable caught) {
+   @Inject
+   public ProductPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager, final DispatchAsync dispatcher)
+   {
+      super(eventBus, view, proxy);
+      this.placeManager = placeManager;
+      this.dispatcher = dispatcher;
+   }
+
+   @TitleFunction
+   public void getListTitle(PlaceRequest request, final SetPlaceTitleHandler handler)
+   {
+      prepareFromRequest(request);
+      dispatcher.execute(new GetProductAction(id), new AsyncCallback<GetProductResult>()
+      {
+
+         @Override
+         public void onFailure(Throwable caught)
+         {
             handler.onSetPlaceTitle("Unknown Product");
-          }
+         }
 
-          @Override
-          public void onSuccess(GetProductResult result) {
+         @Override
+         public void onSuccess(GetProductResult result)
+         {
             handler.onSetPlaceTitle(result.getProduct().getName());
-          }
-        });
-  }
+         }
+      });
+   }
 
-  @Override
-  public void prepareFromRequest(PlaceRequest request) {
-    super.prepareFromRequest(request);
-    String idString = request.getParameter(TOKEN_ID, null);
-    try {
-      id = Integer.parseInt(idString);
-    } catch (NumberFormatException e) {
-      id = 0;
-    }
-  }
+   @Override
+   public void prepareFromRequest(PlaceRequest request)
+   {
+      super.prepareFromRequest(request);
+      String idString = request.getParameter(TOKEN_ID, null);
+      try
+      {
+         id = Integer.parseInt(idString);
+      }
+      catch (NumberFormatException e)
+      {
+         id = 0;
+      }
+   }
 
-  @Override
-  protected void onReset() {
-    super.onReset();
-    getView().setMessage("Loading...");
-    getView().setBackLinkHistoryToken(
-        placeManager.buildRelativeHistoryToken(-1));
-    dispatcher.execute(new GetProductAction(id),
-        new AsyncCallback<GetProductResult>() {
+   @Override
+   protected void onReset()
+   {
+      super.onReset();
+      getView().setMessage("Loading...");
+      getView().setBackLinkHistoryToken(placeManager.buildRelativeHistoryToken(-1));
+      dispatcher.execute(new GetProductAction(id), new AsyncCallback<GetProductResult>()
+      {
 
-          @Override
-          public void onFailure(Throwable caught) {
+         @Override
+         public void onFailure(Throwable caught)
+         {
             getView().setMessage("Unknown product");
-          }
+         }
 
-          @Override
-          public void onSuccess(GetProductResult result) {
+         @Override
+         public void onSuccess(GetProductResult result)
+         {
             getView().setProductDetails(result.getProduct());
-          }
-        });
-  }
+         }
+      });
+   }
 
-  @Override
-  protected void revealInParent() {
-    RevealContentEvent.fire(this, BreadcrumbsPresenter.TYPE_SetMainContent, this);
-  }
+   @Override
+   protected void revealInParent()
+   {
+      RevealContentEvent.fire(this, BreadcrumbsPresenter.TYPE_SetMainContent, this);
+   }
 }

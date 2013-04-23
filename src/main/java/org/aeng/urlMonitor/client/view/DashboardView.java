@@ -18,6 +18,7 @@ package org.aeng.urlMonitor.client.view;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import org.aeng.urlMonitor.client.presenter.DashboardPresenter.MyView;
 import org.aeng.urlMonitor.shared.model.UrlMonitor;
@@ -27,8 +28,8 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -46,22 +47,24 @@ public class DashboardView extends ViewWithUiHandlers<DashboardUiHandlers> imple
    @UiField
    TabPanel jobsContainer;
 
-   ScrollPanel publicJobContainer;
+   FlowPanel publicJobContainer;
 
-   ScrollPanel userJobContainer;
+   FlowPanel userJobContainer;
 
    private final Widget widget;
+
+   public final Logger logger = Logger.getLogger(DashboardView.class.getName());
 
    @Inject
    public DashboardView()
    {
       widget = uiBinder.createAndBindUi(this);
       
-      publicJobContainer = new ScrollPanel();
-      userJobContainer = new ScrollPanel();
+      publicJobContainer = new FlowPanel();
+      userJobContainer = new FlowPanel();
       
-      jobsContainer.add(publicJobContainer, "Public");
-      jobsContainer.add(userJobContainer, "My");
+      jobsContainer.add(publicJobContainer, "Jobs");
+      jobsContainer.add(userJobContainer, "My private Jobs");
    }
 
    @UiHandler("jobsContainer")

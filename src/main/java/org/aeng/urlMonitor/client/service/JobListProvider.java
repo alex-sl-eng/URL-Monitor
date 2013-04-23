@@ -4,10 +4,12 @@
 package org.aeng.urlMonitor.client.service;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.aeng.urlMonitor.client.event.JobListUpdateEvent;
 import org.aeng.urlMonitor.client.event.NotificationEvent;
 import org.aeng.urlMonitor.client.event.NotificationEvent.Severity;
+import org.aeng.urlMonitor.client.presenter.DashboardPresenter;
 import org.aeng.urlMonitor.shared.GetPublicJobListAction;
 import org.aeng.urlMonitor.shared.GetPublicJobListResult;
 import org.aeng.urlMonitor.shared.GetUserJobListAction;
@@ -31,8 +33,10 @@ public class JobListProvider
    private final DispatchAsync dispatcher;
    private final EventBus eventBus;
 
-   private HashMap<Long, UrlMonitor> userJobMap;
-   private HashMap<Long, UrlMonitor> publicJobMap;
+   private HashMap<Long, UrlMonitor> userJobMap = new HashMap<Long, UrlMonitor>();
+   private HashMap<Long, UrlMonitor> publicJobMap = new HashMap<Long, UrlMonitor>();
+
+   public final Logger logger = Logger.getLogger(DashboardPresenter.class.getName());
 
    @Inject
    public JobListProvider(final DispatchAsync dispatcher, final EventBus eventBus)

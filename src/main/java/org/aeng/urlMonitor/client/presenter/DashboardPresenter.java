@@ -1,7 +1,6 @@
 package org.aeng.urlMonitor.client.presenter;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 import org.aeng.urlMonitor.client.NameTokens;
 import org.aeng.urlMonitor.client.event.JobListUpdateEvent;
@@ -48,14 +47,13 @@ public class DashboardPresenter extends Presenter<DashboardPresenter.MyView, Das
 
    private final JobListProvider jobListProvider;
 
-   public final Logger logger = Logger.getLogger(DashboardPresenter.class.getName());
-
    @Inject
    public DashboardPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager, final JobListProvider jobListProvider)
    {
       super(eventBus, view, proxy);
       this.placeManager = placeManager;
       this.jobListProvider = jobListProvider;
+
       view.setUiHandlers(this);
 
       eventBus.addHandler(JobListUpdateEvent.TYPE, this);
@@ -70,7 +68,6 @@ public class DashboardPresenter extends Presenter<DashboardPresenter.MyView, Das
    @Override
    public void revealPublicJobsList()
    {
-      logger.info("============" + jobListProvider.getPublicJobMap().isEmpty());
       if (jobListProvider.getPublicJobMap().isEmpty())
       {
          jobListProvider.initPublicJob();
@@ -83,7 +80,6 @@ public class DashboardPresenter extends Presenter<DashboardPresenter.MyView, Das
    @Override
    public void revealUserJobsList()
    {
-      logger.info("============" + jobListProvider.getUserJobMap().isEmpty());
       if (jobListProvider.getUserJobMap().isEmpty())
       {
          jobListProvider.initUserJob(new Long(1));
