@@ -32,14 +32,14 @@ package org.aeng.urlMonitor.client;
  * @author Philippe Beaudoin
  */
 public class NameTokens {
-  public static final String homePage = "!homePage";
+  public static final String dashboard = "!homePage";
 
   public static final String job = "!job";
 
   public static final String jobList = "!jobList";
 
   public static String getHomePage() {
-    return homePage;
+    return dashboard;
   }
 
   public static String getJobListPage() {

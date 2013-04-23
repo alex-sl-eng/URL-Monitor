@@ -34,60 +34,68 @@ import com.gwtplatform.mvp.client.proxy.SetPlaceTitleHandler;
  * This is the top-level presenter of the hierarchy. Other presenters reveal
  * themselves within this presenter. This presenter display a breadcrumbs with
  * the titles of the previously visited pages.
- *
+ * 
  * @author Christian Goudreau
  * @author Philippe Beaudoin
  */
-public class BreadcrumbsPresenter extends
-    Presenter<BreadcrumbsPresenter.MyView, BreadcrumbsPresenter.MyProxy> {
-  /**
-   * {@link BreadcrumbsPresenter}'s proxy.
-   */
-  @ProxyStandard
-  public interface MyProxy extends Proxy<BreadcrumbsPresenter> {
-  }
+public class BreadcrumbsPresenter extends Presenter<BreadcrumbsPresenter.MyView, BreadcrumbsPresenter.MyProxy>
+{
+   /**
+    * {@link BreadcrumbsPresenter}'s proxy.
+    */
+   @ProxyStandard
+   public interface MyProxy extends Proxy<BreadcrumbsPresenter>
+   {
+   }
 
-  /**
-   * {@link BreadcrumbsPresenter}'s view.
-   */
-  public interface MyView extends View {
-    void clearBreadcrumbs(int breadcrumbSize);
-    void setBreadcrumbs(int index, String title);
-  }
+   /**
+    * {@link BreadcrumbsPresenter}'s view.
+    */
+   public interface MyView extends View
+   {
+      void clearBreadcrumbs(int breadcrumbSize);
 
-  /**
-   * Use this in leaf presenters, inside their {@link #revealInParent} method.
-   */
-  @ContentSlot
-  public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
+      void setBreadcrumbs(int index, String title);
+   }
 
-  private final PlaceManager placeManager;
+   /**
+    * Use this in leaf presenters, inside their {@link #revealInParent} method.
+    */
+   @ContentSlot
+   public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
-  @Inject
-  public BreadcrumbsPresenter(final EventBus eventBus, final MyView view,
-      final MyProxy proxy, final PlaceManager placeManager) {
-    super(eventBus, view, proxy);
-    this.placeManager = placeManager;
-  }
+   private final PlaceManager placeManager;
 
-  @Override
-  protected void onReset() {
-    super.onReset();
-    int size = placeManager.getHierarchyDepth();
-    getView().clearBreadcrumbs(size);
-    for (int i = 0; i < size; ++i) {
-      final int index = i;
-      placeManager.getTitle(i, new SetPlaceTitleHandler() {
-        @Override
-        public void onSetPlaceTitle(String title) {
-          getView().setBreadcrumbs(index, title);
-        }
-      });
-    }
-  }
+   @Inject
+   public BreadcrumbsPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy, final PlaceManager placeManager)
+   {
+      super(eventBus, view, proxy);
+      this.placeManager = placeManager;
+   }
 
-  @Override
-  protected void revealInParent() {
-    RevealRootContentEvent.fire(this, this);
-  }
+   @Override
+   protected void onReset()
+   {
+      super.onReset();
+      int size = placeManager.getHierarchyDepth();
+      getView().clearBreadcrumbs(size);
+      for (int i = 0; i < size; ++i)
+      {
+         final int index = i;
+         placeManager.getTitle(i, new SetPlaceTitleHandler()
+         {
+            @Override
+            public void onSetPlaceTitle(String title)
+            {
+               getView().setBreadcrumbs(index, title);
+            }
+         });
+      }
+   }
+
+   @Override
+   protected void revealInParent()
+   {
+      RevealRootContentEvent.fire(this, this);
+   }
 }

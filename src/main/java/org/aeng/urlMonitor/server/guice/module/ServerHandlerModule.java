@@ -16,10 +16,10 @@
 
 package org.aeng.urlMonitor.server.guice.module;
 
-import org.aeng.urlMonitor.server.rpc.GetMyJobListHandler;
+import org.aeng.urlMonitor.server.rpc.GetUserJobListHandler;
 import org.aeng.urlMonitor.server.rpc.GetProductHandler;
 import org.aeng.urlMonitor.server.rpc.GetPublicJobListHandler;
-import org.aeng.urlMonitor.shared.GetMyJobListAction;
+import org.aeng.urlMonitor.shared.GetUserJobListAction;
 import org.aeng.urlMonitor.shared.GetProductAction;
 import org.aeng.urlMonitor.shared.GetPublicJobListAction;
 
@@ -35,7 +35,7 @@ public class ServerHandlerModule extends HandlerModule {
   @Override
   protected void configureHandlers() {
     bindHandler(GetProductAction.class, GetProductHandler.class);
-    bindHandler(GetMyJobListAction.class, GetMyJobListHandler.class);
+      bindHandler(GetUserJobListAction.class, GetUserJobListHandler.class);
     bindHandler(GetPublicJobListAction.class, GetPublicJobListHandler.class);
   }
 }

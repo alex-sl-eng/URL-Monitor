@@ -17,7 +17,7 @@
 package org.aeng.urlMonitor.client.gin;
 
 import org.aeng.urlMonitor.client.presenter.BreadcrumbsPresenter;
-import org.aeng.urlMonitor.client.presenter.HomePresenter;
+import org.aeng.urlMonitor.client.presenter.DashboardPresenter;
 import org.aeng.urlMonitor.client.presenter.JobListPresenter;
 import org.aeng.urlMonitor.client.presenter.ProductPresenter;
 import org.aeng.urlMonitor.client.service.JobListProvider;
@@ -53,7 +53,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
  */
 public interface ClientGinjectorBase extends Ginjector {
   EventBus getEventBus();
-  AsyncProvider<HomePresenter> getHomePresenter();
+  AsyncProvider<DashboardPresenter> getHomePresenter();
   Provider<BreadcrumbsPresenter> getBreadcrumbsPresenter();
   PlaceManager getPlaceManager();
   AsyncProvider<JobListPresenter> getProductListPresenter();

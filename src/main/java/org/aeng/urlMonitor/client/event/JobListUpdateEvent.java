@@ -14,12 +14,12 @@ public class JobListUpdateEvent extends GwtEvent<JobListUpdateEventHandler>
 {
    public static Type<JobListUpdateEventHandler> TYPE = new Type<JobListUpdateEventHandler>();
 
-   private boolean isMyJob;
+   private boolean isUserJob;
    
    
-   public JobListUpdateEvent(boolean isMyJob)
+   public JobListUpdateEvent(boolean isUserJob)
    {
-      this.isMyJob = isMyJob;  
+      this.isUserJob = isUserJob;  
    }
 
    @Override
@@ -34,8 +34,8 @@ public class JobListUpdateEvent extends GwtEvent<JobListUpdateEventHandler>
       handler.onJobListUpdate(this);
    }
 
-   public boolean isMyJob()
+   public boolean isUserJob()
    {
-      return isMyJob;
+      return isUserJob;
    }
 }

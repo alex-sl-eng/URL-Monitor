@@ -19,11 +19,11 @@ package org.aeng.urlMonitor.client.gin;
 import org.aeng.urlMonitor.client.NameTokens;
 import org.aeng.urlMonitor.client.UrlMonitorPlaceManager;
 import org.aeng.urlMonitor.client.presenter.BreadcrumbsPresenter;
-import org.aeng.urlMonitor.client.presenter.HomePresenter;
+import org.aeng.urlMonitor.client.presenter.DashboardPresenter;
 import org.aeng.urlMonitor.client.presenter.JobListPresenter;
 import org.aeng.urlMonitor.client.presenter.ProductPresenter;
 import org.aeng.urlMonitor.client.view.BreadcrumbsView;
-import org.aeng.urlMonitor.client.view.HomeView;
+import org.aeng.urlMonitor.client.view.DashboardView;
 import org.aeng.urlMonitor.client.view.JobListView;
 import org.aeng.urlMonitor.client.view.ProductView;
 
@@ -40,11 +40,11 @@ public class ClientModule extends AbstractPresenterModule {
     install(new DefaultModule(UrlMonitorPlaceManager.class));
 
     // Constants
-    bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.homePage);
+    bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.dashboard);
 
     // Presenters
     bindPresenter(BreadcrumbsPresenter.class, BreadcrumbsPresenter.MyView.class, BreadcrumbsView.class, BreadcrumbsPresenter.MyProxy.class);
-    bindPresenter(HomePresenter.class, HomePresenter.MyView.class, HomeView.class, HomePresenter.MyProxy.class);
+    bindPresenter(DashboardPresenter.class, DashboardPresenter.MyView.class, DashboardView.class, DashboardPresenter.MyProxy.class);
     bindPresenter(JobListPresenter.class, JobListPresenter.MyView.class, JobListView.class, JobListPresenter.MyProxy.class);
     bindPresenter(ProductPresenter.class, ProductPresenter.MyView.class, ProductView.class, ProductPresenter.MyProxy.class);
   }

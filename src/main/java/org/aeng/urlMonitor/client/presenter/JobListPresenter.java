@@ -131,7 +131,7 @@ public class JobListPresenter extends Presenter<JobListPresenter.MyView, JobList
       getView().setMessage("Loading list...");
       getView().setBackLinkHistoryToken(placeManager.buildRelativeHistoryToken(-1));
       
-      jobListProvider.initMyJob();
+      jobListProvider.initUserJob(new Long(1));
    }
 
    @Override
@@ -148,13 +148,13 @@ public class JobListPresenter extends Presenter<JobListPresenter.MyView, JobList
    @Override
    public void onJobListUpdate(JobListUpdateEvent event)
    {
-      if(event.isMyJob())
+      if(event.isUserJob())
       {
-         getView().setMyJobList(jobListProvider.getMyJobMap());
+         getView().setMyJobList(jobListProvider.getUserJobMap());
       }
       else
       {
-         getView().setPublicJobList(jobListProvider.getMyJobMap());
+         getView().setPublicJobList(jobListProvider.getUserJobMap());
       }
    }
 
