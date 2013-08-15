@@ -1,95 +1,94 @@
 package org.aeng.urlMonitor.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+
 import org.aeng.urlMonitor.model.type.StatusType;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author aeng Alex Eng - loones1595@gmail.com
+ * @author Alex Eng - loones1595@gmail.com
  *
  */
-public class UrlMonitor
+public class UrlMonitor implements Serializable
 {
-   private String name;
+   private static final long serialVersionUID = 1L;
+
+   @Getter
+   @Setter
+   @NonNull
+   private String name; // This needs to be unique
+
+   @Getter
+   @Setter
    private String description;
 
+   @Getter
+   @Setter
+   @NonNull
    private String url;
+
+   @Setter
+   private String tag;
+
+   @Getter
+   @Setter
    private StatusType status;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
+   @Getter
+   @Setter
    private String cronExpression = "0/5 * * * * ?"; // every 5 seconds
 
+   @Getter
+   @Setter
+   @NonNull
    private String contentRegex;
 
-   private String emailTo;
+   @Setter
+   private String emailToList;
 
-   public String getName()
+   public UrlMonitor(Properties prop)
    {
-      return name;
+      this.name = prop.getProperty("name");
+      this.description = prop.getProperty("description");
+      this.url = prop.getProperty("url");
+      this.tag = prop.getProperty("tag");
+
+      if (!StringUtils.isEmpty(prop.getProperty("cronExpression")))
+      {
+         this.cronExpression = prop.getProperty("cronExpression");
+      }
+
+      this.contentRegex = prop.getProperty("contentRegex");
+      this.emailToList = prop.getProperty("emailToList");
    }
 
-   public void setName(String name)
+   public List<String> getEmailTo()
    {
-      this.name = name;
+      if (emailToList != null)
+      {
+         return Arrays.asList(emailToList.split(";"));
+      }
+      return new ArrayList<String>();
    }
 
-   public String getDescription()
+   public List<String> getTag()
    {
-      return description;
+      if (tag != null)
+      {
+         return Arrays.asList(tag.split(";"));
+      }
+      return new ArrayList<String>();
    }
 
-   public void setDescription(String description)
-   {
-      this.description = description;
-   }
-
-   public String getUrl()
-   {
-      return url;
-   }
-
-   public void setUrl(String url)
-   {
-      this.url = url;
-   }
-
-   public String getCronExpression()
-   {
-      return cronExpression;
-   }
-
-   public void setCronExpression(String cronExpression)
-   {
-      this.cronExpression = cronExpression;
-   }
-
-   public String getEmailTo()
-   {
-      return emailTo;
-   }
-
-   public void setEmailTo(String emailTo)
-   {
-      this.emailTo = emailTo;
-   }
-
-   public String getContentRegex()
-   {
-      return contentRegex;
-   }
-
-   public void setContentRegex(String contentRegex)
-   {
-      this.contentRegex = contentRegex;
-   }
-
-   public StatusType getStatus()
-   {
-      return status;
-   }
-
-   public void setStatus(StatusType status)
-   {
-      this.status = status;
-   }
 }

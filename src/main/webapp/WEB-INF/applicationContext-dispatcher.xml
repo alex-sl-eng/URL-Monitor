@@ -6,17 +6,9 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="org.aeng.urlMonitor.controller" />
-
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/WEB-INF/pages/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
-
+	<context:component-scan base-package="org.aeng.urlMonitor" />
+	<context:annotation-config/>
+	<context:property-placeholder location="classpath*:zanata.properties" />
+	
 
 </beans>
