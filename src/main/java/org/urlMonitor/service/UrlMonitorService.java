@@ -28,8 +28,8 @@ import org.urlMonitor.model.Monitor;
 import org.urlMonitor.service.quartz.CronTrigger;
 
 /**
- * @author aeng Alex Eng - loones1595@gmail.com
- * 
+ * @author Alex Eng(aeng)  loones1595@gmail.com
+ *
  */
 @Service
 @Slf4j
@@ -59,7 +59,7 @@ public class UrlMonitorService
 
       cronTrigger = new CronTrigger();
 
-      for (Monitor monitor : loadResourceFiles())
+      for (Monitor monitor : loadMonitorFiles())
       {
          JobKey jobKey = cronTrigger.scheduleMonitor(monitor);
          if (jobKey != null)
@@ -69,7 +69,7 @@ public class UrlMonitorService
       }
    }
 
-   private List<Monitor> loadResourceFiles() throws FileNotFoundException, IOException
+   private List<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException
    {
       List<Monitor> result = new ArrayList<Monitor>();
 

@@ -27,8 +27,6 @@ public class HttpUtil
 {
    public static String readContent(Monitor monitor) throws HttpReadContentException, ClientProtocolException, IOException
    {
-      StringBuilder sb = new StringBuilder();
-
       HttpClient httpclient = new DefaultHttpClient();
 
       // Prepare a request object
@@ -45,7 +43,7 @@ public class HttpUtil
 
       // Get hold of the response entity
       HttpEntity entity = response.getEntity();
-
+      StringBuilder sb = new StringBuilder();
       if (entity != null)
       {
          InputStream instream = entity.getContent();
