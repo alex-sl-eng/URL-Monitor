@@ -17,7 +17,7 @@ import org.urlMonitor.model.type.StatusType;
  * @author Alex Eng - loones1595@gmail.com
  *
  */
-public class UrlMonitor implements Serializable
+public class Monitor implements Serializable
 {
    private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class UrlMonitor implements Serializable
    @Setter
    private String emailToList;
 
-   public UrlMonitor(Properties prop)
+   public Monitor(Properties prop)
    {
       this.name = prop.getProperty("name");
       this.description = prop.getProperty("description");

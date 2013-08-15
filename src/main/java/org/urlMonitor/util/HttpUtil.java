@@ -16,7 +16,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.urlMonitor.exception.HttpReadContentException;
-import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.model.Monitor;
 
 /**
  * 
@@ -25,14 +25,14 @@ import org.urlMonitor.model.UrlMonitor;
  */
 public class HttpUtil
 {
-   public static String readContent(UrlMonitor urlMonitor) throws HttpReadContentException, ClientProtocolException, IOException
+   public static String readContent(Monitor monitor) throws HttpReadContentException, ClientProtocolException, IOException
    {
       StringBuilder sb = new StringBuilder();
 
       HttpClient httpclient = new DefaultHttpClient();
 
       // Prepare a request object
-      HttpGet httpget = new HttpGet(urlMonitor.getUrl());
+      HttpGet httpget = new HttpGet(monitor.getUrl());
 
       // Execute the request
       HttpResponse response = httpclient.execute(httpget);
@@ -40,7 +40,7 @@ public class HttpUtil
       // Examine the response status
       if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
       {
-         throw new HttpReadContentException("Error reading content from url: " + urlMonitor.getUrl());
+         throw new HttpReadContentException("Error reading content from url: " + monitor.getUrl());
       }
 
       // Get hold of the response entity

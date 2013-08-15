@@ -11,49 +11,49 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.urlMonitor.exception.HttpReadContentException;
-import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.util.HttpUtil;
 
 @Slf4j
-public class UrlMonitorJob implements Job
+public class MonitorJob implements Job
 {
    public void execute(JobExecutionContext context) throws JobExecutionException
    {
-      UrlMonitor urlMonitor = (UrlMonitor) context.getJobDetail().getJobDataMap().get("value");
+      Monitor monitor = (Monitor) context.getJobDetail().getJobDataMap().get("value");
 
       try
       {
-         String content = HttpUtil.readContent(urlMonitor);
-         Pattern pattern = Pattern.compile(urlMonitor.getContentRegex());
+         String content = HttpUtil.readContent(monitor);
+         Pattern pattern = Pattern.compile(monitor.getContentRegex());
          Matcher matcher = pattern.matcher(content);
          if (matcher.find())
          {
-            log.debug("Job {0} passed.", urlMonitor.getName());
-            urlMonitor.setStatus(StatusType.Pass);
+            log.debug("Job {0} passed.", monitor.getName());
+            monitor.setStatus(StatusType.Pass);
          }
          else
          {
-            log.debug("Job {0} failed.", urlMonitor.getName());
-            urlMonitor.setStatus(StatusType.Failed);
+            log.debug("Job {0} failed.", monitor.getName());
+            monitor.setStatus(StatusType.Failed);
          }
       }
       catch (ClientProtocolException e)
       {
-         log.debug("Job {0} failed.", urlMonitor.getName());
-         urlMonitor.setStatus(StatusType.Failed);
+         log.debug("Job {0} failed.", monitor.getName());
+         monitor.setStatus(StatusType.Failed);
          throw new JobExecutionException(e);
       }
       catch (IOException e)
       {
-         log.debug("Job {0} failed.", urlMonitor.getName());
-         urlMonitor.setStatus(StatusType.Failed);
+         log.debug("Job {0} failed.", monitor.getName());
+         monitor.setStatus(StatusType.Failed);
          throw new JobExecutionException(e);
       }
       catch (HttpReadContentException e)
       {
-         log.debug("Job {0} failed.", urlMonitor.getName());
-         urlMonitor.setStatus(StatusType.Failed);
+         log.debug("Job {0} failed.", monitor.getName());
+         monitor.setStatus(StatusType.Failed);
          throw new JobExecutionException(e);
       }
 

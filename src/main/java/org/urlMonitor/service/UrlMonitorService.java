@@ -24,7 +24,7 @@ import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.model.Monitor;
 import org.urlMonitor.service.quartz.CronTrigger;
 
 /**
@@ -41,7 +41,7 @@ public class UrlMonitorService
    private final static String REGEX_PROPERTIES = "*.properties";
 
    private CronTrigger cronTrigger;
-   private Map<JobKey, UrlMonitor> urlMonitorMap = new HashMap<JobKey, UrlMonitor>();
+   private Map<JobKey, Monitor> urlMonitorMap = new HashMap<JobKey, Monitor>();
 
    @PostConstruct
    public void init() throws SchedulerException, FileNotFoundException, IOException
@@ -59,19 +59,19 @@ public class UrlMonitorService
 
       cronTrigger = new CronTrigger();
 
-      for (UrlMonitor urlMonitor : loadResourceFiles())
+      for (Monitor monitor : loadResourceFiles())
       {
-         JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
+         JobKey jobKey = cronTrigger.scheduleMonitor(monitor);
          if (jobKey != null)
          {
-            urlMonitorMap.put(jobKey, urlMonitor);
+            urlMonitorMap.put(jobKey, monitor);
          }
       }
    }
 
-   private List<UrlMonitor> loadResourceFiles() throws FileNotFoundException, IOException
+   private List<Monitor> loadResourceFiles() throws FileNotFoundException, IOException
    {
-      List<UrlMonitor> result = new ArrayList<UrlMonitor>();
+      List<Monitor> result = new ArrayList<Monitor>();
 
       File dir = new File(dirPath);
       if (dir.exists())
@@ -86,7 +86,7 @@ public class UrlMonitorService
                {
                   Properties prop = new Properties();
                   prop.load(new FileInputStream(file));
-                  result.add(new UrlMonitor(prop));
+                  result.add(new Monitor(prop));
                }
             }
          }
@@ -94,8 +94,8 @@ public class UrlMonitorService
       return result;
    }
 
-   public List<UrlMonitor> getMonitorList()
+   public List<Monitor> getMonitorList()
    {
-      return new ArrayList<UrlMonitor>(urlMonitorMap.values());
+      return new ArrayList<Monitor>(urlMonitorMap.values());
    }
 }

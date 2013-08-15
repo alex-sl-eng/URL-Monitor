@@ -13,7 +13,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
-import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.model.Monitor;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com
@@ -21,29 +21,28 @@ import org.urlMonitor.model.UrlMonitor;
  */
 public class CronTrigger
 {
-   private final Scheduler scheduler;
+   private final Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
    public CronTrigger() throws SchedulerException
    {
-      scheduler = new StdSchedulerFactory().getScheduler();
       scheduler.start();
    }
 
-   public JobKey scheduleMonitor(UrlMonitor urlMonitor) throws SchedulerException
+   public JobKey scheduleMonitor(Monitor monitor) throws SchedulerException
    {
-      if (urlMonitor != null)
+      if (monitor != null)
       {
-         JobKey jobKey = new JobKey(urlMonitor.getName());
+         JobKey jobKey = new JobKey(monitor.getName());
          if (!scheduler.checkExists(jobKey))
          {
-            JobDetail jobDetail = JobBuilder.newJob(UrlMonitorJob.class).withIdentity(jobKey).build();
+            JobDetail jobDetail = JobBuilder.newJob(MonitorJob.class).withIdentity(jobKey).build();
 
-            jobDetail.getJobDataMap().put("value", urlMonitor);
+            jobDetail.getJobDataMap().put("value", monitor);
 
             Trigger trigger = TriggerBuilder
                   .newTrigger()
-                  .withIdentity("Trigger:" + urlMonitor.getName())
-                  .withSchedule(CronScheduleBuilder.cronSchedule(urlMonitor.getCronExpression()))
+                  .withIdentity("Trigger:" + monitor.getName())
+                  .withSchedule(CronScheduleBuilder.cronSchedule(monitor.getCronExpression()))
                   .build();
 
             scheduler.getListenerManager().addJobListener(new MonitorJobListener(), KeyMatcher.keyEquals(jobKey));
