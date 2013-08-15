@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.service.quartz;
+package org.urlMonitor.service.quartz;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -6,14 +6,14 @@ import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.aeng.urlMonitor.exception.HttpReadContentException;
-import org.aeng.urlMonitor.model.UrlMonitor;
-import org.aeng.urlMonitor.model.type.StatusType;
-import org.aeng.urlMonitor.util.HttpUtil;
 import org.apache.http.client.ClientProtocolException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.urlMonitor.exception.HttpReadContentException;
+import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.util.HttpUtil;
 
 @Slf4j
 public class UrlMonitorJob implements Job

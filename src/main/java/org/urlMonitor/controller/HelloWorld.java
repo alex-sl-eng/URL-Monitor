@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.controller;
+package org.urlMonitor.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

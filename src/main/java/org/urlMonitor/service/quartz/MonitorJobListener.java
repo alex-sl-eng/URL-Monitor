@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.service.quartz;
+package org.urlMonitor.service.quartz;
 
 import lombok.extern.slf4j.Slf4j;
 

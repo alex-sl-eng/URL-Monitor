@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.aeng.urlMonitor.service;
+package org.urlMonitor.service;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -18,13 +18,14 @@ import javax.annotation.PostConstruct;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.aeng.urlMonitor.model.UrlMonitor;
-import org.aeng.urlMonitor.service.quartz.CronTrigger;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.ArrayUtils;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.urlMonitor.model.UrlMonitor;
+import org.urlMonitor.service.quartz.CronTrigger;
 
 /**
  * @author aeng Alex Eng - loones1595@gmail.com
@@ -46,18 +47,19 @@ public class UrlMonitorService
    public void init() throws SchedulerException, FileNotFoundException, IOException
    {
       log.info("==================================================");
-      log.info("==================URL Monitor=====================");
+      log.info("================= URL Monitor ====================");
       log.info("==================================================");
+                                                 
       initJobs();
    }
 
    private void initJobs() throws SchedulerException, FileNotFoundException, IOException
    {
-      log.info("initialising jobs...");
+      log.info("Initialising jobs...");
 
       cronTrigger = new CronTrigger();
 
-      for (UrlMonitor urlMonitor : loadPropertiesFiles())
+      for (UrlMonitor urlMonitor : loadResourceFiles())
       {
          JobKey jobKey = cronTrigger.scheduleMonitor(urlMonitor);
          if (jobKey != null)
@@ -67,21 +69,26 @@ public class UrlMonitorService
       }
    }
 
-   private List<UrlMonitor> loadPropertiesFiles() throws FileNotFoundException, IOException
+   private List<UrlMonitor> loadResourceFiles() throws FileNotFoundException, IOException
    {
       List<UrlMonitor> result = new ArrayList<UrlMonitor>();
 
       File dir = new File(dirPath);
-      FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
-      File[] files = dir.listFiles(fileFilter);
-
-      for (File file : files)
+      if (dir.exists())
       {
-         if (!file.isDirectory())
+         FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
+         File[] files = dir.listFiles(fileFilter);
+         if (!ArrayUtils.isEmpty(files))
          {
-            Properties prop = new Properties();
-            prop.load(new FileInputStream(file));
-            result.add(new UrlMonitor(prop));
+            for (File file : files)
+            {
+               if (!file.isDirectory())
+               {
+                  Properties prop = new Properties();
+                  prop.load(new FileInputStream(file));
+                  result.add(new UrlMonitor(prop));
+               }
+            }
          }
       }
       return result;

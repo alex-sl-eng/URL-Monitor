@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.model.type;
+package org.urlMonitor.model.type;
 
 /**
  * 

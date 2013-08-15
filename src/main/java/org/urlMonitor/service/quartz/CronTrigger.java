@@ -1,9 +1,8 @@
 /**
  * 
  */
-package org.aeng.urlMonitor.service.quartz;
+package org.urlMonitor.service.quartz;
 
-import org.aeng.urlMonitor.model.UrlMonitor;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -14,6 +13,7 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
+import org.urlMonitor.model.UrlMonitor;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com

@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.service;
+package org.urlMonitor.service;
 
 import java.util.List;
 

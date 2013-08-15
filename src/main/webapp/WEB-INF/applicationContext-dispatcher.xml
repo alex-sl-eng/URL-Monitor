@@ -6,9 +6,9 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="org.aeng.urlMonitor" />
+	<context:component-scan base-package="org.urlMonitor" />
 	<context:annotation-config/>
-	<context:property-placeholder location="classpath*:zanata.properties" />
+	<context:property-placeholder location="classpath*:urlMonitor.properties" />
 	
 
 </beans>

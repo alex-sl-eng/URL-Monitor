@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.exception;
+package org.urlMonitor.exception;
 
 public class HttpReadContentException extends Exception
 {

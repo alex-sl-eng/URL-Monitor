@@ -1,27 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.aeng</groupId>
+	<groupId>org.urlMonitor</groupId>
 	<artifactId>UrlMonitor</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Url Monitor</name>
 
 	<properties>
-		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-		<target.jdk>1.7</target.jdk>
-		<spring.version>3.2.4.RELEASE</spring.version>
-		<quartz.version>2.2.0</quartz.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<logback.version>1.0.13</logback.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons-email.version>1.3.1</commons-email.version>
-		<httpclient.version>4.2.3</httpclient.version>
 		<commons-io.version>1.3.2</commons-io.version>
-		<maven-war-plugin.version>2.4</maven-war-plugin.version>
+		<httpclient.version>4.2.3</httpclient.version>
+		<jdk.version>1.7</jdk.version>
 		<jstl.version>1.2</jstl.version>
-		<taglib-standard.version>1.1.2</taglib-standard.version>
+		<junit.version>3.8.1</junit.version>
+		<logback.version>1.0.13</logback.version>
 		<lombok.version>0.12.0</lombok.version>
+		<maven-war-plugin.version>2.4</maven-war-plugin.version>
+		<maven-compiler.version>3.1</maven-compiler.version>
+		<servlet-api.version>2.5</servlet-api.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<spring.version>3.2.4.RELEASE</spring.version>
+		<taglib-standard.version>1.1.2</taglib-standard.version>
+		<tomcat7-maven-plugin.version>2.1</tomcat7-maven-plugin.version>
+		<quartz.version>2.2.0</quartz.version>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 
 	<dependencies>
@@ -112,7 +116,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -120,7 +124,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -138,9 +142,9 @@
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.1</version>
+					<version>${tomcat7-maven-plugin.version}</version>
 					<configuration>
-					<path>/urlMonitor</path>
+						<path>/urlMonitor</path>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -152,6 +156,15 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${maven-war-plugin.version}</version>
 			</plugin>
+			<plugin>
+           		<groupId>org.apache.maven.plugins</groupId>
+           		<artifactId>maven-compiler-plugin</artifactId>
+           		<version>${maven-compiler.version}</version>
+           		<configuration>
+               		<source>${jdk.version}</source>
+               		<target>${jdk.version}</target>
+           		</configuration>
+       </plugin>
 		</plugins>
 
 		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>

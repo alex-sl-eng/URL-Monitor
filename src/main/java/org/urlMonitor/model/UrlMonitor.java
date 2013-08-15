@@ -1,4 +1,4 @@
-package org.aeng.urlMonitor.model;
+package org.urlMonitor.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-import org.aeng.urlMonitor.model.type.StatusType;
 import org.apache.commons.lang3.StringUtils;
+import org.urlMonitor.model.type.StatusType;
 
 /**
  * @author Alex Eng - loones1595@gmail.com
