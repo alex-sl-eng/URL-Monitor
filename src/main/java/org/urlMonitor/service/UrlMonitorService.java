@@ -26,6 +26,7 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
@@ -38,17 +39,20 @@ import org.urlMonitor.service.quartz.CronTrigger;
  *
  */
 @Service
+@Scope("singleton")
 @Slf4j
 public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent>
 {
    @Value("${monitor.files.path}")
    private String dirPath;
 
+   @Value("${retry.count}")
+   private int retryCount;
+
    @Autowired
    private EmailService emailService;
 
    private final static String REGEX_PROPERTIES = "*.properties";
-   private final static int MAX_RETRY_COUNT = 3;
 
    private CronTrigger cronTrigger;
    private Map<JobKey, Monitor> monitorMap = new HashMap<JobKey, Monitor>();
@@ -119,9 +123,17 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       if (monitorMap.containsKey(event.getKey()))
       {
          Monitor monitor = monitorMap.get(event.getKey());
-         monitor.setStatus(event.getStatus());
+         monitor.update(event.getStatus());
 
-         updateStates(monitor);
+         try
+         {
+            updateStates(monitor);
+         }
+         catch (EmailException e)
+         {
+            log.error("Unable to send notification email-" + e);
+            e.printStackTrace();
+         }
       }
    }
 
@@ -130,12 +142,15 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
     * @param monitor
     * @throws EmailException 
     */
-   private void updateStates(Monitor monitor)
+   private void updateStates(Monitor monitor) throws EmailException
    {
       JobKey key = monitor.getKey();
       if (monitor.getStatus() == StatusType.Pass)
       {
-         monitorFailedMap.remove(key);
+         if (monitorFailedMap.remove(key) != null)
+         {
+            emailService.sendSuccessEmail(monitor, monitor.getLastCheck());
+         }
       }
       else if (monitor.getStatus() == StatusType.Unknown || monitor.getStatus() == StatusType.Failed)
       {
@@ -143,9 +158,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          {
             FailedStates failedStates = monitorFailedMap.get(key);
             failedStates.addCount();
-            if (failedStates.getCount() == MAX_RETRY_COUNT)
+            if (failedStates.getCount() == retryCount)
             {
-               emailService.sendEmail(monitor, failedStates.getLastFailedTime());
+               emailService.sendFailedEmail(monitor, monitor.getLastCheck());
             }
          }
          else

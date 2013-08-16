@@ -3,6 +3,7 @@ package org.urlMonitor.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,35 +27,31 @@ public class Monitor implements Serializable
    private JobKey key;// This needs to be unique
    
    @Getter
-   @Setter
    @NonNull
    private String name; 
 
    @Getter
-   @Setter
    private String description;
 
    @Getter
-   @Setter
    @NonNull
    private String url;
 
-   @Setter
    private String tag;
 
    @Getter
-   @Setter
    private StatusType status;
+   
+   @Getter
+   private Date lastCheck;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
    @Getter
-   @Setter
    private String cronExpression = "0/5 * * * * ?"; // every 5 seconds
 
    @Getter
-   @Setter
    @NonNull
    private String contentRegex;
 
@@ -95,6 +92,12 @@ public class Monitor implements Serializable
          return Arrays.asList(tag.split(";"));
       }
       return new ArrayList<String>();
+   }
+   
+   public void update(StatusType status)
+   {
+      this.status = status;
+      this.lastCheck = new Date();
    }
 
 }
