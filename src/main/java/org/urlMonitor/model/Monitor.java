@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.JobKey;
 import org.urlMonitor.model.type.StatusType;
 
 /**
@@ -22,9 +23,12 @@ public class Monitor implements Serializable
    private static final long serialVersionUID = 1L;
 
    @Getter
+   private JobKey key;// This needs to be unique
+   
+   @Getter
    @Setter
    @NonNull
-   private String name; // This needs to be unique
+   private String name; 
 
    @Getter
    @Setter
@@ -71,6 +75,8 @@ public class Monitor implements Serializable
 
       this.contentRegex = prop.getProperty("contentRegex");
       this.emailToList = prop.getProperty("emailToList");
+      
+      this.key = new JobKey(this.name);
    }
 
    public List<String> getEmailTo()

@@ -1,24 +1,26 @@
 package org.urlMonitor.service.events;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class EventPublisher
 {
    @Autowired
-   private SimpleApplicationEventMulticaster eventMulticaster;
+   private SimpleApplicationEventMulticaster simpleApplicationEventMulticaster;
 
-   @Autowired
-   private AsyncTaskExecutor taskExecutor;
-   
+   private SimpleAsyncTaskExecutor asyncTaskExecutor = new SimpleAsyncTaskExecutor();
 
    public void fireEvent(ApplicationEvent event)
    {
-      eventMulticaster.setTaskExecutor(taskExecutor);
-      eventMulticaster.multicastEvent(event);
+      log.debug("Fire event: " + event.toString());
+      simpleApplicationEventMulticaster.setTaskExecutor(asyncTaskExecutor);
+      simpleApplicationEventMulticaster.multicastEvent(event);
    }
 }

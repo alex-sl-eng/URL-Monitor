@@ -20,11 +20,17 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.mail.EmailException;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
+import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
+import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.service.events.MonitorUpdateEvent;
 import org.urlMonitor.service.quartz.CronTrigger;
 
 /**
@@ -33,15 +39,20 @@ import org.urlMonitor.service.quartz.CronTrigger;
  */
 @Service
 @Slf4j
-public class UrlMonitorService
+public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent>
 {
-   @Value("${properties.path}")
+   @Value("${monitor.files.path}")
    private String dirPath;
 
+   @Autowired
+   private EmailService emailService;
+
    private final static String REGEX_PROPERTIES = "*.properties";
+   private final static int MAX_RETRY_COUNT = 3;
 
    private CronTrigger cronTrigger;
-   private Map<JobKey, Monitor> urlMonitorMap = new HashMap<JobKey, Monitor>();
+   private Map<JobKey, Monitor> monitorMap = new HashMap<JobKey, Monitor>();
+   private Map<JobKey, FailedStates> monitorFailedMap = new HashMap<JobKey, FailedStates>();
 
    @PostConstruct
    public void init() throws SchedulerException, FileNotFoundException, IOException
@@ -49,7 +60,7 @@ public class UrlMonitorService
       log.info("==================================================");
       log.info("================= URL Monitor ====================");
       log.info("==================================================");
-                                                 
+
       initJobs();
    }
 
@@ -64,7 +75,7 @@ public class UrlMonitorService
          JobKey jobKey = cronTrigger.scheduleMonitor(monitor);
          if (jobKey != null)
          {
-            urlMonitorMap.put(jobKey, monitor);
+            monitorMap.put(jobKey, monitor);
          }
       }
    }
@@ -91,11 +102,56 @@ public class UrlMonitorService
             }
          }
       }
+      else
+      {
+         log.warn("Monitor files not found {0}", dirPath);
+      }
       return result;
    }
 
    public List<Monitor> getMonitorList()
    {
-      return new ArrayList<Monitor>(urlMonitorMap.values());
+      return new ArrayList<Monitor>(monitorMap.values());
+   }
+
+   public void onApplicationEvent(MonitorUpdateEvent event)
+   {
+      if (monitorMap.containsKey(event.getKey()))
+      {
+         Monitor monitor = monitorMap.get(event.getKey());
+         monitor.setStatus(event.getStatus());
+
+         updateStates(monitor);
+      }
+   }
+
+   /**
+    * retry MAX_RETRY_COUNT times if failed or unknown, then send email
+    * @param monitor
+    * @throws EmailException 
+    */
+   private void updateStates(Monitor monitor)
+   {
+      JobKey key = monitor.getKey();
+      if (monitor.getStatus() == StatusType.Pass)
+      {
+         monitorFailedMap.remove(key);
+      }
+      else if (monitor.getStatus() == StatusType.Unknown || monitor.getStatus() == StatusType.Failed)
+      {
+         if (monitorFailedMap.containsKey(key))
+         {
+            FailedStates failedStates = monitorFailedMap.get(key);
+            failedStates.addCount();
+            if (failedStates.getCount() == MAX_RETRY_COUNT)
+            {
+               emailService.sendEmail(monitor, failedStates.getLastFailedTime());
+            }
+         }
+         else
+         {
+            monitorFailedMap.put(key, new FailedStates());
+         }
+      }
    }
 }
