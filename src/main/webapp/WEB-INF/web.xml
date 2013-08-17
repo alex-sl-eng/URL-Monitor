@@ -5,10 +5,6 @@
 
 	<display-name>Url Monitor</display-name>
 	
-	<welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -23,6 +19,11 @@
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+    	<servlet-name>default</servlet-name>
+    	<url-pattern>/styles/*</url-pattern>
+	</servlet-mapping>
  
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -34,5 +35,7 @@
         	org.springframework.web.context.ContextLoaderListener
         </listener-class>
 	</listener>
+	
+	
 
 </web-app>

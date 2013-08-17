@@ -1,0 +1,92 @@
+body {
+	font-family: "Source Sans Pro","Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;
+	font-size:1em;
+	color:rgba(0,0,0,0.8);
+	background-color:rgba(0,0,0,0.08);
+	margin:0;
+	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
+}
+
+header {
+	background-color:#FFFFFF;
+	padding:0.5%;
+}
+
+header h1{
+	margin:0;
+	letter-spacing:0.05em;
+}
+
+main {
+	padding:0.5%;
+}
+
+main .filter {
+	margin:auto;
+	max-width:960px
+}
+
+main .content {
+	margin:auto;
+	max-width:960px;	
+}
+
+footer {
+	background-color:rgba(51,51,51,0.8);
+	color:#e1e1e1;
+	padding:0.5%;
+	font-size:0.85em;
+	letter-spacing:0.1em;
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color:#667D95;
+}
+
+h1 {
+  font-size: 2.25em;
+  margin-bottom: 0.33333em;
+}
+
+h2 {
+  font-size: 1.75em;
+  margin-top: 0.85714em;
+  margin-bottom: 0.42857em;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 0.5em
+}
+
+h4 {
+  font-size: 1.25em;
+  margin-top: 0.6em;
+  margin-bottom: 0.3em;
+}
+
+h5 {
+  font-size: 1.125em;
+  margin-top: 0.66667em;
+  margin-bottom: 0.66667em;
+}
+
+h6 {
+  font-size: 1em;
+  margin-top: 0.75em;
+}
+
+.horizontal {
+	list-style: none;
+	margin:0;
+	padding:0;
+}
+
+.horizontal li {
+	display:inline-block;
+}

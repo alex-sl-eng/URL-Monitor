@@ -10,9 +10,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -28,6 +30,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
@@ -59,7 +62,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    private Map<JobKey, FailedStates> monitorFailedMap = new HashMap<JobKey, FailedStates>();
 
    @PostConstruct
-   public void init() throws SchedulerException, FileNotFoundException, IOException
+   public void init() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
    {
       log.info("==================================================");
       log.info("================= URL Monitor ====================");
@@ -68,7 +71,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       initJobs();
    }
 
-   private void initJobs() throws SchedulerException, FileNotFoundException, IOException
+   private void initJobs() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
    {
       log.info("Initialising jobs...");
 
@@ -84,9 +87,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       }
    }
 
-   private List<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException
+   private Set<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException, InvalidMonitorFileException
    {
-      List<Monitor> result = new ArrayList<Monitor>();
+      Set<Monitor> result = new HashSet<Monitor>();
 
       File dir = new File(dirPath);
       if (dir.exists())
@@ -101,7 +104,11 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
                {
                   Properties prop = new Properties();
                   prop.load(new FileInputStream(file));
-                  result.add(new Monitor(prop));
+                  Monitor monitor = new Monitor(prop);
+                  if (!result.contains(monitor)) // remove duplicate
+                  {
+                     result.add(new Monitor(prop));
+                  }
                }
             }
          }
