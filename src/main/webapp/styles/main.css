@@ -2,14 +2,17 @@ body {
 	font-family: "Source Sans Pro","Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;
 	font-size:1em;
 	color:rgba(0,0,0,0.8);
-	background-color:rgba(0,0,0,0.08);
+	background:rgba(0,0,0,0.08) url(white_plaster.png);
 	margin:0;
 	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
+header, main, footer {
+	padding:0.7em;
+}
+
 header {
 	background-color:#FFFFFF;
-	padding:0.5%;
 }
 
 header h1{
@@ -17,24 +20,26 @@ header h1{
 	letter-spacing:0.05em;
 }
 
-main {
-	padding:0.5%;
-}
-
-main .filter {
+main .filter, main .content {
 	margin:auto;
 	max-width:960px
 }
 
+main .filter {
+	text-align:center;
+}
+
+main .filter li {
+	font-size:1em;
+}
+
 main .content {
-	margin:auto;
-	max-width:960px;	
+		
 }
 
 footer {
 	background-color:rgba(51,51,51,0.8);
 	color:#e1e1e1;
-	padding:0.5%;
 	font-size:0.85em;
 	letter-spacing:0.1em;
 	position:absolute;
@@ -81,6 +86,10 @@ h6 {
   margin-top: 0.75em;
 }
 
+a {
+	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
+}
+
 .horizontal {
 	list-style: none;
 	margin:0;
@@ -89,4 +98,31 @@ h6 {
 
 .horizontal li {
 	display:inline-block;
+}
+
+.button {
+	border:1px solid rgba(0,0,0,0.2);
+	padding:0.35em 0.75em;
+	box-shadow:none;
+	cursor:pointer;
+	opacity:0.55;
+	border-radius:2px;
+	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
+}
+
+.button:hover {
+	opacity:1;
+	box-shadow:0px 0px 1px rgba(0,0,0,0.2);
+}
+
+.button:active {
+	box-shadow:inset 0px 0px 3px rgba(0,0,0,0.3);
+}
+
+.selected {
+	background:rgba(0,0,0,0.5);
+}
+
+.selected:hover {
+	opacity:0.55;
 }
