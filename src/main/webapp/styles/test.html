@@ -6,6 +6,30 @@
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="style.css">
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript">
+		function toggleDetails(toggleBtn, rowId) {
+			var details = document.getElementById(rowId);
+			
+			if (details.className.match(/(?:^|\s)visible(?!\S)/) ) {
+				details.className = details.className.replace
+			      ( /(?:^|\s)visible(?!\S)/g , '' );
+				
+				toggleBtn.className = toggleBtn.className.replace
+			      ( /(?:^|\s)icon-chevron-up(?!\S)/g , '' );
+				
+				toggleBtn.className += " icon-chevron-down";
+			}
+			else {
+				details.className += " visible";
+				
+				toggleBtn.className = toggleBtn.className.replace
+			      ( /(?:^|\s)icon-chevron-down(?!\S)/g , '' );
+				
+				toggleBtn.className += " icon-chevron-up";
+			}
+		}
+	</script>
 </head>
 
 <header>
@@ -30,37 +54,53 @@
 		</ul>
 	</div>
 	<div class="content">
-		<ul class="vertical">
-			<li class="success">
-				<ul class="horizontal no-border">
-					<li class="status icon-checkmark"></li>
-					<li class="name"><a href="http://google.com">Google testingggggggggggggggggggggggggggggggg</a></li>
-					<li class="time">12/07/1900 08:00:00
-						<a href=# class="more-info icon-chevron-down"></a>
-					</li>
-				</ul>
-			</li>
-			
-			<li class="failed">	
-				<ul class="horizontal no-border">
-					<li class="status icon-close"></li>
-					<li class="name"><a href="http://yahoo.com">Yahoo</a></li>
-					<li class="time">12/07/1900 08:00:00
-						<a href=# class="more-info icon-chevron-down"></a>
-					</li>
-				</ul>
-			</li>
-			
-			<li class="unknown">	
-				<ul class="horizontal no-border">
-					<li class="status icon-question"></li>
-					<li class="name"><a href="http://amazon.com">Amazon</a></li>
-					<li class="time">12/07/1900 08:00:00
-						<a href=# class="more-info icon-chevron-down"></a>
-					</li>
-				</ul>
-			</li>
-		</ul>
+		<div class="container success">
+			<span class="status icon-checkmark"></span>
+			<span class="name"><a href="http://google.com">Google testingggggggggggggggggggggggggggggggg</a></span>
+			<span class="time">12/07/1900 08:00:00
+				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, 'row1')"></a>
+			</span>
+			<div id="row1" class="details">
+				<table>
+					<tr>
+						<td class="header">Description</td>
+						<td class="value"><span>google search engine</span></td>
+					</tr>
+					<tr>
+						<td class="header">Url</td>
+						<td class="value"><a href="http://google.com">http://google.com</a></td>
+					</tr>
+					<tr>
+						<td class="header">Search text</td>
+						<td class="value">searched string testing long string that. sssssssssssssssssssss.</td>
+					</tr>
+					<tr>
+						<td class="header">Cron expression</td>
+						<td class="value">0/5 * * * * ?</td>
+					</tr>
+					<tr>
+						<td class="header">Tag</td>
+						<td class="value">#search;#public</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="container failed">
+			<span class="status icon-close"></span>
+			<span class="name"><a href="http://yahoo.com">Yahoo</a></span>
+			<span class="time">12/07/1900 08:00:00
+				<a href=# class="more-info icon-chevron-down"></a>
+			</span>
+		</div>
+		
+		<div class="container unknown">
+			<span class="status icon-question"></span>
+			<span class="name"><a href="http://amazon.com">Amazon</a></span>
+			<span class="time">12/07/1900 08:00:00
+				<a href=# class="more-info icon-chevron-down"></a>
+			</span>
+		</div>
 	</div>
 </main>
 
