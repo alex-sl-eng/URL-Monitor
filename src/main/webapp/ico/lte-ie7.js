@@ -3,11 +3,17 @@
 window.onload = function() {
 	function addIcon(el, entity) {
 		var html = el.innerHTML;
-		el.innerHTML = '<span style="font-family: \'iconminia\'">' + entity + '</span>' + html;
+		el.innerHTML = '<span style="font-family: \'icomoon\'">' + entity + '</span>' + html;
 	}
 	var icons = {
 			'icon-list' : '&#xe000;',
-			'icon-grid' : '&#xe001;'
+			'icon-grid' : '&#xe001;',
+			'icon-close' : '&#xe003;',
+			'icon-checkmark' : '&#xe002;',
+			'icon-question' : '&#xe004;',
+			'icon-health' : '&#xe005;',
+			'icon-chevron-down' : '&#xf078;',
+			'icon-chevron-up' : '&#xf077;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;

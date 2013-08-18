@@ -4,7 +4,6 @@ body {
 	color:rgba(0,0,0,0.8);
 	background:rgba(0,0,0,0.08) url(white_plaster.png);
 	margin:0;
-	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
 header, main, footer {
@@ -22,19 +21,15 @@ header h1{
 
 main .filter, main .content {
 	margin:auto;
-	max-width:960px
-}
-
-main .filter {
-	text-align:center;
-}
-
-main .filter li {
-	font-size:1em;
+	max-width:960px;
 }
 
 main .content {
 		
+}
+
+main .filter {
+	text-align:center;
 }
 
 footer {
@@ -86,36 +81,75 @@ h6 {
   margin-top: 0.75em;
 }
 
-a {
+a, a:VISITED {
+	text-decoration:none;
+	color:#3A8BC9;
+}
+
+a:hover {
+	color:#085997;
+}
+
+body, a, button, li {
 	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
-.horizontal {
+ul.horizontal {
 	list-style: none;
 	margin:0;
 	padding:0;
 }
 
-.horizontal li {
+ul.horizontal li {
 	display:inline-block;
+	vertical-align: middle;
+	padding:0 !important;
 }
 
-.button {
+ul.vertical {
+	list-style: none;
+	margin:0;
+	padding:0;
+}
+
+ul.vertical li {
+	padding:0.5em;
+	margin:0.3em;
+}
+
+ul.vertical>li:hover {
+	background-color:rgba(0,0,0,0.04);
+}
+
+.no-border li, .no-border {
+	border:none !important;
+}
+
+
+input[type="text"], button, .content .vertical li {
+	border-radius:2px;
 	border:1px solid rgba(0,0,0,0.2);
-	padding:0.35em 0.75em;
+}
+
+input[type="text"] {
+	padding:0.16em;
+	font-size:1.1em;
+	width:100%;
+}
+
+button {
+	padding:0.4em 0.8em;
 	box-shadow:none;
 	cursor:pointer;
-	opacity:0.55;
-	border-radius:2px;
-	transition:0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
+	opacity:0.6;
 }
 
-.button:hover {
+button:hover {
 	opacity:1;
 	box-shadow:0px 0px 1px rgba(0,0,0,0.2);
 }
 
-.button:active {
+button:active {
 	box-shadow:inset 0px 0px 3px rgba(0,0,0,0.3);
 }
 
@@ -125,4 +159,45 @@ a {
 
 .selected:hover {
 	opacity:0.55;
+}
+
+.success {
+	color:rgba(0,128,0,0.8);
+}
+
+.failed {
+	color:rgba(255,0,0,0.8);
+}
+
+.unknown {
+	color:rgba(255,128,24,0.8);
+}
+
+.status, .name, .time, .more-info{
+	text-overflow: ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	display:inline-block;
+}
+
+.status, .more-info {
+	font-size:16px !important;
+}
+
+.status {
+	width:20px;
+}
+
+.name {
+	font-weight:bold;
+}
+
+.time {
+	float:right;
+	font-size:0.75em;
+	color:rgba(0,0,0,0.8) !important;
+}
+
+.more-info {
+	padding: 0 0 0 0.5em;
 }

@@ -16,21 +16,51 @@
 <main>
 	<div class="filter">
 		<ul class="horizontal">
-			<li>
+			<li style="width:50%">
 				<input type="text" />
 			</li>
-			<li class="button selected">
-				<span class="icon-list"/>
+			<li>
+				<button class="icon-list selected"></button>
 			</li>
 			
-			<li class="button">
-				<span class="icon-grid"/>
+			<li>
+				<button class="icon-grid"></button>
 			</li>
 			
 		</ul>
 	</div>
 	<div class="content">
-		content
+		<ul class="vertical">
+			<li class="success">
+				<ul class="horizontal no-border">
+					<li class="status icon-checkmark"></li>
+					<li class="name"><a href="http://google.com">Google testingggggggggggggggggggggggggggggggg</a></li>
+					<li class="time">12/07/1900 08:00:00
+						<a href=# class="more-info icon-chevron-down"></a>
+					</li>
+				</ul>
+			</li>
+			
+			<li class="failed">	
+				<ul class="horizontal no-border">
+					<li class="status icon-close"></li>
+					<li class="name"><a href="http://yahoo.com">Yahoo</a></li>
+					<li class="time">12/07/1900 08:00:00
+						<a href=# class="more-info icon-chevron-down"></a>
+					</li>
+				</ul>
+			</li>
+			
+			<li class="unknown">	
+				<ul class="horizontal no-border">
+					<li class="status icon-question"></li>
+					<li class="name"><a href="http://amazon.com">Amazon</a></li>
+					<li class="time">12/07/1900 08:00:00
+						<a href=# class="more-info icon-chevron-down"></a>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 </main>
 
