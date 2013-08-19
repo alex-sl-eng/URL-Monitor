@@ -8,32 +8,81 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript">
+		function setView(viewType) {
+			var containerList = document.getElementsByClassName("container");
+			var listButton = document.getElementById('list');
+			var gridButton = document.getElementById('grid');
+			
+			var removeClass, addClass;
+			
+			if(viewType == 'list') {
+				removeClass = 'grid';
+				addClass = 'list';
+				
+				addCssClass(listButton, 'selected');
+				removeCssClass(gridButton, 'selected');
+			}	
+			else if(viewType == 'grid') {
+				removeClass = 'list';
+				addClass = 'grid';
+				
+				addCssClass(gridButton, 'selected');
+				removeCssClass(listButton, 'selected');
+			} 
+			
+			for (var i = 0; i < containerList.length; i++) {
+				removeCssClass(containerList[i], removeClass);
+				addCssClass(containerList[i], addClass);
+			}
+		}
+		
 		function toggleDetails(toggleBtn, rowId) {
+			var downArrowClass = 'icon-chevron-down';
+			var upArrowClass = 'icon-chevron-up';
+			var visibleClass = 'visible';
+			
 			var details = document.getElementById(rowId);
 			
-			if (details.className.match(/(?:^|\s)visible(?!\S)/) ) {
-				details.className = details.className.replace
-			      ( /(?:^|\s)visible(?!\S)/g , '' );
-				
-				toggleBtn.className = toggleBtn.className.replace
-			      ( /(?:^|\s)icon-chevron-up(?!\S)/g , '' );
-				
-				toggleBtn.className += " icon-chevron-down";
+			if (containCssClass(details, visibleClass)) {
+				removeCssClass(toggleBtn, upArrowClass);
+				addCssClass(toggleBtn, downArrowClass);
+				removeCssClass(details, visibleClass);
 			}
 			else {
-				details.className += " visible";
-				
-				toggleBtn.className = toggleBtn.className.replace
-			      ( /(?:^|\s)icon-chevron-down(?!\S)/g , '' );
-				
-				toggleBtn.className += " icon-chevron-up";
+				addCssClass(details, visibleClass);
+				removeCssClass(toggleBtn, downArrowClass);
+				addCssClass(toggleBtn, upArrowClass);
+			}
+		}
+		
+		function containCssClass(element, cssClass) {
+			var regex = new RegExp("(?:^|\\s)" + cssClass + "(?!\\S)");
+			return element.className.match(regex);
+		}
+		
+		function removeCssClass(element, cssClass) {
+			var regex = new RegExp("(?:^|\\s)" + cssClass + "(?!\\S)", 'g');
+			element.className = element.className.replace(regex, '');
+		}
+		
+		function addCssClass(element, cssClass) {
+			if(!containCssClass(element, cssClass)) {				
+				element.className += ' ' + cssClass;
 			}
 		}
 	</script>
 </head>
 
 <header>
-	<h1>URL Monitor</h1> 
+	<h1><a href=#><span class="logo icon-health"></span>URL Monitor</a></h1> 
+	
+	<li class="right huge right_menu_toggle"><span class="icon-list-2"></span>
+		<ul class="right_menu">
+			<li><a href=#>About</a></li>
+			<li><a href=#>License</a></li>
+			<li><a href=#>Report issue</a></li>
+		</ul>
+	</li>
 </header>
 
 
@@ -44,20 +93,25 @@
 				<input type="text" />
 			</li>
 			<li>
-				<button class="icon-list selected"></button>
+				<select>
+				  <option value="name">Sort by name</option>
+				  <option value="status">Sort by status</option>
+				</select>
+			</li>
+			<li>
+				<button class="icon-list" id="list" onclick="setView('list')"></button>
 			</li>
 			
 			<li>
-				<button class="icon-grid"></button>
+				<button class="icon-grid" id="grid" onclick="setView('grid')"></button>
 			</li>
-			
 		</ul>
 	</div>
 	<div class="content">
 		<div class="container success">
 			<span class="status icon-checkmark"></span>
 			<span class="name"><a href="http://google.com">Google testingggggggggggggggggggggggggggggggg</a></span>
-			<span class="time">12/07/1900 08:00:00
+			<span class="time right">12/07/1900 08:00:00
 				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, 'row1')"></a>
 			</span>
 			<div id="row1" class="details">
@@ -89,7 +143,7 @@
 		<div class="container failed">
 			<span class="status icon-close"></span>
 			<span class="name"><a href="http://yahoo.com">Yahoo</a></span>
-			<span class="time">12/07/1900 08:00:00
+			<span class="time right">12/07/1900 08:00:00
 				<a href=# class="more-info icon-chevron-down"></a>
 			</span>
 		</div>
@@ -97,13 +151,28 @@
 		<div class="container unknown">
 			<span class="status icon-question"></span>
 			<span class="name"><a href="http://amazon.com">Amazon</a></span>
-			<span class="time">12/07/1900 08:00:00
+			<span class="time right">12/07/1900 08:00:00
+				<a href=# class="more-info icon-chevron-down"></a>
+			</span>
+		</div>
+		
+		<div class="container unknown">
+			<span class="status icon-question"></span>
+			<span class="name"><a href="http://amazon.com">Amazon</a></span>
+			<span class="time right">12/07/1900 08:00:00
 				<a href=# class="more-info icon-chevron-down"></a>
 			</span>
 		</div>
 	</div>
 </main>
 
-<footer>
-	Copyright 2013 UrlMonitor.org. All times AEST (GMT +10:00)
-</footer>
+<!-- <footer> -->
+<!-- 	Copyright 2013 UrlMonitor.org. All times AEST (GMT +10:00) -->
+<!-- 	<ul class="horizontal"> -->
+<!-- 		<li><a href=#>Terms & Conditions</a></li> -->
+<!-- 		<li class="footnote">|</li> -->
+<!-- 		<li><a href=#>License</a></li> -->
+<!-- 		<li class="footnote">|</li> -->
+<!-- 		<li><a href=#>Report a problem</a></li> -->
+<!-- 	</ul> -->
+<!-- </footer> -->

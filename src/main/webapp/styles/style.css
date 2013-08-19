@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-list, .icon-grid, .icon-close, .icon-checkmark, .icon-question, .icon-health, .icon-chevron-down, .icon-chevron-up {
+.icon-list, .icon-grid, .icon-close, .icon-checkmark, .icon-question, .icon-chevron-down, .icon-chevron-up, .icon-health, .icon-list-2 {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -52,12 +52,15 @@ you can use the generic selector below, but it's slower:
 .icon-question:before {
 	content: "\e004";
 }
-.icon-health:before {
-	content: "\e005";
-}
 .icon-chevron-down:before {
 	content: "\f078";
 }
 .icon-chevron-up:before {
 	content: "\f077";
+}
+.icon-health:before {
+	content: "\e005";
+}
+.icon-list-2:before {
+	content: "\e009";
 }

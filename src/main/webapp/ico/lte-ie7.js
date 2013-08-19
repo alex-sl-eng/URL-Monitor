@@ -11,9 +11,10 @@ window.onload = function() {
 			'icon-close' : '&#xe003;',
 			'icon-checkmark' : '&#xe002;',
 			'icon-question' : '&#xe004;',
-			'icon-health' : '&#xe005;',
 			'icon-chevron-down' : '&#xf078;',
-			'icon-chevron-up' : '&#xf077;'
+			'icon-chevron-up' : '&#xf077;',
+			'icon-health' : '&#xe005;',
+			'icon-list-2' : '&#xe009;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;
