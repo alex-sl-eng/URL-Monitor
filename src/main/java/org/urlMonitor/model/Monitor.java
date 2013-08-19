@@ -68,7 +68,7 @@ public class Monitor implements Serializable
       this.url = prop.getProperty("url");
       this.cronExpression = prop.getProperty("cronExpression");
       this.contentRegex = prop.getProperty("contentRegex");
-
+      
       isMandatoryFieldsPresent();
 
       this.description = prop.getProperty("description");
@@ -80,8 +80,8 @@ public class Monitor implements Serializable
 
    private void isMandatoryFieldsPresent() throws InvalidMonitorFileException
    {
-      if(StringUtils.isEmpty(name) || !StringUtils.isEmpty(url) 
-            || !StringUtils.isEmpty(cronExpression) || !StringUtils.isEmpty(contentRegex))
+      if(StringUtils.isEmpty(name) || StringUtils.isEmpty(url) 
+            || StringUtils.isEmpty(cronExpression) || StringUtils.isEmpty(contentRegex))
       {
          throw new InvalidMonitorFileException("Missing mandatory field(s) in monitor file.");
       }
