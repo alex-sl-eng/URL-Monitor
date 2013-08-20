@@ -21,16 +21,21 @@
 	</ul>
 </div>
 <div class="content">
+
+	<script type="text/javascript">
+	    setInterval(refreshPage, 1000);
+	</script>
+
 	<c:forEach var="monitor" items="${monitorList}">
-		<div class="container ${monitor.statusValue}">
+		<div id="${monitor.hashCode()}-container" class="container ${monitor.statusValue}">
 			<c:if test="${monitor.statusValue == 'Pass'}">
-				<span class="status icon-checkmark"></span> 
+				<span id="${monitor.hashCode()}-status" class="status icon-checkmark"></span> 
 			</c:if>
 			<c:if test="${monitor.statusValue == 'Failed'}">
-				<span class="status icon-close"></span> 
+				<span id="${monitor.hashCode()}-status" class="status icon-close"></span> 
 			</c:if>
 			<c:if test="${monitor.statusValue == 'Unknown'}">
-				<span class="status icon-question"></span> 
+				<span id="${monitor.hashCode()}-status" class="status icon-question"></span> 
 			</c:if>
 			
 			<span class="name">
@@ -38,9 +43,9 @@
 			</span>
 			
 			<span class="time right"><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss"  value="${monitor.lastCheck}"/>
-				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()})"></a>
+				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()} + '-details')"></a>
 			</span>
-			<div id="${monitor.hashCode()}" class="details">
+			<div id="${monitor.hashCode()}-details" class="details">
 				<table>
 					<tr>
 						<td class="header"><spring:message code="monitor.details.Description"/></td>

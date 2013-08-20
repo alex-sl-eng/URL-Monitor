@@ -13,7 +13,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.quartz.JobKey;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.type.StatusType;
 
@@ -25,9 +24,6 @@ import org.urlMonitor.model.type.StatusType;
 public class Monitor implements Serializable
 {
    private static final long serialVersionUID = 1L;
-
-   @Getter
-   private JobKey key;// This needs to be unique
 
    @Getter
    @NonNull
@@ -47,6 +43,9 @@ public class Monitor implements Serializable
 
    @Getter
    private Date lastCheck;
+   
+   @Getter
+   private int hashCode;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
@@ -74,8 +73,8 @@ public class Monitor implements Serializable
       this.description = prop.getProperty("description");
       this.tag = prop.getProperty("tag");
       this.emailToList = prop.getProperty("emailToList");
-
-      this.key = new JobKey(this.name + ":" + this.hashCode());
+      
+      hashCode = this.hashCode();
    }
 
    private void isMandatoryFieldsPresent() throws InvalidMonitorFileException

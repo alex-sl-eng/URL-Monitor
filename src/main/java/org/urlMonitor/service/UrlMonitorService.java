@@ -58,8 +58,8 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    private final static String REGEX_PROPERTIES = "*.properties";
 
    private CronTrigger cronTrigger;
-   private Map<JobKey, Monitor> monitorMap = new HashMap<JobKey, Monitor>();
-   private Map<JobKey, FailedStates> monitorFailedMap = new HashMap<JobKey, FailedStates>();
+   private Map<Integer, Monitor> monitorMap = new HashMap<Integer, Monitor>();
+   private Map<Integer, FailedStates> monitorFailedMap = new HashMap<Integer, FailedStates>();
 
    @PostConstruct
    public void init() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
@@ -79,10 +79,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
       for (Monitor monitor : loadMonitorFiles())
       {
-         JobKey jobKey = cronTrigger.scheduleMonitor(monitor);
-         if (jobKey != null)
+         if(cronTrigger.scheduleMonitor(monitor))
          {
-            monitorMap.put(jobKey, monitor);
+            monitorMap.put(monitor.hashCode(), monitor);
          }
       }
    }
@@ -127,9 +126,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
    public void onApplicationEvent(MonitorUpdateEvent event)
    {
-      if (monitorMap.containsKey(event.getKey()))
+      if (monitorMap.containsKey(event.getHashCode()))
       {
-         Monitor monitor = monitorMap.get(event.getKey());
+         Monitor monitor = monitorMap.get(event.getHashCode());
          monitor.update(event.getStatus());
 
          try
@@ -151,7 +150,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
     */
    private void updateStates(Monitor monitor) throws EmailException
    {
-      JobKey key = monitor.getKey();
+      int key = monitor.hashCode();
       if (monitor.getStatus() == StatusType.Pass)
       {
          if (monitorFailedMap.remove(key) != null)

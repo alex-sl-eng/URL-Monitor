@@ -1,62 +1,37 @@
+function refreshPage() {
+	$.ajax({
+		url : '/urlMonitor/updateStatus',
+		success : function(data) {
+			for ( var i = 0; i < data.length; i++) {
+				var monitor = data[i];
+				console.log(monitor.name);
+				var hashcode = monitor.hashCode;
+			}
+		}
+	});
+}
+
 function setView(viewType) {
-	var containerList = document.getElementsByClassName("container");
-	var listButton = document.getElementById('list');
-	var gridButton = document.getElementById('grid');
-
-	var removeClass, addClass;
-
 	if (viewType == 'list') {
-		removeClass = 'grid';
+		$('#list').addClass('selected');
+		$('#grid').removeClass('selected');
 
-		addCssClass(listButton, 'selected');
-		removeCssClass(gridButton, 'selected');
 	} else if (viewType == 'grid') {
-		addClass = 'grid';
-
-		addCssClass(gridButton, 'selected');
-		removeCssClass(listButton, 'selected');
+		$('#grid').addClass('selected');
+		$('#list').removeClass('selected');
 	}
 
-	for ( var i = 0; i < containerList.length; i++) {
-		if(removeClass) {			
-			removeCssClass(containerList[i], removeClass);
-		}
-		if(addClass) {
-			addCssClass(containerList[i], addClass);
-		}
-	}
+	$(".container").toggleClass("grid");
 }
 
 function toggleDetails(toggleBtn, rowId) {
-	var downArrowClass = 'icon-chevron-down';
-	var upArrowClass = 'icon-chevron-up';
-	var visibleClass = 'visible';
-
-	var details = document.getElementById(rowId);
+	$("#" + rowId).toggleClass("visible");
 
 	if (containCssClass(details, visibleClass)) {
-		removeCssClass(toggleBtn, upArrowClass);
-		addCssClass(toggleBtn, downArrowClass);
-		removeCssClass(details, visibleClass);
+		$(toggleBtn).removeClass('icon-chevron-up').addClass(
+				'icon-chevron-down');
 	} else {
-		addCssClass(details, visibleClass);
-		removeCssClass(toggleBtn, downArrowClass);
-		addCssClass(toggleBtn, upArrowClass);
-	}
-}
-
-function containCssClass(element, cssClass) {
-	var regex = new RegExp("(?:^|\\s)" + cssClass + "(?!\\S)");
-	return element.className.match(regex);
-}
-
-function removeCssClass(element, cssClass) {
-	var regex = new RegExp("(?:^|\\s)" + cssClass + "(?!\\S)", 'g');
-	element.className = element.className.replace(regex, '');
-}
-
-function addCssClass(element, cssClass) {
-	if (!containCssClass(element, cssClass)) {
-		element.className += ' ' + cssClass;
+		$(toggleBtn).removeClass('icon-chevron-down').addClass(
+				'icon-chevron-up');
 	}
 }

@@ -28,11 +28,12 @@ public class CronTrigger
       scheduler.start();
    }
 
-   public JobKey scheduleMonitor(Monitor monitor) throws SchedulerException
+   public boolean scheduleMonitor(Monitor monitor) throws SchedulerException
    {
       if (monitor != null)
       {
-         JobKey jobKey = monitor.getKey();
+         JobKey jobKey = new JobKey(monitor.hashCode() + "");
+         
          if (!scheduler.checkExists(jobKey))
          {
             JobDetail jobDetail = JobBuilder.newJob(MonitorJob.class).withIdentity(jobKey).build();
@@ -48,10 +49,10 @@ public class CronTrigger
             scheduler.getListenerManager().addJobListener(new MonitorJobListener(), KeyMatcher.keyEquals(jobKey));
             scheduler.scheduleJob(jobDetail, trigger);
 
-            return jobKey;
+            return true;
          }
       }
-      return null;
+      return false;
    }
 
    public void pauseJob(JobKey jobKey) throws SchedulerException

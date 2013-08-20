@@ -45,22 +45,22 @@ public class MonitorJob implements Job
             log.debug("Job {0} failed.", monitor.getName());
             updatedStatus = StatusType.Failed;
          }
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getKey(), updatedStatus));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), updatedStatus));
       }
       catch (ClientProtocolException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getKey(), StatusType.Unknown));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Unknown));
       }
       catch (IOException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getKey(), StatusType.Unknown));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Unknown));
       }
       catch (HttpReadContentException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getKey(), StatusType.Failed));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Failed));
       }
    }
    
