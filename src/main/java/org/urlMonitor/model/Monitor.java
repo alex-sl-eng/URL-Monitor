@@ -65,6 +65,10 @@ public class Monitor implements Serializable
    @Getter
    private int hashCode;
    
+   /**
+    * This is used to expose hashCode to JSON object in script
+    */
+   @Getter
    private String formattedLastCheck;
 
    public Monitor(Properties prop) throws InvalidMonitorFileException

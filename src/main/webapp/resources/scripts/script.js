@@ -1,27 +1,34 @@
+var refreshPageIntervalId = 0;
+
 function refreshPage() {
 	$.ajax({
 		url : '/urlMonitor/updateStatus',
+		cache : false,
 		success : function(data) {
 			for ( var i = 0; i < data.length; i++) {
-				var monitor = data[i];
-				var hashcode = monitor.hashCode;
+				var hashcode = data[i].hashCode;
+				var status = data[i].status;
 				
 				$('#' + hashcode + "-container")
 					.removeClass('Pass Failed Unknown')
-					.addClass(monitor.status);
+					.addClass(status);
 				
 				$('#' + hashcode + "-status").removeClass('icon-checkmark icon-close icon-question');
 				
-				if(monitor.status == 'Pass') {
+				if(status == 'Pass') {
 					$('#' + hashcode + "-status").addClass('icon-checkmark');
-				} else if(monitor.status == 'Failed'){
+				} else if(status == 'Failed'){
 					$('#' + hashcode + "-status").addClass('icon-close');
-				} else if(monitor.status == 'Unknown'){
+				} else if(status == 'Unknown'){
 					$('#' + hashcode + "-status").addClass('icon-question');
 				}
 				
-				$('#' + hashcode + "-lastCheck").text(monitor.formattedLastCheck);
+				$('#' + hashcode + "-lastCheck").text(data[i].formattedLastCheck);
 			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			clearInterval(refreshPageIntervalId);
+			$('#message').text("An error has occurred making the request: " + errorThrown);
 		}
 	});
 }

@@ -159,6 +159,9 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>${tomcat7-maven-plugin.version}</version>
 					<configuration>
+						<additionalClasspathDirs>
+							<additionalClasspathDir>src/test/resources</additionalClasspathDir> 
+						</additionalClasspathDirs>
 						<path>/urlMonitor</path>
 					</configuration>
 				</plugin>

@@ -23,7 +23,9 @@
 <div class="content">
 
 	<script type="text/javascript">
-	    setInterval(refreshPage, 1000);
+		$(document).ready(function() {
+			refreshPageIntervalId = setInterval(refreshPage, 1000);
+		});
 	</script>
 
 	<c:forEach var="monitor" items="${monitorList}">
@@ -42,7 +44,8 @@
 				<a href="${monitor.url}}">${monitor.name}</a>
 			</span>
 			
-			<span id="${monitor.hashCode()}-lastCheck" class="time right"><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss"  value="${monitor.lastCheck}"/>
+			<span id="${monitor.hashCode()}-lastCheck" class="time right">
+				${monitor.formattedLastCheck}"
 				<a href='#' class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()} + '-details')"></a>
 			</span>
 			<div id="${monitor.hashCode()}-details" class="details">

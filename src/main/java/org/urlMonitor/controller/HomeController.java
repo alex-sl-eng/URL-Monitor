@@ -27,7 +27,6 @@ public class HomeController
    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
    public @ResponseBody List<Monitor> refreshPage()
    {
-      System.out.println("=======hit");
       return urlMonitorService.getMonitorList();
    }
 }
