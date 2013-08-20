@@ -15,6 +15,7 @@ import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.util.DateUtil;
 
 /**
  * @author Alex Eng - loones1595@gmail.com
@@ -43,9 +44,6 @@ public class Monitor implements Serializable
 
    @Getter
    private Date lastCheck;
-   
-   @Getter
-   private int hashCode;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
@@ -61,25 +59,33 @@ public class Monitor implements Serializable
    @Setter
    private String emailToList;
 
+   /**
+    * This is used to expose hashCode to JSON object in script
+    */
+   @Getter
+   private int hashCode;
+   
+   private String formattedLastCheck;
+
    public Monitor(Properties prop) throws InvalidMonitorFileException
    {
       this.name = prop.getProperty("name");
       this.url = prop.getProperty("url");
       this.cronExpression = prop.getProperty("cronExpression");
       this.contentRegex = prop.getProperty("contentRegex");
-      
+
       isMandatoryFieldsPresent();
 
       this.description = prop.getProperty("description");
       this.tag = prop.getProperty("tag");
       this.emailToList = prop.getProperty("emailToList");
-      
+
       hashCode = this.hashCode();
    }
 
    private void isMandatoryFieldsPresent() throws InvalidMonitorFileException
    {
-      if(StringUtils.isEmpty(name) || StringUtils.isEmpty(url) 
+      if (StringUtils.isEmpty(name) || StringUtils.isEmpty(url)
             || StringUtils.isEmpty(cronExpression) || StringUtils.isEmpty(contentRegex))
       {
          throw new InvalidMonitorFileException("Missing mandatory field(s) in monitor file.");
@@ -103,7 +109,7 @@ public class Monitor implements Serializable
       }
       return new ArrayList<String>();
    }
-   
+
    public String getStatusValue()
    {
       return status.toString();
@@ -113,5 +119,7 @@ public class Monitor implements Serializable
    {
       this.status = status;
       this.lastCheck = new Date();
+      this.formattedLastCheck = DateUtil.formatShortDate(lastCheck);
    }
+   
 }

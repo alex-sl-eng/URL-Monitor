@@ -42,8 +42,8 @@
 				<a href="${monitor.url}}">${monitor.name}</a>
 			</span>
 			
-			<span class="time right"><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss"  value="${monitor.lastCheck}"/>
-				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()} + '-details')"></a>
+			<span id="${monitor.hashCode()}-lastCheck" class="time right"><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss"  value="${monitor.lastCheck}"/>
+				<a href='#' class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()} + '-details')"></a>
 			</span>
 			<div id="${monitor.hashCode()}-details" class="details">
 				<table>

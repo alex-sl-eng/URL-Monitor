@@ -9,8 +9,8 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic'
 	rel='stylesheet' type='text/css'>
-<script src="resources/scripts/script.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="resources/scripts/script.js"></script>
+<script type="text/javascript" src="resources/scripts/jquery-2.0.3.min.js"></script>
 </head>
 
 <header>

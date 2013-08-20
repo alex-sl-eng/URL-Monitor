@@ -4,8 +4,23 @@ function refreshPage() {
 		success : function(data) {
 			for ( var i = 0; i < data.length; i++) {
 				var monitor = data[i];
-				console.log(monitor.name);
 				var hashcode = monitor.hashCode;
+				
+				$('#' + hashcode + "-container")
+					.removeClass('Pass Failed Unknown')
+					.addClass(monitor.status);
+				
+				$('#' + hashcode + "-status").removeClass('icon-checkmark icon-close icon-question');
+				
+				if(monitor.status == 'Pass') {
+					$('#' + hashcode + "-status").addClass('icon-checkmark');
+				} else if(monitor.status == 'Failed'){
+					$('#' + hashcode + "-status").addClass('icon-close');
+				} else if(monitor.status == 'Unknown'){
+					$('#' + hashcode + "-status").addClass('icon-question');
+				}
+				
+				$('#' + hashcode + "-lastCheck").text(monitor.formattedLastCheck);
 			}
 		}
 	});
