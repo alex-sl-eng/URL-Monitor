@@ -21,9 +21,12 @@ import org.urlMonitor.util.HttpUtil;
 @Slf4j
 public class MonitorJob implements Job
 {
+   private EventPublisher eventPublisher;
+   
    public void execute(JobExecutionContext context) throws JobExecutionException
    {
-      EventPublisher eventPublisher= ContextBeanProvider.getBean(EventPublisher.class);
+      checkRequiredComponents();
+      
       Monitor monitor = (Monitor) context.getJobDetail().getJobDataMap().get("value");
       
       try
@@ -59,6 +62,13 @@ public class MonitorJob implements Job
          log.debug("Job {0} failed.", monitor.getName());
          eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getKey(), StatusType.Failed));
       }
-
+   }
+   
+   private void checkRequiredComponents()
+   {
+      if(eventPublisher == null)
+      {
+         eventPublisher= ContextBeanProvider.getBean(EventPublisher.class);
+      }
    }
 }

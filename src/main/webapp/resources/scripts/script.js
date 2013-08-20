@@ -7,12 +7,10 @@ function setView(viewType) {
 
 	if (viewType == 'list') {
 		removeClass = 'grid';
-		addClass = 'list';
 
 		addCssClass(listButton, 'selected');
 		removeCssClass(gridButton, 'selected');
 	} else if (viewType == 'grid') {
-		removeClass = 'list';
 		addClass = 'grid';
 
 		addCssClass(gridButton, 'selected');
@@ -20,8 +18,12 @@ function setView(viewType) {
 	}
 
 	for ( var i = 0; i < containerList.length; i++) {
-		removeCssClass(containerList[i], removeClass);
-		addCssClass(containerList[i], addClass);
+		if(removeClass) {			
+			removeCssClass(containerList[i], removeClass);
+		}
+		if(addClass) {
+			addCssClass(containerList[i], addClass);
+		}
 	}
 }
 

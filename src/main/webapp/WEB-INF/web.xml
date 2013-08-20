@@ -22,7 +22,7 @@
 	
 	<servlet-mapping>
     	<servlet-name>default</servlet-name>
-    	<url-pattern>/styles/*</url-pattern>
+    	<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
  
 	<context-param>

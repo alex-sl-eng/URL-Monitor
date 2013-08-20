@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="includes/header.jsp" />
 
 <main>
@@ -11,7 +12,7 @@
 				<option value="status"><spring:message code="sort.status"/></option>
 		</select></li>
 		<li>
-			<button class="icon-list" id="list" onclick="setView('list')"></button>
+			<button class="icon-list selected" id="list" onclick="setView('list')"></button>
 		</li>
 
 		<li>
@@ -20,59 +21,50 @@
 	</ul>
 </div>
 <div class="content">
-	<div class="container success">
-		<span class="status icon-checkmark"></span> <span class="name"><a
-			href="http://google.com">Google
-				testingggggggggggggggggggggggggggggggg</a></span> <span class="time right">12/07/1900
-			08:00:00 <a href=# class="more-info icon-chevron-down"
-			onclick="toggleDetails(this, 'row1')"></a>
-		</span>
-		<div id="row1" class="details">
-			<table>
-				<tr>
-					<td class="header">Description</td>
-					<td class="value"><span>google search engine</span></td>
-				</tr>
-				<tr>
-					<td class="header">Url</td>
-					<td class="value"><a href="http://google.com">http://google.com</a></td>
-				</tr>
-				<tr>
-					<td class="header">Search text</td>
-					<td class="value">searched string testing long string that.
-						sssssssssssssssssssss.</td>
-				</tr>
-				<tr>
-					<td class="header">Cron expression</td>
-					<td class="value">0/5 * * * * ?</td>
-				</tr>
-				<tr>
-					<td class="header">Tag</td>
-					<td class="value">#search;#public</td>
-				</tr>
-			</table>
+	<c:forEach var="monitor" items="${monitorList}">
+		<div class="container ${monitor.statusValue}">
+			<c:if test="${monitor.statusValue == 'Pass'}">
+				<span class="status icon-checkmark"></span> 
+			</c:if>
+			<c:if test="${monitor.statusValue == 'Failed'}">
+				<span class="status icon-close"></span> 
+			</c:if>
+			<c:if test="${monitor.statusValue == 'Unknown'}">
+				<span class="status icon-question"></span> 
+			</c:if>
+			
+			<span class="name">
+				<a href="${monitor.url}}">${monitor.name}</a>
+			</span>
+			
+			<span class="time right"><fmt:formatDate pattern="dd-MM-yyyy hh:mm:ss"  value="${monitor.lastCheck}"/>
+				<a href=# class="more-info icon-chevron-down" onclick="toggleDetails(this, ${monitor.hashCode()})"></a>
+			</span>
+			<div id="${monitor.hashCode()}" class="details">
+				<table>
+					<tr>
+						<td class="header"><spring:message code="monitor.details.Description"/></td>
+						<td class="value"><span>${monitor.description}</span></td>
+					</tr>
+					<tr>
+						<td class="header"><spring:message code="monitor.details.Url"/></td>
+						<td class="value"><a href="${monitor.url}">${monitor.url}</a></td>
+					</tr>
+					<tr>
+						<td class="header"><spring:message code="monitor.details.SearchText"/></td>
+						<td class="value">${monitor.contentRegex}</td>
+					</tr>
+					<tr>
+						<td class="header"><spring:message code="monitor.details.CronExpression"/></td>
+						<td class="value">${monitor.cronExpression}</td>
+					</tr>
+					<tr>
+						<td class="header"><spring:message code="monitor.details.Tag"/></td>
+						<td class="value">${monitor.tag}</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-	</div>
-
-	<div class="container failed">
-		<span class="status icon-close"></span> <span class="name"><a
-			href="http://yahoo.com">Yahoo</a></span> <span class="time right">12/07/1900
-			08:00:00 <a href=# class="more-info icon-chevron-down"></a>
-		</span>
-	</div>
-
-	<div class="container unknown">
-		<span class="status icon-question"></span> <span class="name"><a
-			href="http://amazon.com">Amazon</a></span> <span class="time right">12/07/1900
-			08:00:00 <a href=# class="more-info icon-chevron-down"></a>
-		</span>
-	</div>
-
-	<div class="container unknown">
-		<span class="status icon-question"></span> <span class="name"><a
-			href="http://amazon.com">Amazon</a></span> <span class="time right">12/07/1900
-			08:00:00 <a href=# class="more-info icon-chevron-down"></a>
-		</span>
-	</div>
+	</c:forEach>
 </div>
 </main>

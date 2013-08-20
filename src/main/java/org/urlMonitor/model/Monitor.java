@@ -43,7 +43,7 @@ public class Monitor implements Serializable
    private String tag;
 
    @Getter
-   private StatusType status;
+   private StatusType status = StatusType.Unknown;
 
    @Getter
    private Date lastCheck;
@@ -103,6 +103,11 @@ public class Monitor implements Serializable
          return Arrays.asList(tag.split(";"));
       }
       return new ArrayList<String>();
+   }
+   
+   public String getStatusValue()
+   {
+      return status.toString();
    }
 
    public void update(StatusType status)

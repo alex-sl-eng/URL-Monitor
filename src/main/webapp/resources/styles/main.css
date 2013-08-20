@@ -185,6 +185,8 @@ ul.horizontal li {
 	overflow: hidden;
 	display: inline-block;
 	transition: 0.8s cubic-bezier(0.26, 0.47, 0.36, 0.94);
+	width: 90%;
+	white-space: nowrap;
 }
 
 .container:hover {
@@ -195,8 +197,18 @@ ul.horizontal li {
 	width: 30%;
 }
 
-.list {
-	width: 90%;
+.grid .status {
+	font-size: 1em;
+}
+
+.grid .time {
+	float: none;
+	font-size:0.7em;
+}
+
+.grid .name {
+	width: 48%;
+	font-size:0.8em;
 }
 
 input[type="text"],button,select,.container {
@@ -240,17 +252,17 @@ button:active {
 	opacity: 0.55;
 }
 
-.success {
+.Pass {
 	color: rgba(0, 128, 0, 0.8);
 }
 
-.failed {
+.Failed {
 	color: rgba(255, 0, 0, 0.8);
 	border: 1px solid rgba(255, 0, 0, 0.3);
 	box-shadow: 0 0 0.13em rgba(255, 0, 0, 0.5);
 }
 
-.unknown {
+.Unknown {
 	color: rgba(255, 128, 24, 0.8);
 }
 
@@ -281,6 +293,7 @@ button:active {
 .time {
 	font-size: 0.75em;
 	color: rgba(0, 0, 0, 0.8) !important;
+	font-weight: bold;
 }
 
 .more-info {
@@ -290,6 +303,7 @@ button:active {
 
 .time,.details {
 	color: rgba(92, 92, 92, 0.9) !important;
+	overflow:hidden;
 }
 
 .details {
@@ -305,6 +319,7 @@ button:active {
 	padding: 0.55em;
 	width: 100%;
 	font-size: 0.9em;
+	table-layout: fixed;
 }
 
 .header {
@@ -315,4 +330,5 @@ button:active {
 .value {
 	text-overflow: ellipsis;
 	overflow: hidden;
+	width:80%;
 }
