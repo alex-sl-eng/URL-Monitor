@@ -12,11 +12,11 @@
 				<option value="status"><spring:message code="sort.status"/></option>
 		</select></li>
 		<li>
-			<button class="icon-list selected" id="list" onclick="setView('list')"></button>
+			<button class="icon-list selected" id="list"></button>
 		</li>
 
 		<li>
-			<button class="icon-grid" id="grid" onclick="setView('grid')"></button>
+			<button class="icon-grid" id="grid"></button>
 		</li>
 	</ul>
 </div>

@@ -80,18 +80,40 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 }
 
 .message {
-	position: absolute;
 	width: 100%;
-	padding: 0.8em 0;
-	text-align: center;
 	z-index: 1;
-	background: rgba(0,0,0,0.7);
-	color:#ffffff;
+	background: rgba(0, 0, 0, 0.7);
+	color: lightgray;
+	font-size: 0.9em;
+	max-height: 30%;
+	height: 0.1em;
+	vertical-align: middle;
 }
 
-.close {
-	float:right;
-	margin-right: 1.5em;
+#message, #closeMessageButton {
+	display: none;
+}
+
+#closeMessageButton {
+	margin: 0 0.7em;
+	background: none;
+	border: none;
+	color: lightgray;
+	font-size: 1.4em;
+	padding: 0.4em;
+}
+
+.visible_message {
+	padding: 0.8em 0;
+	height: auto;
+}
+
+.visible_message #message {
+	display: initial;
+}
+
+.visible_message #closeMessageButton {
+	display: initial;
 }
 
 main {
@@ -174,7 +196,7 @@ a:hover,.right_menu_toggle:hover {
 	color: #085997;
 }
 
-body,a,button,select,li {
+body,a,button,select,li,.message {
 	transition: 0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
@@ -248,6 +270,7 @@ button {
 	box-shadow: none;
 	cursor: pointer;
 	opacity: 0.6;
+	vertical-align: middle;
 }
 
 button:hover,select:hover {

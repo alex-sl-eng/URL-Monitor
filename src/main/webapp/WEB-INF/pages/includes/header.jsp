@@ -12,8 +12,8 @@
 	rel='stylesheet' type='text/css'>
 	
 <link rel="icon" type="image/png" href="resources/images/icon.png"/>
-<script type="text/javascript" src="resources/scripts/script.js"></script>
 <script type="text/javascript" src="resources/scripts/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="resources/scripts/script.js"></script>
 <script>contextPath = "${pageContext.request.contextPath}"</script>
 
 </head>
@@ -36,7 +36,7 @@
 	</li>
 	
 	<div class="message">
-		<span id="message">An error has occurred making the request:</span>
-		<button class="close icon-close"></button>
+		<button id="closeMessageButton" class="icon-cancel"></button>
+		<span id="message"></span>
 	</div>
 </header>

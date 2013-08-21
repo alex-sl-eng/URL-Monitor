@@ -1,6 +1,34 @@
 var refreshPageIntervalId = 0;
 var contextPath;
 
+$(document).ready(function(){
+	$("#closeMessageButton").click(function() {
+		$(".message").toggleClass("visible_message");
+	});
+	
+	$("#list").click(function() {
+		if(!$("#list").hasClass("selected")) {
+			$('#list').addClass('selected');
+		}
+		$('#grid').removeClass('selected');
+		$(".container").removeClass("grid");
+	});
+	
+	$("#grid").click(function() {
+		if(!$("#grid").hasClass("selected")) {
+			$('#grid').addClass('selected');
+		}
+		$('#list').removeClass('selected');
+		
+		if(!$(".container").hasClass("grid")) {
+			$(".container").addClass("grid");
+		}
+	});
+})
+
+
+
+
 function refreshPage() {
 	$.ajax({
 		url : contextPath + '/updateStatus',
@@ -36,25 +64,16 @@ function refreshPage() {
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
 			$('#message').text("An error has occurred making the request: " + errorThrown);
+			
+			if(!$(".message").hasClass("visible_message")) {
+				$(".message").addClass("visible_message");
+			}
 		}
 	});
 }
 
 function getLoadingHtml() {
 	return "<img alt='Loading...' src='resources/images/loader.gif'/>";
-}
-
-function setView(viewType) {
-	if (viewType == 'list') {
-		$('#list').addClass('selected');
-		$('#grid').removeClass('selected');
-
-	} else if (viewType == 'grid') {
-		$('#grid').addClass('selected');
-		$('#list').removeClass('selected');
-	}
-
-	$(".container").toggleClass("grid");
 }
 
 function toggleDetails(toggleBtn, rowId) {
