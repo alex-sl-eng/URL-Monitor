@@ -53,11 +53,11 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 	margin: 0;
 	padding: 0;
 	font-size: 0.4em;
-	background-color: rgba(51, 51, 51, 0.9);
+	background-color: rgba(51, 51, 51, 1);
 	letter-spacing: 0.1em;
 	position: absolute;
 	right: 0;
-	z-index: 1;
+	z-index: 2;
 	min-width: 10em;
 }
 
@@ -77,6 +77,21 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 
 .right_menu>li:hover {
 	background-color: rgba(128, 128, 128, 0.5);
+}
+
+.message {
+	position: absolute;
+	width: 100%;
+	padding: 0.8em 0;
+	text-align: center;
+	z-index: 1;
+	background: rgba(0,0,0,0.7);
+	color:#ffffff;
+}
+
+.close {
+	float:right;
+	margin-right: 1.5em;
 }
 
 main {
@@ -300,7 +315,7 @@ button:active {
 	padding: 0 0 0 0.5em;
 	font-size: 1.5em;
 	display: inline-block;
-	vertical-align:middle;
+	vertical-align: middle;
 }
 
 .time,.details {

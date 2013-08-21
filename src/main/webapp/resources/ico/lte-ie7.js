@@ -14,7 +14,8 @@ window.onload = function() {
 			'icon-chevron-down' : '&#xf078;',
 			'icon-chevron-up' : '&#xf077;',
 			'icon-health' : '&#xe005;',
-			'icon-list-2' : '&#xe009;'
+			'icon-list-2' : '&#xe009;',
+			'icon-cancel' : '&#xe006;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;

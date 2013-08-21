@@ -34,4 +34,9 @@
 			<li><a href="https://bitbucket.org/aeng/urlmonitor/issues/new"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
 	</li>
+	
+	<div class="message">
+		<span id="message">An error has occurred making the request:</span>
+		<button class="close icon-close"></button>
+	</div>
 </header>
