@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -9,8 +10,12 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic'
 	rel='stylesheet' type='text/css'>
+	
+<link rel="icon" type="image/png" href="resources/images/icon.png"/>
 <script type="text/javascript" src="resources/scripts/script.js"></script>
 <script type="text/javascript" src="resources/scripts/jquery-2.0.3.min.js"></script>
+<script>contextPath = "${pageContext.request.contextPath}"</script>
+
 </head>
 
 <header>

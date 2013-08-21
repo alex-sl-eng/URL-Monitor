@@ -1,13 +1,13 @@
-package org.urlMonitor.service;
+package org.urlMonitor.component;
 
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @Scope("singleton")
 public class MessageResource
 {

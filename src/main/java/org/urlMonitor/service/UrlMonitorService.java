@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.mail.EmailException;
-import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,8 +57,8 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    private final static String REGEX_PROPERTIES = "*.properties";
 
    private CronTrigger cronTrigger;
-   private Map<Integer, Monitor> monitorMap = new HashMap<Integer, Monitor>();
-   private Map<Integer, FailedStates> monitorFailedMap = new HashMap<Integer, FailedStates>();
+   private Map<Long, Monitor> monitorMap = new HashMap<Long, Monitor>();
+   private Map<Long, FailedStates> monitorFailedMap = new HashMap<Long, FailedStates>();
 
    @PostConstruct
    public void init() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
@@ -81,7 +80,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       {
          if(cronTrigger.scheduleMonitor(monitor))
          {
-            monitorMap.put(monitor.hashCode(), monitor);
+            monitorMap.put(monitor.getId(), monitor);
          }
       }
    }
@@ -126,9 +125,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
    public void onApplicationEvent(MonitorUpdateEvent event)
    {
-      if (monitorMap.containsKey(event.getHashCode()))
+      if (monitorMap.containsKey(event.getId()))
       {
-         Monitor monitor = monitorMap.get(event.getHashCode());
+         Monitor monitor = monitorMap.get(event.getId());
          monitor.update(event.getStatus());
 
          try
@@ -150,19 +149,19 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
     */
    private void updateStates(Monitor monitor) throws EmailException
    {
-      int key = monitor.hashCode();
+      Long id = monitor.getId();
       if (monitor.getStatus() == StatusType.Pass)
       {
-         if (monitorFailedMap.remove(key) != null)
+         if (monitorFailedMap.remove(id) != null)
          {
             emailService.sendSuccessEmail(monitor, monitor.getLastCheck());
          }
       }
       else if (monitor.getStatus() == StatusType.Unknown || monitor.getStatus() == StatusType.Failed)
       {
-         if (monitorFailedMap.containsKey(key))
+         if (monitorFailedMap.containsKey(id))
          {
-            FailedStates failedStates = monitorFailedMap.get(key);
+            FailedStates failedStates = monitorFailedMap.get(id);
             failedStates.addCount();
             if (failedStates.getCount() == retryCount)
             {
@@ -171,7 +170,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          }
          else
          {
-            monitorFailedMap.put(key, new FailedStates());
+            monitorFailedMap.put(id, new FailedStates());
          }
       }
    }

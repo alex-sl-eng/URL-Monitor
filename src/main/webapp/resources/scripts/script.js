@@ -1,29 +1,36 @@
 var refreshPageIntervalId = 0;
+var contextPath;
 
 function refreshPage() {
 	$.ajax({
-		url : '/urlMonitor/updateStatus',
+		url : contextPath + '/updateStatus',
 		cache : false,
 		success : function(data) {
 			for ( var i = 0; i < data.length; i++) {
-				var hashcode = data[i].hashCode;
+				var id = data[i].id;
 				var status = data[i].status;
 				
-				$('#' + hashcode + "-container")
+				$('#' + id + "-container")
 					.removeClass('Pass Failed Unknown')
 					.addClass(status);
 				
-				$('#' + hashcode + "-status").removeClass('icon-checkmark icon-close icon-question');
+				$('#' + id + "-status").removeClass('icon-checkmark icon-close icon-question');
+				$('#' + id + "-status").html(''); 
 				
 				if(status == 'Pass') {
-					$('#' + hashcode + "-status").addClass('icon-checkmark');
+					$('#' + id + "-status").addClass('icon-checkmark');
 				} else if(status == 'Failed'){
-					$('#' + hashcode + "-status").addClass('icon-close');
+					$('#' + id + "-status").addClass('icon-close');
 				} else if(status == 'Unknown'){
-					$('#' + hashcode + "-status").addClass('icon-question');
+					$('#' + id + "-status").html(getLoadingHtml());
 				}
 				
-				$('#' + hashcode + "-lastCheck").text(data[i].formattedLastCheck);
+				if(data[i].formattedLastCheck){
+					$('#' + id + "-lastCheck").text(data[i].formattedLastCheck);
+				}
+				else {
+					$('#' + id + "-lastCheck").html(getLoadingHtml());
+				}
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -31,6 +38,10 @@ function refreshPage() {
 			$('#message').text("An error has occurred making the request: " + errorThrown);
 		}
 	});
+}
+
+function getLoadingHtml() {
+	return "<img alt='Loading...' src='resources/images/loader.gif'/>";
 }
 
 function setView(viewType) {
@@ -47,13 +58,13 @@ function setView(viewType) {
 }
 
 function toggleDetails(toggleBtn, rowId) {
-	$("#" + rowId).toggleClass("visible");
+	$("#" + rowId + '-details').toggleClass("visible");
 
-	if (containCssClass(details, visibleClass)) {
-		$(toggleBtn).removeClass('icon-chevron-up').addClass(
-				'icon-chevron-down');
-	} else {
+	if ($("#" + rowId + '-details').hasClass("visible")) {
 		$(toggleBtn).removeClass('icon-chevron-down').addClass(
-				'icon-chevron-up');
+		'icon-chevron-up');
+	} else {
+		$(toggleBtn).removeClass('icon-chevron-up').addClass(
+		'icon-chevron-down');
 	}
 }

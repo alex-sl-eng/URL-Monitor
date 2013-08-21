@@ -10,29 +10,30 @@ import org.apache.http.client.ClientProtocolException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.urlMonitor.component.ContentReader;
+import org.urlMonitor.component.ContentReaderManager;
+import org.urlMonitor.component.ContextBeanProvider;
 import org.urlMonitor.exception.HttpReadContentException;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.service.ContextBeanProvider;
 import org.urlMonitor.service.events.EventPublisher;
 import org.urlMonitor.service.events.MonitorUpdateEvent;
-import org.urlMonitor.util.HttpUtil;
 
 @Slf4j
 public class MonitorJob implements Job
 {
    private EventPublisher eventPublisher;
+   private ContentReader contentReader;
    
    public void execute(JobExecutionContext context) throws JobExecutionException
    {
-      checkRequiredComponents();
-      
       Monitor monitor = (Monitor) context.getJobDetail().getJobDataMap().get("value");
+      initRequiredComponents(monitor);
       
       try
       {
          StatusType updatedStatus = StatusType.Failed;
-         String content = HttpUtil.readContent(monitor);
+         String content = contentReader.readContent(monitor.getUrl());
          Pattern pattern = Pattern.compile(monitor.getContentRegex());
          Matcher matcher = pattern.matcher(content);
          if (matcher.find())
@@ -45,30 +46,36 @@ public class MonitorJob implements Job
             log.debug("Job {0} failed.", monitor.getName());
             updatedStatus = StatusType.Failed;
          }
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), updatedStatus));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), updatedStatus));
       }
       catch (ClientProtocolException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Unknown));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), StatusType.Unknown));
       }
       catch (IOException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Unknown));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), StatusType.Unknown));
       }
       catch (HttpReadContentException e)
       {
          log.debug("Job {0} failed.", monitor.getName());
-         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.hashCode(), StatusType.Failed));
+         eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), StatusType.Failed));
       }
    }
    
-   private void checkRequiredComponents()
+   private void initRequiredComponents(Monitor monitor)
    {
       if(eventPublisher == null)
       {
-         eventPublisher= ContextBeanProvider.getBean(EventPublisher.class);
+         eventPublisher = ContextBeanProvider.getBean(EventPublisher.class);
+      }
+      
+      if(contentReader == null)
+      {
+         ContentReaderManager manager = ContextBeanProvider.getBean(ContentReaderManager.class);
+         contentReader = manager.getOrCreateContentReader(monitor.getId(), monitor.getUrl());
       }
    }
 }

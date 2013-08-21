@@ -27,6 +27,9 @@ public class Monitor implements Serializable
    private static final long serialVersionUID = 1L;
 
    @Getter
+   private Long id;
+   
+   @Getter
    @NonNull
    private String name;
 
@@ -60,13 +63,7 @@ public class Monitor implements Serializable
    private String emailToList;
 
    /**
-    * This is used to expose hashCode to JSON object in script
-    */
-   @Getter
-   private int hashCode;
-   
-   /**
-    * This is used to expose hashCode to JSON object in script
+    * This is used to expose formatted date to JSON object in script
     */
    @Getter
    private String formattedLastCheck;
@@ -84,7 +81,7 @@ public class Monitor implements Serializable
       this.tag = prop.getProperty("tag");
       this.emailToList = prop.getProperty("emailToList");
 
-      hashCode = this.hashCode();
+      id = new Long(this.hashCode());
    }
 
    private void isMandatoryFieldsPresent() throws InvalidMonitorFileException
@@ -112,11 +109,6 @@ public class Monitor implements Serializable
          return Arrays.asList(tag.split(";"));
       }
       return new ArrayList<String>();
-   }
-
-   public String getStatusValue()
-   {
-      return status.toString();
    }
 
    public void update(StatusType status)

@@ -10,15 +10,15 @@ public class MonitorUpdateEvent extends ApplicationEvent
    private static final long serialVersionUID = 1L;
 
    @Getter
-   private final Integer hashCode;
+   private final Long id;
    
    @Getter
    private StatusType status;
    
-   public MonitorUpdateEvent(Object source, Integer hashCode, StatusType status)
+   public MonitorUpdateEvent(Object source, Long id, StatusType status)
    {
       super(source);
-      this.hashCode = hashCode;
+      this.id = id;
       this.status = status;
    }
 }

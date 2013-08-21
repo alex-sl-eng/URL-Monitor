@@ -32,7 +32,7 @@ public class CronTrigger
    {
       if (monitor != null)
       {
-         JobKey jobKey = new JobKey(monitor.hashCode() + "");
+         JobKey jobKey = new JobKey(monitor.getId() + "");
          
          if (!scheduler.checkExists(jobKey))
          {

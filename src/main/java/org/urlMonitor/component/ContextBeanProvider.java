@@ -1,4 +1,4 @@
-package org.urlMonitor.service;
+package org.urlMonitor.component;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
