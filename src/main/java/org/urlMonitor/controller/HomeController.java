@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.service.UrlMonitorService;
@@ -28,5 +29,11 @@ public class HomeController
    public @ResponseBody List<Monitor> refreshPage()
    {
       return urlMonitorService.getMonitorList();
+   }
+   
+   @RequestMapping(value = "/filterList", method = RequestMethod.GET)
+   public @ResponseBody List<Monitor> filterList(@RequestParam String filterText)
+   {
+      return urlMonitorService.getMonitorList(filterText);
    }
 }

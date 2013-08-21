@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +123,31 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    {
       return new ArrayList<Monitor>(monitorMap.values());
    }
+   
+   public List<Monitor> getMonitorList(String filterText)
+   {
+      List<Monitor> list = getMonitorList();
+      if(StringUtils.isEmpty(filterText))
+      {
+         return list;
+      }
+      
+      List<Monitor> filteredList = new ArrayList<Monitor>();
+      String[] filters = filterText.split(";");
+      
+      for(Monitor monitor: list)
+      {
+         for(String filter: filters)
+         {
+            if(monitor.getTag().contains(filter))
+            {
+               filteredList.add(monitor);
+            }
+         }
+      }
+      return filteredList;
+   }
+   
 
    public void onApplicationEvent(MonitorUpdateEvent event)
    {

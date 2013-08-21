@@ -29,14 +29,18 @@
 	<li class="right huge right_menu_toggle">
 		<span class="icon-list-2"></span>
 		<ul class="right_menu">
-			<li><a href="/about"><spring:message code="nav.About"/></a></li>
-			<li><a href="/license"><spring:message code="nav.License"/></a></li>
-			<li><a href="https://bitbucket.org/aeng/urlmonitor/issues/new"><spring:message code="nav.ReportIssue"/></a></li>
+			<li><a href="https://github.com/aeng/urlMonitor/wiki" target="_blank"><spring:message code="nav.About"/></a></li>
+			<li><a href="https://github.com/aeng/urlMonitor/issues" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
 	</li>
 	
 	<div class="message">
 		<button id="closeMessageButton" class="icon-cancel"></button>
-		<span id="message"></span>
+		<span id="message">
+			An error has occurred making the request. Try 
+			<a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.
+		</span>
+		
+		<span id="message_details"></span>
 	</div>
 </header>

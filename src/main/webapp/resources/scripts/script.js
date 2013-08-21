@@ -24,9 +24,30 @@ $(document).ready(function(){
 			$(".container").addClass("grid");
 		}
 	});
+	
+	$("#filter_text").change(function() {
+		filterList($('#filter_text').val());
+	});
 })
 
 
+function filterList(filterText) {
+	$.ajax({
+		url : contextPath + '/filterList',
+		cache : false,
+		data: ({filterText : filterText}),
+		success : function(data) {
+			//refresh whole table
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			clearInterval(refreshPageIntervalId);
+			console.log(errorThrown);
+			
+			displayMessage(errorThrown);
+		}
+	});
+}
 
 
 function refreshPage() {
@@ -63,17 +84,24 @@ function refreshPage() {
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
-			$('#message').text("An error has occurred making the request: " + errorThrown);
 			
-			if(!$(".message").hasClass("visible_message")) {
-				$(".message").addClass("visible_message");
-			}
+			displayMessage(errorThrown);
 		}
 	});
 }
 
 function getLoadingHtml() {
 	return "<img alt='Loading...' src='resources/images/loader.gif'/>";
+}
+
+function displayMessage(message) {
+	if(!$(".message").hasClass("visible_message")) {
+		$(".message").addClass("visible_message");
+	}
+	
+	if(message) {
+		$('#message_details').text(message);
+	}
 }
 
 function toggleDetails(toggleBtn, rowId) {

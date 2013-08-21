@@ -90,8 +90,9 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 	vertical-align: middle;
 }
 
-#message, #closeMessageButton {
+#message, #closeMessageButton, #message_details {
 	display: none;
+	vertical-align: baseline;
 }
 
 #closeMessageButton {
@@ -108,11 +109,7 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 	height: auto;
 }
 
-.visible_message #message {
-	display: initial;
-}
-
-.visible_message #closeMessageButton {
+.visible_message #message, .visible_message #closeMessageButton, .visible_message #message_details {
 	display: initial;
 }
 

@@ -6,11 +6,7 @@
 <main>
 <div class="filter">
 	<ul class="horizontal">
-		<li style="width: 50%"><input type="text" /></li>
-		<li><select>
-				<option value="name"><spring:message code="sort.name"/></option>
-				<option value="status"><spring:message code="sort.status"/></option>
-		</select></li>
+		<li style="width: 50%"><input type="text" id="filter_text"/></li>
 		<li>
 			<button class="icon-list selected" id="list"></button>
 		</li>
@@ -24,7 +20,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			refreshPageIntervalId = setInterval(refreshPage, 1000);
+			refreshPageIntervalId = setInterval(refreshPage, 10000);
 		});
 	</script>
 

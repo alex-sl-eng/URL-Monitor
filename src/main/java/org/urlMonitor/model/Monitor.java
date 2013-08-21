@@ -25,7 +25,7 @@ import org.urlMonitor.util.DateUtil;
 public class Monitor implements Serializable
 {
    private static final long serialVersionUID = 1L;
-
+   
    @Getter
    private Long id;
    
