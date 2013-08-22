@@ -26,14 +26,16 @@ public class HomeController
    }
 
    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
-   public @ResponseBody List<Monitor> refreshPage()
+   public @ResponseBody
+   List<Monitor> refreshPage()
    {
       return urlMonitorService.getMonitorList();
    }
-   
+
    @RequestMapping(value = "/filterList", method = RequestMethod.GET)
-   public @ResponseBody List<Monitor> filterList(@RequestParam String filterText)
+   public String filterList(@RequestParam String filterText, ModelMap model)
    {
-      return urlMonitorService.getMonitorList(filterText);
+      model.addAttribute("monitorList", urlMonitorService.getMonitorList(filterText));
+      return "view/content";
    }
 }

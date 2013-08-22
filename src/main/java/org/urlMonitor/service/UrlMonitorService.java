@@ -79,7 +79,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
       for (Monitor monitor : loadMonitorFiles())
       {
-         if(cronTrigger.scheduleMonitor(monitor))
+         if (cronTrigger.scheduleMonitor(monitor))
          {
             monitorMap.put(monitor.getId(), monitor);
          }
@@ -123,31 +123,49 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    {
       return new ArrayList<Monitor>(monitorMap.values());
    }
-   
+
    public List<Monitor> getMonitorList(String filterText)
    {
       List<Monitor> list = getMonitorList();
-      if(StringUtils.isEmpty(filterText))
+      if (StringUtils.isEmpty(filterText))
       {
          return list;
       }
-      
+
       List<Monitor> filteredList = new ArrayList<Monitor>();
       String[] filters = filterText.split(";");
-      
-      for(Monitor monitor: list)
+
+      for (Monitor monitor : list)
       {
-         for(String filter: filters)
+         if (isMatchTagOrName(monitor.getName(), monitor.getTag(), filters))
          {
-            if(monitor.getTag().contains(filter))
-            {
-               filteredList.add(monitor);
-            }
+            filteredList.add(monitor);
          }
       }
       return filteredList;
    }
-   
+
+   private boolean isMatchTagOrName(String name, List<String> tags, String[] filterTextList)
+   {
+      for (String filterText : filterTextList)
+      {
+         if (name.contains(filterText))
+         {
+            return true;
+         }
+         else
+         {
+            for (String tag : tags)
+            {
+               if (tag.contains(filterText))
+               {
+                  return true;
+               }
+            }
+         }
+      }
+      return false;
+   }
 
    public void onApplicationEvent(MonitorUpdateEvent event)
    {

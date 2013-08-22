@@ -13,6 +13,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.UrlValidator;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.util.DateUtil;
@@ -27,6 +28,7 @@ public class Monitor implements Serializable
    private static final long serialVersionUID = 1L;
    
    @Getter
+   @NonNull
    private Long id;
    
    @Getter
@@ -39,8 +41,6 @@ public class Monitor implements Serializable
    @Getter
    @NonNull
    private String url;
-
-   private String tag;
 
    @Getter
    private StatusType status = StatusType.Unknown;
@@ -61,6 +61,8 @@ public class Monitor implements Serializable
 
    @Setter
    private String emailToList;
+   
+   private String tag;
 
    /**
     * This is used to expose formatted date to JSON object in script
@@ -70,16 +72,17 @@ public class Monitor implements Serializable
 
    public Monitor(Properties prop) throws InvalidMonitorFileException
    {
-      this.name = prop.getProperty("name");
-      this.url = prop.getProperty("url");
-      this.cronExpression = prop.getProperty("cronExpression");
-      this.contentRegex = prop.getProperty("contentRegex");
+      this.name = StringUtils.trimToEmpty(prop.getProperty("name"));
+      this.url = StringUtils.trimToEmpty(prop.getProperty("url"));
+      this.cronExpression = StringUtils.trimToEmpty(prop.getProperty("cronExpression"));
+      this.contentRegex = StringUtils.trimToEmpty(prop.getProperty("contentRegex"));
 
       isMandatoryFieldsPresent();
+      validateNameRegexAndTag();
 
-      this.description = prop.getProperty("description");
-      this.tag = prop.getProperty("tag");
-      this.emailToList = prop.getProperty("emailToList");
+      this.description = StringUtils.trimToEmpty(prop.getProperty("description"));
+      this.tag = StringUtils.trimToEmpty(prop.getProperty("tag"));
+      this.emailToList = StringUtils.trimToEmpty(prop.getProperty("emailToList"));
 
       id = new Long(this.hashCode());
    }
@@ -90,6 +93,29 @@ public class Monitor implements Serializable
             || StringUtils.isEmpty(cronExpression) || StringUtils.isEmpty(contentRegex))
       {
          throw new InvalidMonitorFileException("Missing mandatory field(s) in monitor file.");
+      }
+   }
+   
+   private void validateNameRegexAndTag() throws InvalidMonitorFileException
+   {
+      if(StringUtils.containsWhitespace(name))
+      {
+         throw new InvalidMonitorFileException("Invalid name-" + name);
+      }
+      
+      UrlValidator urlValidator = new UrlValidator();
+      if (!urlValidator.isValid(url)) {
+         throw new InvalidMonitorFileException("Invalid url-" + url);
+      }
+      
+      if(StringUtils.containsWhitespace(contentRegex))
+      {
+         throw new InvalidMonitorFileException("Invalid content regular expression-" + contentRegex);
+      }
+      
+      if(!org.quartz.CronExpression.isValidExpression(cronExpression))
+      {
+         throw new InvalidMonitorFileException("Invalid cron expression-" + cronExpression);
       }
    }
 

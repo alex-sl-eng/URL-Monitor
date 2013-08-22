@@ -1,3 +1,4 @@
+var refreshPageInterval = 10000;
 var refreshPageIntervalId = 0;
 var contextPath;
 
@@ -26,6 +27,7 @@ $(document).ready(function(){
 	});
 	
 	$("#filter_text").change(function() {
+		$(".content").html(getLargeLoadingHtml());
 		filterList($('#filter_text').val());
 	});
 })
@@ -36,9 +38,8 @@ function filterList(filterText) {
 		url : contextPath + '/filterList',
 		cache : false,
 		data: ({filterText : filterText}),
-		success : function(data) {
-			//refresh whole table
-			
+		success : function(response) {
+			$(".content").html(response);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
@@ -92,6 +93,10 @@ function refreshPage() {
 
 function getLoadingHtml() {
 	return "<img alt='Loading...' src='resources/images/loader.gif'/>";
+}
+
+function getLargeLoadingHtml() {
+	return "<img alt='Loading...' src='resources/images/loader-large.gif'/>";
 }
 
 function displayMessage(message) {

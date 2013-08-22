@@ -120,9 +120,6 @@ main {
 main .filter,main .content {
 	margin: auto;
 	max-width: 960px;
-}
-
-main .filter {
 	text-align: center;
 }
 
@@ -222,6 +219,7 @@ ul.horizontal li {
 	transition: 0.8s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 	width: 96%;
 	white-space: nowrap;
+	text-align: left;
 }
 
 .container:hover {
