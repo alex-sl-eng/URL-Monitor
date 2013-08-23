@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta http-equiv="cleartype" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><spring:message code="Application.name"/></title>
 <link rel="stylesheet" href="resources/styles/main.css">
 <link rel="stylesheet" href="resources/styles/style.css">
-<link
-	href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic'
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,400italic'
 	rel='stylesheet' type='text/css'>
 	
 <link rel="icon" type="image/png" href="resources/images/icon.png"/>
@@ -34,13 +34,20 @@
 		</ul>
 	</li>
 	
-	<div class="message">
-		<button id="closeMessageButton" class="icon-cancel"></button>
-		<span id="message">
-			An error has occurred making the request. Try 
-			<a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.
-		</span>
-		
-		<span id="message_details"></span>
-	</div>
+    <ul class="message horizontal">
+        <li>
+            <button id="closeMessageButton" class="icon-cancel"></button>
+        </li>
+        <li>
+			<span id="message">
+				An error has occurred making the request. Try 
+				<a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.
+			</span>
+			
+			<span id="message_details"></span>
+		</li>
+	</ul>
+	<span class="small">
+	   <input type="checkbox" id="auto_refresh" value="true" checked="checked"/>Auto refresh
+	</span>
 </header>

@@ -4,7 +4,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
-import java.util.concurrent.TimeUnit;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,11 +18,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 @Slf4j
 public class HttpClientBuilder
 {
-   public static HttpClient buildClient(Long allowIdleTime)
+   public static HttpClient buildClient()
    {
       HttpClient httpclient = new DefaultHttpClient();
-      httpclient.getConnectionManager().closeIdleConnections(allowIdleTime, TimeUnit.MINUTES);
-
       configureSSLHandling(httpclient);
 
       return httpclient;

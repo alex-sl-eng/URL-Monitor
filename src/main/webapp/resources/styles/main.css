@@ -1,3 +1,12 @@
+@media screen and (max-width: 524px) {
+	header h1,.huge {
+		font-size: 200% !important;
+	}
+	.grid {
+		width: auto !important;
+	}
+}
+
 body {
 	font-family: "Source Sans Pro", "Helvetica Neue", HelveticaNeue,
 		Helvetica, Arial, sans-serif;
@@ -88,15 +97,20 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 	max-height: 30%;
 	height: 0.1em;
 	vertical-align: middle;
+	overflow: hidden;
 }
 
-#message, #closeMessageButton, #message_details {
-	display: none;
+#message,#closeMessageButton,#message_details {
 	vertical-align: baseline;
 }
 
+#message,#message_details {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display:block;
+}
+
 #closeMessageButton {
-	margin: 0 0.7em;
 	background: none;
 	border: none;
 	color: lightgray;
@@ -105,12 +119,8 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 }
 
 .visible_message {
-	padding: 0.8em 0;
+	padding: 0.8em 0 !important;
 	height: auto;
-}
-
-.visible_message #message, .visible_message #closeMessageButton, .visible_message #message_details {
-	display: initial;
 }
 
 main {
@@ -125,6 +135,10 @@ main .filter,main .content {
 
 .huge {
 	font-size: 2.25em;
+}
+
+.small {
+	font-size: 0.9em;
 }
 
 footer {
@@ -217,7 +231,6 @@ ul.horizontal li {
 	overflow: hidden;
 	display: inline-block;
 	transition: 0.8s cubic-bezier(0.26, 0.47, 0.36, 0.94);
-	width: 96%;
 	white-space: nowrap;
 	text-align: left;
 }

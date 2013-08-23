@@ -1,6 +1,7 @@
-var refreshPageInterval = 10000;
+var refreshPageInterval = 5000; //5 seconds
 var refreshPageIntervalId = 0;
 var contextPath;
+var view = 'list';
 
 $(document).ready(function(){
 	$("#closeMessageButton").click(function() {
@@ -13,6 +14,8 @@ $(document).ready(function(){
 		}
 		$('#grid').removeClass('selected');
 		$(".container").removeClass("grid");
+		
+		view = 'list';
 	});
 	
 	$("#grid").click(function() {
@@ -23,6 +26,16 @@ $(document).ready(function(){
 		
 		if(!$(".container").hasClass("grid")) {
 			$(".container").addClass("grid");
+		}
+		
+		view = 'grid';
+	});
+	
+	$("#auto_refresh").click(function() {
+		if($("#auto_refresh").is(':checked')) {
+			refreshPageIntervalId = setInterval(refreshPage, refreshPageInterval);
+		} else {
+			clearInterval(refreshPageIntervalId);
 		}
 	});
 	
@@ -40,6 +53,12 @@ function filterList(filterText) {
 		data: ({filterText : filterText}),
 		success : function(response) {
 			$(".content").html(response);
+			
+			if(view == 'grid') {			
+				$('#grid').trigger('click');
+			} else {
+				$('#list').trigger('click');
+			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
@@ -52,6 +71,7 @@ function filterList(filterText) {
 
 
 function refreshPage() {
+	console.log("refresh page");
 	$.ajax({
 		url : contextPath + '/updateStatus',
 		cache : false,
