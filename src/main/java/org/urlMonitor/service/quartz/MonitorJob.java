@@ -19,21 +19,26 @@ import org.urlMonitor.service.events.MonitorUpdateEvent;
 @Slf4j
 public class MonitorJob implements Job
 {
-   private EventPublisher eventPublisher;
-   private WebClient webClient;
-
    public void execute(JobExecutionContext context) throws JobExecutionException
    {
       Monitor monitor = (Monitor) context.getJobDetail().getJobDataMap().get("value");
-      initRequiredComponents(monitor);
 
-      if(webClient != null)
+      EventPublisher eventPublisher = ContextBeanProvider.getBean(EventPublisher.class);
+      WebClientManager manager = ContextBeanProvider.getBean(WebClientManager.class);
+      WebClient webClient = null;
+      
+      if(manager != null)
+      {
+         webClient = manager.getOrCreateWebClient(monitor.getId(), monitor.getUrl());
+      }
+
+      if (webClient != null && eventPublisher != null)
       {
          try
          {
             StatusType updatedStatus = webClient.checkStatus(monitor.getUrl(), monitor.getContentRegex());
             log.debug("{} status: {}", monitor.getName(), updatedStatus);
-            
+
             eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), updatedStatus));
          }
          catch (ClientProtocolException e)
@@ -46,22 +51,9 @@ public class MonitorJob implements Job
             log.debug("{} failed.", monitor.getName());
             eventPublisher.fireEvent(new MonitorUpdateEvent(this, monitor.getId(), StatusType.Unknown));
          }
-      }
-   }
-
-   private void initRequiredComponents(Monitor monitor)
-   {
-      if (eventPublisher == null)
-      {
-         eventPublisher = ContextBeanProvider.getBean(EventPublisher.class);
-      }
-
-      if (webClient == null)
-      {
-         WebClientManager manager = ContextBeanProvider.getBean(WebClientManager.class);
-         if(manager != null)
+         finally
          {
-            webClient = manager.getOrCreateWebClient(monitor.getId(), monitor.getUrl());
+            webClient.close();
          }
       }
    }

@@ -19,7 +19,11 @@ public class ContextBeanProvider implements ApplicationContextAware
    
    public static <T> T getBean(Class<T> clazz)
    {
-      return applicationContext.getBean(clazz);
+      if(applicationContext != null)
+      {
+         return applicationContext.getBean(clazz);
+      }
+      return null;
    }
 
 }

@@ -18,4 +18,6 @@ public interface WebClient
     * @throws IOException
     */
    StatusType checkStatus(String url, String contentRegex) throws ClientProtocolException, IOException;
+
+   void close();
 }

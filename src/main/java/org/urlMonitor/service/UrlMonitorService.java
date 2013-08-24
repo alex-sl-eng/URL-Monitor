@@ -181,7 +181,6 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          catch (EmailException e)
          {
             log.error("Unable to send notification email-" + e);
-            e.printStackTrace();
          }
       }
    }

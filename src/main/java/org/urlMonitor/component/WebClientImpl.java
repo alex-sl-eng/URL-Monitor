@@ -17,28 +17,28 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.util.HttpClientBuilder;
 
 public class WebClientImpl implements WebClient
 {
-   private final HttpClient httpclient;
+   private final HttpClient httpClient;
+   private final HttpGet httpGet;
+   private HttpResponse httpResponse;
 
-   public WebClientImpl(String url)
+   public WebClientImpl(String url, HttpClient httpClient)
    {
-      httpclient = HttpClientBuilder.buildClient();
+      this.httpClient = httpClient;
+      this.httpGet = new HttpGet(url);
    }
 
    @Override
    public StatusType checkStatus(String url, String contentRegex) throws ClientProtocolException, IOException
    {
-      HttpGet httpget = new HttpGet(url);
-
       // Execute the request
-      HttpResponse response = httpclient.execute(httpget);
+      httpResponse = httpClient.execute(httpGet);
 
       StatusType result = StatusType.Failed;
 
-      if (!isHttpResponseOK(response))
+      if (!isHttpResponseOK(httpResponse))
       {
          result = StatusType.Failed;
       }
@@ -47,7 +47,7 @@ public class WebClientImpl implements WebClient
          if (!StringUtils.isEmpty(contentRegex))
          {
             // Get hold of the response entity
-            HttpEntity entity = response.getEntity();
+            HttpEntity entity = httpResponse.getEntity();
             StringBuilder sb = new StringBuilder();
             if (entity != null)
             {
@@ -62,7 +62,9 @@ public class WebClientImpl implements WebClient
                   sb.append(line);
                   line = br.readLine();
                }
+              
                br.close();
+               instream.close();
             }
 
             Pattern pattern = Pattern.compile(contentRegex);
@@ -79,15 +81,21 @@ public class WebClientImpl implements WebClient
          }
       }
 
-      EntityUtils.consumeQuietly(response.getEntity());
-      httpclient.getConnectionManager().closeExpiredConnections();
-      httpclient.getConnectionManager().closeIdleConnections(1L, TimeUnit.SECONDS);
-
+      close();
       return result;
    }
 
    private boolean isHttpResponseOK(HttpResponse response)
    {
       return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
+   }
+
+   @Override
+   public void close()
+   {
+      EntityUtils.consumeQuietly(httpResponse.getEntity());
+      httpGet.releaseConnection();
+      httpClient.getConnectionManager().closeIdleConnections(1L, TimeUnit.SECONDS);
+      httpClient.getConnectionManager().closeExpiredConnections();
    }
 }

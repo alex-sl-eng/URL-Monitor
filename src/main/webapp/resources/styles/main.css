@@ -16,7 +16,7 @@ body {
 	margin: 0;
 }
 
-main,footer {
+main {
 	padding: 0.5em;
 }
 
@@ -139,22 +139,6 @@ main .filter,main .content {
 
 .small {
 	font-size: 0.9em;
-}
-
-footer {
-	clear: both;
-	background-color: rgba(51, 51, 51, 0.8);
-	color: #e1e1e1;
-	font-size: 0.8em;
-	letter-spacing: 0.1em;
-}
-
-footer a:hover {
-	color: #6CBDFB;
-}
-
-.footnote {
-	color: rgba(128, 128, 128, 0.8);
 }
 
 h1,h2,h3,h4,h5,h6,h1 a {

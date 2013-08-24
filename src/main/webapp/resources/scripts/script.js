@@ -64,14 +64,13 @@ function filterList(filterText) {
 			clearInterval(refreshPageIntervalId);
 			console.log(errorThrown);
 			
-			displayMessage(errorThrown);
+			displayMessage(getErrorMessageHeader(), errorThrown);
 		}
 	});
 }
 
 
 function refreshPage() {
-	console.log("refresh page");
 	$.ajax({
 		url : contextPath + '/updateStatus',
 		cache : false,
@@ -105,8 +104,7 @@ function refreshPage() {
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
-			
-			displayMessage(errorThrown);
+			displayMessage(getErrorMessageHeader(), errorThrown);
 		}
 	});
 }
@@ -119,12 +117,18 @@ function getLargeLoadingHtml() {
 	return "<img alt='Loading...' src='resources/images/loader-large.gif'/>";
 }
 
-function displayMessage(message) {
-	if(!$(".message").hasClass("visible_message")) {
-		$(".message").addClass("visible_message");
-	}
-	
-	if(message) {
+function getErrorMessageHeader() {
+	return "An error has occurred making the request. " +
+			"Try <a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.";
+}
+
+function displayMessage(messageHeaderHTML, message) {
+	if(messageHeaderHTML) {
+		if(!$(".message").hasClass("visible_message")) {
+			$(".message").addClass("visible_message");
+		}
+		$("#message").html(messageHeaderHTML);
+		
 		$('#message_details').text(message);
 	}
 }

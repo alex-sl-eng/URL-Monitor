@@ -9,7 +9,8 @@ public class MonitorValidator
 {
    public static void isMandatoryFieldsPresent(Monitor monitor) throws InvalidMonitorFileException
    {
-      if (monitor.getId() == null || StringUtils.isEmpty(monitor.getName()) || StringUtils.isEmpty(monitor.getUrl()) || StringUtils.isEmpty(monitor.getCronExpression()))
+      if (monitor.getId() == null || StringUtils.isEmpty(monitor.getName()) || StringUtils.isEmpty(monitor.getUrl()) 
+            || StringUtils.isEmpty(monitor.getCronExpression()))
       {
          throw new InvalidMonitorFileException("Missing mandatory field(s) in monitor file.");
       }

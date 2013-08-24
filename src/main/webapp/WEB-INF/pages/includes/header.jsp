@@ -29,8 +29,8 @@
 	<li class="right huge right_menu_toggle">
 		<span class="icon-list-2"></span>
 		<ul class="right_menu">
-			<li><a href="https://github.com/aeng/urlMonitor/wiki" target="_blank"><spring:message code="nav.About"/></a></li>
-			<li><a href="https://github.com/aeng/urlMonitor/issues" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
+			<li><a href="https://bitbucket.org/aeng/url-monitor/wiki/Home" target="_blank"><spring:message code="nav.About"/></a></li>
+			<li><a href="https://bitbucket.org/aeng/url-monitor/issues/new" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
 	</li>
 	
@@ -39,11 +39,7 @@
             <button id="closeMessageButton" class="icon-cancel"></button>
         </li>
         <li>
-			<span id="message">
-				An error has occurred making the request. Try 
-				<a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.
-			</span>
-			
+			<span id="message"></span>
 			<span id="message_details"></span>
 		</li>
 	</ul>
