@@ -1,4 +1,4 @@
-var refreshPageInterval = 5000; //5 seconds
+var refreshPageInterval = 5000; //30 seconds
 var refreshPageIntervalId = 0;
 var contextPath;
 var view = 'list';
@@ -71,6 +71,8 @@ function filterList(filterText) {
 
 
 function refreshPage() {
+	$('#refresh_status').html(getLoadingHtml());
+	
 	$.ajax({
 		url : contextPath + '/updateStatus',
 		cache : false,
@@ -101,10 +103,12 @@ function refreshPage() {
 					$('#' + id + "-lastCheck").html(getLoadingHtml());
 				}
 			}
+			$('#refresh_status').html("");
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			clearInterval(refreshPageIntervalId);
 			displayMessage(getErrorMessageHeader(), errorThrown);
+			$('#refresh_status').html("");
 		}
 	});
 }
