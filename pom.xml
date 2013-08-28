@@ -45,7 +45,7 @@
     </issueManagement>
     
     <developers>
-        <!-- in alphabetical order (by id field) -->
+
         <developer>
             <id>Admin</id>
             <name>Alex Eng</name>
