@@ -34,9 +34,9 @@
     </properties>
     
     <scm>
-        <connection>scm:git:git://bitbucket.org/aeng/url-monitor.git</connection>
-        <developerConnection>scm:git:git://bitbucket.org/aeng/url-monitor.git</developerConnection>
-        <url>https://bitbucket.org/aeng/url-monitor</url>
+        <connection>scm:git:ssh://git@bitbucket.org/aeng/url-monitor.git</connection>
+        <developerConnection>scm:git:ssh://git@bitbucket.org/aeng/url-monitor.git</developerConnection>
+        <url>https://bitbucket.org/aeng/url-monitor.git</url>
     </scm>
     
     <issueManagement>
