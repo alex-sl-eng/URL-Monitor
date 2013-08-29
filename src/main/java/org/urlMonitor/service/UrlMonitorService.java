@@ -26,7 +26,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -46,11 +45,8 @@ import org.urlMonitor.service.quartz.CronTrigger;
 @Slf4j
 public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent>
 {
-   @Value("${monitor.files.path}")
-   private String dirPath;
-
-   @Value("${retry.count}")
-   private int retryCount;
+   @Autowired
+   private AppConfiguration appConfiguration;
 
    @Autowired
    private EmailService emailService;
@@ -68,11 +64,6 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       log.info("================= URL Monitor ====================");
       log.info("==================================================");
 
-      initJobs();
-   }
-
-   private void initJobs() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
-   {
       log.info("Initialising jobs...");
 
       cronTrigger = new CronTrigger();
@@ -90,7 +81,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    {
       Set<Monitor> result = new HashSet<Monitor>();
 
-      File dir = new File(dirPath);
+      File dir = new File(appConfiguration.getFilesPath());
       if (dir.exists())
       {
          FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
@@ -114,7 +105,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       }
       else
       {
-         log.warn("Monitor files not found {0}", dirPath);
+         log.warn("Monitor files not found {0}", appConfiguration.getFilesPath());
       }
       return result;
    }
@@ -195,8 +186,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       Long id = monitor.getId();
       if (monitor.getStatus() == StatusType.Pass)
       {
-         if (monitorFailedMap.remove(id) != null)
+         if (monitorFailedMap.containsKey(id) && monitorFailedMap.get(id).getCount() >= appConfiguration.getRetryCount())
          {
+            monitorFailedMap.remove(id);
             emailService.sendSuccessEmail(monitor, monitor.getLastCheck());
          }
       }
@@ -206,7 +198,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          {
             FailedStates failedStates = monitorFailedMap.get(id);
             failedStates.addCount();
-            if (failedStates.getCount() == retryCount)
+            if (failedStates.getCount() == appConfiguration.getRetryCount())
             {
                emailService.sendFailedEmail(monitor, monitor.getLastCheck());
             }

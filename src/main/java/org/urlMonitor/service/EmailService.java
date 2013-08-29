@@ -5,14 +5,16 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.urlMonitor.component.MessageResource;
@@ -24,20 +26,23 @@ import org.urlMonitor.util.DateUtil;
 @Slf4j
 public class EmailService
 {
-   @Value("${email.port}")
-   private String port;
-
-   @Value("${email.host}")
-   private String host;
-
-   @Value("${email.from}")
-   private String from;
-
-   @Value("${email.replyTo}")
-   private String replyTo;
-
+   @Autowired
+   private AppConfiguration appConfiguration;
+   
    @Autowired
    private MessageResource messageResource;
+   
+   private Email getEmailClient()
+   {
+      Email email = new SimpleEmail();
+      email.setHostName(appConfiguration.getEmailHost());
+      email.setSmtpPort(appConfiguration.getEmailPort());
+      email.setSSLOnConnect(appConfiguration.isEmailUseSsl());
+      email.setStartTLSEnabled(appConfiguration.isEmailUseTsl());
+      email.setAuthenticator(new DefaultAuthenticator(appConfiguration.getEmailUsername(), appConfiguration.getEmailPassword()));
+      
+      return email;
+   }
 
    public void sendFailedEmail(Monitor monitor, Date lastCheck) throws EmailException
    {
@@ -53,19 +58,16 @@ public class EmailService
 
    private void sendEmail(String subject, String message, List<String> toEmailList) throws EmailException
    {
+      Email email = getEmailClient();
+      
       if (toEmailList != null && !toEmailList.isEmpty() && !StringUtils.isEmpty(message))
       {
-         Email email = new SimpleEmail();
-
-         email.setFrom(from);
-
+         email.setFrom(appConfiguration.getEmailFrom());
+         
          for (String toEmail : toEmailList)
          {
             email.addTo(toEmail);
          }
-
-         email.setSmtpPort(Integer.parseInt(port));
-         email.setHostName(host);
 
          email.setSubject(subject);
          email.setMsg(message);
@@ -130,9 +132,9 @@ public class EmailService
       {
       }
 
-      if (!StringUtils.isEmpty(replyTo))
+      if (!StringUtils.isEmpty(appConfiguration.getEmailReplyTo()))
       {
-         sb.append(replyTo);
+         sb.append(appConfiguration.getEmailReplyTo());
       }
       return sb.toString();
    }
