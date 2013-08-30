@@ -15,12 +15,11 @@
 <script type="text/javascript" src="resources/scripts/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="resources/scripts/script.js"></script>
 <script>contextPath = "${pageContext.request.contextPath}"</script>
-
 </head>
 
 <header>
 	<h1>
-		<a href="/">
+		<a href="${pageContext.request.contextPath}">
 			<span class="logo icon-health"></span>
 			<spring:message code="Application.name"/>
 		</a>
@@ -29,22 +28,18 @@
 	<li class="right huge right_menu_toggle">
 		<span class="icon-list-2"></span>
 		<ul class="right_menu">
-			<li><a href="https://bitbucket.org/aeng/url-monitor/wiki/Home" target="_blank"><spring:message code="nav.About"/></a></li>
+			<li><a href="about"><spring:message code="nav.About"/></a></li>
 			<li><a href="https://bitbucket.org/aeng/url-monitor/issues/new" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
 	</li>
 	
-    <ul class="message horizontal">
+    <ul class="message list-h">
         <li>
-            <button id="closeMessageButton" class="icon-cancel"></button>
+            <button id="close_message_button" class="icon-cancel"></button>
         </li>
         <li>
 			<span id="message"></span>
 			<span id="message_details"></span>
 		</li>
 	</ul>
-	<span class="small">
-	   <input type="checkbox" id="auto_refresh" value="true" checked="checked"/>Auto refresh
-	   <span id="refresh_status"></span>
-	</span>
 </header>

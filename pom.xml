@@ -30,6 +30,11 @@
         <tomcat7-maven-plugin.version>2.1</tomcat7-maven-plugin.version>
         <quartz.version>2.2.0</quartz.version>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        
+        <maven.build.timestamp.format>dd/MM/yyyy HH:mm z</maven.build.timestamp.format>     
+        <timestamp>${maven.build.timestamp}</timestamp>
+     
+     
     </properties>
     
     <scm>

@@ -107,10 +107,10 @@ header h1,.right_menu_toggle span[class*='icon-'] {
 #message,#message_details {
 	overflow: hidden;
 	text-overflow: ellipsis;
-	display:block;
+	display: block;
 }
 
-#closeMessageButton {
+#close_message_button {
 	background: none;
 	border: none;
 	color: lightgray;
@@ -139,6 +139,13 @@ main .filter,main .content {
 
 .small {
 	font-size: 0.9em;
+}
+
+.label {
+	background-color: rgb(65, 105, 136);
+	color: rgb(242, 242, 242);
+	box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px;
+	padding: 0.1em 0.7em;
 }
 
 h1,h2,h3,h4,h5,h6,h1 a {
@@ -188,6 +195,10 @@ a:hover,.right_menu_toggle:hover {
 	color: #085997;
 }
 
+a.dark-background:hover {
+	color: #88b9de;
+}
+
 body,a,button,select,li,.message {
 	transition: 0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
@@ -197,16 +208,27 @@ span {
 	vertical-align: middle;
 }
 
-ul.horizontal {
+.list-h {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-ul.horizontal li {
+.list-h li {
 	display: inline-block;
 	vertical-align: middle;
 	padding: 0 !important;
+}
+
+.list-v li {
+	border-bottom: 0.1em solid rgba(0,0,0,0.05);
+	padding: 0.5em;
+}
+
+.list-no-bullet {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .container {
@@ -238,6 +260,10 @@ ul.horizontal li {
 .grid .name {
 	max-width: 55%;
 	font-size: 0.8em;
+}
+
+input[type="checkbox"] {
+	vertical-align: middle;
 }
 
 input[type="text"],button,select,.container {

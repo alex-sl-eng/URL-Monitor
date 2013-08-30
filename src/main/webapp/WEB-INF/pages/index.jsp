@@ -10,8 +10,13 @@
 		});
 	</script>
 	
+	<span class="small">
+       <input type="checkbox" id="auto_refresh" value="true" checked="checked"/>Auto refresh
+       <span id="refresh_status"></span>
+    </span>
+	
 	<div class="filter">
-		<ul class="horizontal">
+		<ul class="list-h">
 			<li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name."/></li>
 			<li>
 				<button class="icon-list selected" id="list" title="List view"></button>

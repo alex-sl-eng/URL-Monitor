@@ -53,7 +53,7 @@ public class Monitor implements Serializable
     */
    @Getter
    @NonNull
-   private String cronExpression = "0/5 * * * * ?"; // every 5 seconds
+   private String cronExpression = "1 * * * * ?"; // DEFAULT: every 1 minutes
 
    @Getter
    private String contentRegex; //check for text exist if return http 200

@@ -123,7 +123,7 @@ function getLargeLoadingHtml() {
 
 function getErrorMessageHeader() {
 	return "An error has occurred making the request. " +
-			"Try <a href='#' onclick='location.reload(true); return false;'>refresh page</a> later.";
+			"Try <a href='#' class='dark-background' onclick='location.reload(true); return false;'>refresh page</a> later.";
 }
 
 function displayMessage(messageHeaderHTML, message) {

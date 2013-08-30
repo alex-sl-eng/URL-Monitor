@@ -13,7 +13,7 @@
 	<context:component-scan base-package="org.urlMonitor" />
 	<context:annotation-config/>
 	<mvc:annotation-driven />
-	<context:property-placeholder location="classpath*:urlMonitor.properties"/>
+	<context:property-placeholder location="classpath*:urlMonitor.properties,classpath*:info.properties"/>
 	
 
 </beans>

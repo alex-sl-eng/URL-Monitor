@@ -15,6 +15,14 @@ import org.springframework.stereotype.Service;
 public class AppConfiguration
 {
    @Getter
+   @Value("${build.version}")
+   private String buildVersion;
+   
+   @Getter
+   @Value("${build.date}")
+   private String buildDate;
+   
+   @Getter
    @Value("${email.host}")
    private String emailHost;
    
