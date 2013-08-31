@@ -1,6 +1,6 @@
 package org.urlMonitor.model.type;
 
-public class CronType
+public final class PredefinedCron
 {
    public static String THRITY_SECONDS = "0/30 * * * * ?";
    

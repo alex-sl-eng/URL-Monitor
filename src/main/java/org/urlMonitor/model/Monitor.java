@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.urlMonitor.exception.InvalidMonitorFileException;
+import org.urlMonitor.model.type.PredefinedCron;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.util.DateUtil;
 import org.urlMonitor.util.MonitorValidator;
@@ -53,7 +54,7 @@ public class Monitor implements Serializable
     */
    @Getter
    @NonNull
-   private String cronExpression = "1 * * * * ?"; // DEFAULT: every 1 minutes
+   private String cronExpression = PredefinedCron.ONE_MINUTE; // DEFAULT: every 1 minutes
 
    @Getter
    private String contentRegex; //check for text exist if return http 200
