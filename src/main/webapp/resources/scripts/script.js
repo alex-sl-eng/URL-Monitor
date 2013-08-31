@@ -4,7 +4,7 @@ var contextPath;
 var view = 'list';
 
 $(document).ready(function(){
-	$("#closeMessageButton").click(function() {
+	$("#close_message_button").click(function() {
 		$(".message").toggleClass("visible_message");
 	});
 	

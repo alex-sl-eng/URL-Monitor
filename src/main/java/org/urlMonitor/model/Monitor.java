@@ -89,7 +89,7 @@ public class Monitor implements Serializable
 
    public List<String> getEmailTo()
    {
-      if (emailToList != null)
+      if (!StringUtils.isEmpty(emailToList))
       {
          return Arrays.asList(emailToList.split(";"));
       }
@@ -98,7 +98,7 @@ public class Monitor implements Serializable
 
    public List<String> getTag()
    {
-      if (tag != null)
+      if (!StringUtils.isEmpty(tag))
       {
          return Arrays.asList(tag.split(";"));
       }

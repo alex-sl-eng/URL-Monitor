@@ -35,7 +35,7 @@
 	            <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.id})"></a>
 	        </span>
 	        <div id="${monitor.id}-details" class="details">
-	            <table>
+	            <table class="small">
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Description"/></td>
 	                    <td><span class="value" title="${monitor.description}">${monitor.description}</span></td>
@@ -46,7 +46,16 @@
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.SearchText"/></td>
-	                    <td><span class="value" title="${monitor.contentRegex}">${monitor.contentRegex}</span></td>
+	                    <td>
+	                       <span class="value" title="${monitor.contentRegex}">
+	                           <c:if test="${not empty monitor.contentRegex}">
+	                               ${monitor.contentRegex}
+	                           </c:if>
+	                           <c:if test="${empty monitor.contentRegex}">
+                                   <i>No pattern checking</i>
+                               </c:if>
+	                       </span>
+	                    </td>
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.CronExpression"/></td>

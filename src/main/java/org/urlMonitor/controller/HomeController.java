@@ -18,7 +18,7 @@ public class HomeController
    @Autowired
    private UrlMonitorService urlMonitorService;
 
-   @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+   @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
    public String GetIndexPage(ModelMap model)
    {
       model.addAttribute("monitorList", urlMonitorService.getMonitorList());

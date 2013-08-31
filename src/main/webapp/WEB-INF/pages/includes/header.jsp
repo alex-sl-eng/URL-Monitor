@@ -33,7 +33,7 @@
 		</ul>
 	</li>
 	
-    <ul class="message list-h">
+    <ul class="message list-h small">
         <li>
             <button id="close_message_button" class="icon-cancel"></button>
         </li>

@@ -4,19 +4,21 @@
 <jsp:include page="includes/header.jsp" />
 
 <main>
-    <ul class="small list-no-bullet list-v">
+    <ul class="small list-no-bullet list-v content-wrapper">
         <li>
-			<span class="label">Version</span>
+			<span class="label-highlight">Version</span>
 			<span><c:out value="${buildVersion}"/></span>
-			<span class="label">Build</span>
+        </li>
+        <li>
+            <span class="label-highlight">Build</span>
             <span><c:out value="${buildDate}"/></span>
         </li>
         <li>
-            <span class="label">Contact</span> 
+            <span class="label-highlight">Contact</span> 
             <span><a href="mailto:${replyTo}">${replyTo}</a></span>  
         </li>
         <li>
-            <span class="label">Project Information</span> 
+            <span class="label-highlight">Project Information</span> 
             <span>
                 <a href="https://bitbucket.org/aeng/url-monitor/wiki/Home" target="_blank">
                     Project Wiki Page
@@ -24,7 +26,7 @@
             </span>
         </li>
         <li>
-            <span class="label">Release License</span>
+            <span class="label-highlight">License</span>
             <span><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></span>
             
             <p>

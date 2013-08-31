@@ -15,7 +15,7 @@
        <span id="refresh_status"></span>
     </span>
 	
-	<div class="filter">
+	<div class="filter content-wrapper">
 		<ul class="list-h">
 			<li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name."/></li>
 			<li>
@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 	
-	<div class="content">
+	<div class="content content-wrapper">
 	   <jsp:include page="view/content.jsp" />	
 	</div>
 </main>

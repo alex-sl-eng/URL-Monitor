@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -56,6 +58,15 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    private CronTrigger cronTrigger;
    private Map<Long, Monitor> monitorMap = new HashMap<Long, Monitor>();
    private Map<Long, FailedStates> monitorFailedMap = new HashMap<Long, FailedStates>();
+
+   public static final Comparator<Monitor> MonitorComparator = new Comparator<Monitor>()
+   {
+      @Override
+      public int compare(Monitor o1, Monitor o2)
+      {
+         return o1.getName().compareTo(o2.getName());
+      }
+   };
 
    @PostConstruct
    public void init() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
@@ -112,7 +123,9 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
    public List<Monitor> getMonitorList()
    {
-      return new ArrayList<Monitor>(monitorMap.values());
+      List<Monitor> monitorList = new ArrayList<Monitor>(monitorMap.values());
+      Collections.sort(monitorList, MonitorComparator);
+      return monitorList;
    }
 
    public List<Monitor> getMonitorList(String filterText)
@@ -200,6 +213,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
             failedStates.addCount();
             if (failedStates.getCount() == appConfiguration.getRetryCount())
             {
+               log.info("Failed check max-" + monitor.getUrl());
                emailService.sendFailedEmail(monitor, monitor.getLastCheck());
             }
          }

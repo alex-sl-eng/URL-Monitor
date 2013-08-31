@@ -5,8 +5,6 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -58,10 +56,10 @@ public class EmailService
 
    private void sendEmail(String subject, String message, List<String> toEmailList) throws EmailException
    {
-      Email email = getEmailClient();
-      
       if (toEmailList != null && !toEmailList.isEmpty() && !StringUtils.isEmpty(message))
       {
+         Email email = getEmailClient();
+         
          email.setFrom(appConfiguration.getEmailFrom());
          
          for (String toEmail : toEmailList)
@@ -77,7 +75,7 @@ public class EmailService
       }
       else
       {
-         log.warn("Action ignored - no email recipients defined.");
+         log.info("send email ignored - no email recipients defined.");
       }
    }
 
