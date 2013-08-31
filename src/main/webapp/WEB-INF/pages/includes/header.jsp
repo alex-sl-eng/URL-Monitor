@@ -19,7 +19,7 @@
 
 <header>
 	<h1>
-		<a href="${pageContext.request.contextPath}">
+		<a href="home">
 			<span class="logo icon-health"></span>
 			<spring:message code="Application.name"/>
 		</a>

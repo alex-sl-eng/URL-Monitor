@@ -122,7 +122,7 @@ function getLargeLoadingHtml() {
 }
 
 function getErrorMessageHeader() {
-	return "An error has occurred making the request. " +
+	return "Having problem communicating with server. " +
 			"Try <a href='#' class='dark-background' onclick='location.reload(true); return false;'>refresh page</a> later.";
 }
 
