@@ -15,6 +15,8 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.util.EntityUtils;
 import org.urlMonitor.model.type.StatusType;
 
@@ -28,6 +30,7 @@ public class WebClientImpl implements WebClient
    {
       this.httpClient = httpClient;
       this.httpGet = new HttpGet(url);
+      httpGet.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.IGNORE_COOKIES);
    }
 
    @Override
