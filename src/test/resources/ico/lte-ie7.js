@@ -15,10 +15,11 @@ window.onload = function() {
 			'icon-chevron-up' : '&#xf077;',
 			'icon-health' : '&#xe005;',
 			'icon-list-2' : '&#xe009;',
-			'icon-cancel' : '&#xe006;'
+			'icon-cancel' : '&#xe006;',
+			'icon-twitter' : '&#xe007;'
 		},
 		els = document.getElementsByTagName('*'),
-		i, attr, html, c, el;
+		i, attr, c, el;
 	for (i = 0; ; i += 1) {
 		el = els[i];
 		if(!el) {

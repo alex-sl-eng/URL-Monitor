@@ -69,7 +69,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    };
 
    @PostConstruct
-   public void init() throws SchedulerException, FileNotFoundException, IOException, InvalidMonitorFileException
+   public void init() throws SchedulerException, FileNotFoundException, IOException
    {
       log.info("==================================================");
       log.info("================= URL Monitor ====================");
@@ -88,7 +88,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
       }
    }
 
-   private Set<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException, InvalidMonitorFileException
+   private Set<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException
    {
       Set<Monitor> result = new HashSet<Monitor>();
 
@@ -105,11 +105,19 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
                {
                   Properties prop = new Properties();
                   prop.load(new FileInputStream(file));
-                  Monitor monitor = new Monitor(prop);
-                  if (!result.contains(monitor)) // remove duplicate
+                  try
                   {
-                     result.add(new Monitor(prop));
+                     Monitor monitor = new Monitor(prop);
+                     if (!result.contains(monitor)) // remove duplicate
+                     {
+                        result.add(monitor);
+                     }
                   }
+                  catch (InvalidMonitorFileException e)
+                  {
+                     log.info("Ingoring incomplete monitor info: " + file.getName());
+                  }
+
                }
             }
          }

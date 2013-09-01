@@ -25,13 +25,13 @@
 		</a>
 	</h1>
 
-	<li class="right huge right_menu_toggle">
+	<div class="right huge right_menu_toggle">
 		<span class="icon-list-2"></span>
 		<ul class="right_menu">
 			<li><a href="about"><spring:message code="nav.About"/></a></li>
 			<li><a href="https://bitbucket.org/aeng/url-monitor/issues/new" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
-	</li>
+	</div>
 	
     <ul class="message list-h small">
         <li>

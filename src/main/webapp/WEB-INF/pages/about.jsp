@@ -8,14 +8,14 @@
         <li>
 			<span class="label-highlight">Version</span>
 			<span><c:out value="${buildVersion}"/></span>
-        </li>
-        <li>
-            <span class="label-highlight">Build</span>
+			 <span class="label-highlight">Build</span>
             <span><c:out value="${buildDate}"/></span>
         </li>
         <li>
             <span class="label-highlight">Contact</span> 
             <span><a href="mailto:${replyTo}">${replyTo}</a></span>  
+            <span class="label-highlight">Follow us @</span> 
+            <a href="https://twitter.com/UrlmonitorOrg"><span class="icon-twitter"></span></a>
         </li>
         <li>
             <span class="label-highlight">Project Information</span> 

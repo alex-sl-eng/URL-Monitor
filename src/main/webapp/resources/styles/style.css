@@ -19,6 +19,7 @@
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -27,7 +28,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-list, .icon-grid, .icon-close, .icon-checkmark, .icon-question, .icon-chevron-down, .icon-chevron-up, .icon-health, .icon-list-2, .icon-cancel {
+.icon-list, .icon-grid, .icon-close, .icon-checkmark, .icon-question, .icon-chevron-down, .icon-chevron-up, .icon-health, .icon-list-2, .icon-cancel, .icon-twitter {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -66,4 +67,7 @@ you can use the generic selector below, but it's slower:
 }
 .icon-cancel:before {
 	content: "\e006";
+}
+.icon-twitter:before {
+	content: "\e007";
 }
