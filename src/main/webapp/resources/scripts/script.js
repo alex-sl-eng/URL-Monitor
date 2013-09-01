@@ -139,12 +139,5 @@ function displayMessage(messageHeaderHTML, message) {
 
 function toggleDetails(toggleBtn, rowId) {
 	$("#" + rowId + '-details').toggleClass("visible");
-
-	if ($("#" + rowId + '-details').hasClass("visible")) {
-		$(toggleBtn).removeClass('icon-chevron-down').addClass(
-		'icon-chevron-up');
-	} else {
-		$(toggleBtn).removeClass('icon-chevron-up').addClass(
-		'icon-chevron-down');
-	}
+	$(toggleBtn).toggleClass("rotated");
 }

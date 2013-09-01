@@ -20,9 +20,6 @@
 			<li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name."/></li>
 			<li>
 				<button class="icon-list selected" id="list" title="List view"></button>
-			</li>
-	
-			<li>
 				<button class="icon-grid" id="grid" title="Grid view"></button>
 			</li>
 		</ul>

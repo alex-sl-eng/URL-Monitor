@@ -38,7 +38,14 @@
 	            <table class="small">
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Description"/></td>
-	                    <td><span class="value" title="${monitor.description}">${monitor.description}</span></td>
+	                    <td>
+	                       <c:if test="${not empty monitor.description}">
+                               ${monitor.description}
+                           </c:if>
+                           <c:if test="${empty monitor.description}">
+                               <i>No description</i>
+                           </c:if>
+	                    </td>
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Url"/></td>
@@ -64,7 +71,12 @@
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Tag"/></td>
 	                    <td>
-	                        <c:if test="${not empty monitor.tag}"><span class="value" title="${monitor.tag}">${monitor.tag}</span></c:if>
+	                        <c:if test="${not empty monitor.tag}">
+	                           <span class="value" title="${monitor.tag}">${monitor.tag}</span>
+	                        </c:if>
+	                        <c:if test="${empty monitor.tag}">
+                               <i>No tag</i>
+                            </c:if>
 	                    </td>
 	                </tr>
 	            </table>

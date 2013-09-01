@@ -1,9 +1,35 @@
 @media screen and (max-width: 524px) {
 	header h1,.huge {
-		font-size: 200% !important;
+		font-size: 180% !important;
 	}
 	.grid {
-		width: auto !important;
+		width: 90% !important;
+		border-left: 0.3em solid rgba(0, 0, 0, 0.08) !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+	}
+	.Pass:hover,.Failed:hover,.Unknown:hover {
+	   border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+	}
+	.Pass:hover {
+	    border-left-color: rgba(0, 128, 0, 0.5) !important;
+	}
+	.Failed:hover {
+	    border-left-color: rgba(255, 0, 0, 0.5) !important;
+	}
+	.Unknown:hover {
+	    border-left-color: rgba(255, 128, 24, 0.5) !important;
+	}
+	
+	.status {
+        font-size: 1em !important;
+	}
+	
+	.time {
+	    font-size: 0.7em !important;
+	}
+	
+	.name {
+	    font-size: 0.8em !important;
 	}
 }
 
@@ -33,9 +59,10 @@ header .logo {
 header h1 {
 	margin: 0;
 	letter-spacing: 0.05em;
+	display: inline-block;
 }
 
-header h1,.right_menu_toggle span[class*='icon-'] {
+header h1 a, .right_menu_toggle span[class*='icon-'] {
 	padding: 0.25em;
 	display: inline-block;
 }
@@ -243,20 +270,28 @@ span {
 }
 
 .container {
-	padding: 0.5em;
+	padding: 0.45em;
 	margin: 0.3em;
 	overflow: hidden;
 	display: inline-block;
 	white-space: nowrap;
 	text-align: left;
+	width:90%;
+	border-left: 0.3em solid rgba(0, 0, 0, 0.08);
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	border-right: 1px solid rgba(0, 0, 0, 0.08);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 1px;
 }
 
 .container:hover {
-	background-color: rgba(0, 0, 0, 0.04);
+	background-color: rgba(0, 0, 0, 0.03);
 }
 
 .grid {
 	width: 30%;
+	border-left: 1px solid rgba(0, 0, 0, 0.08);
+	border-top: 0.3em solid rgba(0, 0, 0, 0.08);
 }
 
 .grid .status {
@@ -276,9 +311,9 @@ input[type="checkbox"] {
 	vertical-align: middle;
 }
 
-input[type="text"],button,select,.container {
-	border-radius: 2px;
+input[type="text"],button{
 	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 1px;
 }
 
 input[type="text"] {
@@ -287,23 +322,16 @@ input[type="text"] {
 	width: 100%;
 }
 
-select {
-	padding: 0.3em;
-	outline: none;
-	opacity: 0.6;
-}
-
 button {
 	padding: 0.4em 0.8em;
 	box-shadow: none;
 	cursor: pointer;
-	opacity: 0.6;
+	opacity: 0.55;
 	vertical-align: middle;
 }
 
-button:hover,select:hover {
+button:hover {
 	opacity: 1;
-	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
 }
 
 button:active {
@@ -318,18 +346,47 @@ button:active {
 	opacity: 0.55;
 }
 
+.grid.Pass:hover,.grid.Failed:hover,.grid.Unknown:hover {
+	border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 .Pass {
-	color: rgba(0, 128, 0, 0.8);
+	color: rgba(0, 128, 0, 0.3);
+}
+
+.Pass:hover {
+	color: rgba(0, 128, 0, 0.7);
+    border-left-color: rgba(0, 128, 0, 0.5);
+}
+
+.grid.Pass:hover {
+    border-top-color: rgba(0, 128, 0, 0.5);
 }
 
 .Failed {
-	color: rgba(255, 0, 0, 0.8);
-	border: 1px solid rgba(255, 0, 0, 0.3);
-	box-shadow: 0 0 0.13em rgba(255, 0, 0, 0.5);
+	color: rgba(255, 0, 0, 0.3);
+}
+
+.Failed:hover {
+    color: rgba(255, 0, 0, 0.7);
+    border-left-color: rgba(255, 0, 0, 0.5);
+}
+
+.grid.Failed:hover {
+    border-top-color: rgba(255, 0, 0, 0.5);
 }
 
 .Unknown {
-	color: rgba(255, 128, 24, 0.8);
+	color: rgba(255, 128, 24, 0.3);
+}
+
+.Unknown:hover {
+    color: rgba(255, 128, 24, 0.7);
+    border-left-color: rgba(255, 128, 24, 0.5);
+}
+
+.grid.Unknown:hover {
+    border-top-color: rgba(255, 128, 24, 0.5);
 }
 
 .right {
@@ -363,10 +420,16 @@ button:active {
 }
 
 .more-info {
-	padding: 0 0 0 0.5em;
+	margin: 0 0 0 0.5em;
 	font-size: 1.5em;
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.more-info.rotated {
+	transform: rotateZ(180deg);
+	-ms-transform: rotate(180deg);
+	-webkit-transform: rotateZ(180deg);
 }
 
 .time,.details {
