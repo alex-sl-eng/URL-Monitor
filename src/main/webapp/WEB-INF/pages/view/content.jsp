@@ -7,33 +7,36 @@
 <c:if test="${not empty monitorList}">
 	<c:forEach var="monitor" items="${monitorList}">
 	    <div id="${monitor.id}-container" class="container ${monitor.status}">
-	        <c:if test="${monitor.status == 'Pass'}">
-	            <span id="${monitor.id}-status" class="status icon-checkmark"></span> 
-	        </c:if>
-	        <c:if test="${monitor.status == 'Failed'}">
-	            <span id="${monitor.id}-status" class="status icon-close"></span> 
-	        </c:if>
-	        <c:if test="${monitor.status == 'Unknown'}">
-	            <span id="${monitor.id}-status" class="status">
-	                <img alt="Loading..." src="resources/images/loader.gif"/>
-	            </span> 
-	        </c:if>
-	        
-	        <span class="name">
-	            <a href="${monitor.url}" title="${monitor.name}">${monitor.name}</a>
-	        </span>
-	        
-	        <span class="time right">
-	            <span id="${monitor.id}-lastCheck">
-	                <c:if test="${not empty monitor.formattedLastCheck}">
-	                    ${monitor.formattedLastCheck}
-	                </c:if>
-	                <c:if test="${empty monitor.formattedLastCheck}">
-	                    <img alt="Loading..." src="resources/images/loader.gif"/>
-	                </c:if>
-	            </span>
-	            <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.id})"></a>
-	        </span>
+            <ul class="list-h">
+                <li>
+                    <c:if test="${monitor.status == 'Pass'}">
+	                    <span id="${monitor.id}-status" class="status icon-checkmark"></span> 
+		            </c:if>
+		            <c:if test="${monitor.status == 'Failed'}">
+		                <span id="${monitor.id}-status" class="status icon-close"></span> 
+		            </c:if>
+		            <c:if test="${monitor.status == 'Unknown'}">
+		                <span id="${monitor.id}-status" class="status">
+		                    <img alt="Loading..." src="resources/images/loader.gif"/>
+		                </span> 
+		            </c:if>
+                </li>
+                <li class="name">
+                    <a href="${monitor.url}" title="${monitor.name}">${monitor.name}</a>
+                </li>
+                <li class="time right">
+                    <span id="${monitor.id}-lastCheck">
+	                    <c:if test="${not empty monitor.formattedLastCheck}">
+	                        ${monitor.formattedLastCheck}
+	                    </c:if>
+	                    <c:if test="${empty monitor.formattedLastCheck}">
+	                        <img alt="Loading..." src="resources/images/loader.gif"/>
+	                    </c:if>
+                    </span>
+                    <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.id})"></a>
+                </li>
+            </ul>
+	       
 	        <div id="${monitor.id}-details" class="details">
 	            <table class="small">
 	                <tr>

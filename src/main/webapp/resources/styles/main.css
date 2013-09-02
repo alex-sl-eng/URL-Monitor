@@ -65,6 +65,7 @@ header h1 {
 header h1 a, .right_menu_toggle span[class*='icon-'] {
 	padding: 0.25em;
 	display: inline-block;
+	outline:none;
 }
 
 .right_menu_toggle {
@@ -250,6 +251,7 @@ span {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	line-height: 1.2em
 }
 
 .list-h li {
@@ -274,7 +276,6 @@ span {
 	margin: 0.3em;
 	overflow: hidden;
 	display: inline-block;
-	white-space: nowrap;
 	text-align: left;
 	width:90%;
 	border-left: 0.3em solid rgba(0, 0, 0, 0.08);
@@ -356,11 +357,11 @@ button:active {
 
 .Pass:hover {
 	color: rgba(0, 128, 0, 0.7);
-    border-left-color: rgba(0, 128, 0, 0.5);
+    border-left-color: rgba(0, 128, 0, 0.7);
 }
 
 .grid.Pass:hover {
-    border-top-color: rgba(0, 128, 0, 0.5);
+    border-top-color: rgba(0, 128, 0, 0.7);
 }
 
 .Failed {
@@ -369,11 +370,11 @@ button:active {
 
 .Failed:hover {
     color: rgba(255, 0, 0, 0.7);
-    border-left-color: rgba(255, 0, 0, 0.5);
+    border-left-color: rgba(255, 0, 0, 0.7);
 }
 
 .grid.Failed:hover {
-    border-top-color: rgba(255, 0, 0, 0.5);
+    border-top-color: rgba(255, 0, 0, 0.7);
 }
 
 .Unknown {
@@ -382,11 +383,11 @@ button:active {
 
 .Unknown:hover {
     color: rgba(255, 128, 24, 0.7);
-    border-left-color: rgba(255, 128, 24, 0.5);
+    border-left-color: rgba(255, 128, 24, 0.7);
 }
 
 .grid.Unknown:hover {
-    border-top-color: rgba(255, 128, 24, 0.5);
+    border-top-color: rgba(255, 128, 24, 0.7);
 }
 
 .right {
@@ -424,6 +425,7 @@ button:active {
 	font-size: 1.5em;
 	display: inline-block;
 	vertical-align: middle;
+	outline: none;
 }
 
 .more-info.rotated {
@@ -439,6 +441,7 @@ button:active {
 
 .details {
 	max-height: 0;
+	clear: both;
 	transition: 0.5s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
