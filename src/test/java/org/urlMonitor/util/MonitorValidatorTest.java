@@ -1,4 +1,4 @@
-package org.aeng.util;
+package org.urlMonitor.util;
 
 import java.util.Properties;
 
@@ -18,13 +18,13 @@ public class MonitorValidatorTest
    @Test(expected = InvalidMonitorFileException.class)  
    public void testEmptyNameFields() throws InvalidMonitorFileException
    {
-      MonitorValidator.validateNameRegexAndTag(buildMonitor("", "http://localhost", "0/5 * * * * ?"));
+      MonitorValidator.validateNameRegexAndTag(buildMonitor("", "http://localhost", "0/30 * * * * ?"));
    }
    
    @Test(expected = InvalidMonitorFileException.class)  
    public void testInvalidUrlFields() throws InvalidMonitorFileException
    {
-      MonitorValidator.validateNameRegexAndTag(buildMonitor("name", "httplocalhost", "0/5 * * * * ?"));
+      MonitorValidator.validateNameRegexAndTag(buildMonitor("name", "httplocalhost", "0/30 * * * * ?"));
    }
    
    @Test(expected = InvalidMonitorFileException.class)  
@@ -36,7 +36,7 @@ public class MonitorValidatorTest
    @Test
    public void testMandatoryFieldExist() throws InvalidMonitorFileException
    {
-      MonitorValidator.isMandatoryFieldsPresent(buildMonitor("name", "http://localhost.com", "0/5 * * * * ?"));
+      MonitorValidator.isMandatoryFieldsPresent(buildMonitor("name", "http://localhost.com", "0/30 * * * * ?"));
    }
    
    

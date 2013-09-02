@@ -14,7 +14,7 @@ import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.urlMonitor.exception.InvalidMonitorFileException;
-import org.urlMonitor.model.type.PredefinedCron;
+import org.urlMonitor.model.type.CronType;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.util.DateUtil;
 import org.urlMonitor.util.MonitorValidator;
@@ -23,7 +23,7 @@ import org.urlMonitor.util.MonitorValidator;
  * @author Alex Eng - loones1595@gmail.com
  *
  */
-@EqualsAndHashCode(of = { "name", "url", "contentRegex", "cronExpression" })
+@EqualsAndHashCode(of = { "name", "url", "contentRegex", "cron" })
 public class Monitor implements Serializable
 {
    private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class Monitor implements Serializable
     */
    @Getter
    @NonNull
-   private String cronExpression = PredefinedCron.ONE_MINUTE; // DEFAULT: every 1 minutes
+   private CronType cron = CronType.ONE_MINUTE; // DEFAULT: every 1 minutes
 
    @Getter
    private String contentRegex; //check for text exist if return http 200
@@ -74,7 +74,7 @@ public class Monitor implements Serializable
    {
       this.name = StringUtils.trimToEmpty(prop.getProperty("name"));
       this.url = StringUtils.trimToEmpty(prop.getProperty("url"));
-      this.cronExpression = StringUtils.trimToEmpty(prop.getProperty("cronExpression"));
+      this.cron = CronType.getType(StringUtils.trimToEmpty(prop.getProperty("cronExpression")));
       this.contentRegex = StringUtils.trimToEmpty(prop.getProperty("contentRegex"));
 
       this.description = StringUtils.trimToEmpty(prop.getProperty("description"));
@@ -82,7 +82,7 @@ public class Monitor implements Serializable
       this.emailToList = StringUtils.trimToEmpty(prop.getProperty("emailToList"));
 
       id = new Long(this.hashCode());
-      
+
       MonitorValidator.isMandatoryFieldsPresent(this);
       MonitorValidator.validateNameRegexAndTag(this);
    }

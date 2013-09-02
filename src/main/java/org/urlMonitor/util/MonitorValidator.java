@@ -10,7 +10,7 @@ public class MonitorValidator
    public static void isMandatoryFieldsPresent(Monitor monitor) throws InvalidMonitorFileException
    {
       if (monitor.getId() == null || StringUtils.isEmpty(monitor.getName()) || StringUtils.isEmpty(monitor.getUrl()) 
-            || StringUtils.isEmpty(monitor.getCronExpression()))
+            || monitor.getCron() == null)
       {
          throw new InvalidMonitorFileException("Missing mandatory field(s) in monitor file.");
       }
@@ -29,9 +29,9 @@ public class MonitorValidator
          throw new InvalidMonitorFileException("Invalid url-" + monitor.getUrl());
       }
 
-      if (!org.quartz.CronExpression.isValidExpression(monitor.getCronExpression()))
+      if (!org.quartz.CronExpression.isValidExpression(monitor.getCron().getExpression()))
       {
-         throw new InvalidMonitorFileException("Invalid cron expression-" + monitor.getCronExpression());
+         throw new InvalidMonitorFileException("Invalid cron expression-" + monitor.getCron());
       }
    }
 }

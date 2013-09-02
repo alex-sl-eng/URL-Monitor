@@ -1,4 +1,4 @@
-package org.aeng.util;
+package org.urlMonitor.util;
 
 public class DateUtilTest
 {

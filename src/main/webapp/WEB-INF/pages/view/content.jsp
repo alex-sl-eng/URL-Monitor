@@ -68,8 +68,8 @@
 	                    </td>
 	                </tr>
 	                <tr>
-	                    <td class="header"><spring:message code="monitor.details.CronExpression"/></td>
-	                    <td><span class="value" title="${monitor.cronExpression}">${monitor.cronExpression}</span></td>
+	                    <td class="header"><spring:message code="monitor.details.Interval"/></td>
+	                    <td><span class="value" title="${monitor.cron.display}">${monitor.cron.display}</span></td>
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Tag"/></td>
