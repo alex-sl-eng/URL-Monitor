@@ -38,9 +38,9 @@
     </properties>
     
     <scm>
-        <connection>scm:git:ssh://git@bitbucket.org/aeng/url-monitor.git</connection>
-        <developerConnection>scm:git:ssh://git@bitbucket.org/aeng/url-monitor.git</developerConnection>
-        <url>https://bitbucket.org/aeng/url-monitor.git</url>
+        <connection>sscm:git:git@github.com:aeng/URL-Monitor.git</connection>
+        <developerConnection>scm:git:git@github.com:aeng/URL-Monitor.git</developerConnection>
+        <url>https://github.com/aeng/URL-Monitor.git</url>
     </scm>
     
     <distributionManagement>
@@ -48,14 +48,14 @@
             <uniqueVersion>false</uniqueVersion>
             <id>cloudbees-private-release-repository</id>
             <name>cloudbees-private-release-repository</name>
-            <url>dav:https://repository-aeng.forge.cloudbees.com/private/</url>
+            <url>dav:https://repository-aeng.forge.cloudbees.com/release/</url>
             <layout>default</layout>
         </repository>
     </distributionManagement>
     
     <issueManagement>
-        <system>Bitbucket</system>
-        <url>https://bitbucket.org/aeng/url-monitor/issues?status=new&amp;status=open</url>
+        <system>GitHub</system>
+        <url>https://github.com/aeng/URL-Monitor/issues</url>
     </issueManagement>
     
     <developers>

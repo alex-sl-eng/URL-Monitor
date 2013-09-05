@@ -20,7 +20,7 @@
         <li>
             <span class="label-highlight">Project Information</span> 
             <span>
-                <a href="https://bitbucket.org/aeng/url-monitor/wiki/Home" target="_blank">
+                <a href="https://github.com/aeng/URL-Monitor/wiki" target="_blank">
                     Project Wiki Page
                 </a>
             </span>
@@ -28,25 +28,6 @@
         <li>
             <span class="label-highlight">License</span>
             <span><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></span>
-            
-            <p>
-                Copyright © 2013 Alex Eng 
-            </p>
-            <p>
-                Licensed under the Apache License, Version 2.0 (the "License"); <br/>
-                you may not use this file except in compliance with the License.<br/>
-                You may obtain a copy of the License at
-            </p>
-            <p>
-	           <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
-            </p>
-            <p>
-                Unless required by applicable law or agreed to in writing, software<br/>
-                distributed under the License is distributed on an "AS IS" BASIS,<br/>
-                WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br/>
-                See the License for the specific language governing permissions and<br/>
-                limitations under the License.
-            </p>
         </li>
     </ul>
 	
