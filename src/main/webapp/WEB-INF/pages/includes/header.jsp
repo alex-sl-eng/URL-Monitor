@@ -29,7 +29,7 @@
 		<span class="icon-list-2"></span>
 		<ul class="right_menu">
 			<li><a href="about"><spring:message code="nav.About"/></a></li>
-			<li><a href="https://bitbucket.org/aeng/url-monitor/issues/new" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
+			<li><a href="https://github.com/aeng/url-monitor/issues" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
 		</ul>
 	</div>
 	
