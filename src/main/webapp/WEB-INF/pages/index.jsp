@@ -7,6 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			refreshPageIntervalId = setInterval(refreshPage, refreshPageInterval);
+      $("#filter_text").trigger("change");
 		});
 	</script>
 	

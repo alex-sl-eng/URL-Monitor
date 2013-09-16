@@ -1,254 +1,289 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.urlMonitor</groupId>
-    <artifactId>urlMonitor</artifactId>
-    <packaging>war</packaging>
-    <version>1.3.3-SNAPSHOT</version>
-    <name>Url Monitor</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.urlMonitor</groupId>
+  <artifactId>urlMonitor</artifactId>
+  <packaging>war</packaging>
+  <version>1.3.3-SNAPSHOT</version>
+  <name>Url Monitor</name>
 
-    <properties>
-        <commons-lang3.version>3.1</commons-lang3.version>
-        <commons-email.version>1.3.1</commons-email.version>
-        <commons-io.version>1.3.2</commons-io.version>
-        <commons-validator.version>1.3.1</commons-validator.version>
-        <httpclient.version>4.2.3</httpclient.version>
-        <jackson.version>1.9.13</jackson.version>
-        <javamelody-core.version>1.46.0</javamelody-core.version>
-        <jdk.version>1.7</jdk.version>
-        <joda-time.version>2.2</joda-time.version>
-        <jstl.version>1.2</jstl.version>
-        <junit.version>4.11</junit.version>
-        <logback.version>1.0.13</logback.version>
-        <lombok.version>0.12.0</lombok.version>
-        <maven-war-plugin.version>2.4</maven-war-plugin.version>
-        <maven-compiler.version>3.1</maven-compiler.version>
-        <oro.version>2.0.8</oro.version>
-        <servlet-api.version>2.5</servlet-api.version>
-        <slf4j.version>1.7.5</slf4j.version>
-        <spring.version>3.2.4.RELEASE</spring.version>
-        <taglib-standard.version>1.1.2</taglib-standard.version>
-        <tomcat7-maven-plugin.version>2.1</tomcat7-maven-plugin.version>
-        <quartz.version>2.2.0</quartz.version>
-        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        
-        <maven.build.timestamp.format>dd/MM/yyyy HH:mm z</maven.build.timestamp.format>     
-        <timestamp>${maven.build.timestamp}</timestamp>
-     
-     
-    </properties>
-    
-    <scm>
-        <connection>sscm:git:git@github.com:aeng/URL-Monitor.git</connection>
-        <developerConnection>scm:git:git@github.com:aeng/URL-Monitor.git</developerConnection>
-        <url>https://github.com/aeng/URL-Monitor.git</url>
-    </scm>
-    
-    <distributionManagement>
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>cloudbees-private-release-repository</id>
-            <name>cloudbees-private-release-repository</name>
-            <url>dav:https://repository-aeng.forge.cloudbees.com/release/</url>
-            <layout>default</layout>
-        </repository>
-    </distributionManagement>
-    
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/aeng/URL-Monitor/issues</url>
-    </issueManagement>
-    
-    <developers>
+  <properties>
+    <commons-lang3.version>3.1</commons-lang3.version>
+    <commons-email.version>1.3.1</commons-email.version>
+    <commons-io.version>1.3.2</commons-io.version>
+    <commons-validator.version>1.3.1</commons-validator.version>
+    <hibernate-core.version>4.2.5.Final</hibernate-core.version>
+    <hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
+    <httpclient.version>4.2.3</httpclient.version>
+    <jackson.version>1.9.13</jackson.version>
+    <javamelody-core.version>1.46.0</javamelody-core.version>
+    <jdk.version>1.7</jdk.version>
+    <joda-time.version>2.2</joda-time.version>
+    <jstl.version>1.2</jstl.version>
+    <junit.version>4.11</junit.version>
+    <liquibase-core.version>3.0.4</liquibase-core.version>
+    <logback.version>1.0.13</logback.version>
+    <lombok.version>0.12.0</lombok.version>
+    <maven-war-plugin.version>2.4</maven-war-plugin.version>
+    <maven-compiler.version>3.1</maven-compiler.version>
+    <oro.version>2.0.8</oro.version>
+    <servlet-api.version>2.5</servlet-api.version>
+    <slf4j.version>1.7.5</slf4j.version>
+    <spring.version>3.2.4.RELEASE</spring.version>
+    <taglib-standard.version>1.1.2</taglib-standard.version>
+    <tomcat7-maven-plugin.version>2.1</tomcat7-maven-plugin.version>
+    <quartz.version>2.2.0</quartz.version>
+    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 
-        <developer>
-            <id>Admin</id>
-            <name>Alex Eng</name>
-            <email>loones1595@gmail.com</email>
-            <timezone>10</timezone>
-        </developer>
-    </developers>
+    <maven.build.timestamp.format>dd/MM/yyyy HH:mm z</maven.build.timestamp.format>
+    <timestamp>${maven.build.timestamp}</timestamp>
 
-    <dependencies>
-        <!-- Spring 3 dependencies -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+  </properties>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+  <scm>
+    <connection>sscm:git:git@github.com:aeng/URL-Monitor.git</connection>
+    <developerConnection>scm:git:git@github.com:aeng/URL-Monitor.git</developerConnection>
+    <url>https://github.com/aeng/URL-Monitor.git</url>
+  </scm>
 
-        <!-- Jackson JSON Mapper -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>cloudbees-private-release-repository</id>
+      <name>cloudbees-private-release-repository</name>
+      <url>dav:https://repository-aeng.forge.cloudbees.com/release/</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
 
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${quartz.version}</version>
-        </dependency>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/aeng/URL-Monitor/issues</url>
+  </issueManagement>
 
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
-        </dependency>
+  <developers>
 
-        <!-- loggings -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
+    <developer>
+      <id>Admin</id>
+      <name>Alex Eng</name>
+      <email>loones1595@gmail.com</email>
+      <timezone>10</timezone>
+    </developer>
+  </developers>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
+  <dependencies>
+    <!-- Spring 3 dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
-        <!-- Apache -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-            <version>${commons-email.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>${commons-validator.version}</version>
-        </dependency>
+    <!-- Jackson JSON Mapper -->
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>oro</groupId>
-            <artifactId>oro</artifactId>
-            <version>${oro.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
 
-        <!-- JSTL -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>${jstl.version}</version>
-        </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>${joda-time.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>${taglib-standard.version}</version>
-        </dependency>
-        
-         <!-- javamelody-core -->
-        <dependency>
-            <groupId>net.bull.javamelody</groupId>
-            <artifactId>javamelody-core</artifactId>
-            <version>${javamelody-core.version}</version>
-        </dependency>
+    <!-- logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
 
-        <!-- for compile only, your container should have this -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
-        <!-- Test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!-- Apache -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-2</version>
-            </extension>
-        </extensions>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-email</artifactId>
+      <version>${commons-email.version}</version>
+    </dependency>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>${tomcat7-maven-plugin.version}</version>
-                    <configuration>
-                        <additionalClasspathDirs>
-                            <additionalClasspathDir>src/test/resources</additionalClasspathDir>
-                        </additionalClasspathDirs>
-                        <path>/urlMonitor</path>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpclient.version}</version>
+    </dependency>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-war-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler.version}</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
+    </dependency>
 
-        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
-    </build>
+    <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+      <version>${commons-validator.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>oro</groupId>
+      <artifactId>oro</artifactId>
+      <version>${oro.version}</version>
+    </dependency>
+
+    <!-- JSTL -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${jstl.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>${taglib-standard.version}</version>
+    </dependency>
+
+    <!-- javamelody-core -->
+    <dependency>
+      <groupId>net.bull.javamelody</groupId>
+      <artifactId>javamelody-core</artifactId>
+      <version>${javamelody-core.version}</version>
+    </dependency>
+
+    <!-- database -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase-core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>${hibernate-validator.version}</version>
+    </dependency>
+
+    <!-- for compile only, your container should have this -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>${servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>${tomcat7-maven-plugin.version}</version>
+          <configuration>
+            <additionalClasspathDirs>
+              <additionalClasspathDir>src/test/resources</additionalClasspathDir>
+            </additionalClasspathDirs>
+            <path>/urlMonitor</path>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven-war-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler.version}</version>
+        <configuration>
+          <source>${jdk.version}</source>
+          <target>${jdk.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+  </build>
 </project>

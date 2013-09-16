@@ -10,10 +10,13 @@
         http://www.springframework.org/schema/mvc 
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-	<context:component-scan base-package="org.urlMonitor" />
-	<context:annotation-config/>
-	<mvc:annotation-driven />
-	<context:property-placeholder location="classpath*:urlMonitor.properties,classpath*:info.properties"/>
-	
-
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    <property name="prefix">
+      <value>/WEB-INF/pages/</value>
+    </property>
+    <property name="suffix">
+      <value>.jsp</value>
+    </property>
+  </bean>
 </beans>
