@@ -13,7 +13,7 @@
   <!-- Liquibase -->
   <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
     <property name="dataSource" ref="dataSource"/>
-    <property name="changeLog" value="classpath:liquibase/db.changelog.xml"/>
+    <property name="changeLog" value="classpath:db/db.changelogs.xml"/>
   </bean>
 
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
