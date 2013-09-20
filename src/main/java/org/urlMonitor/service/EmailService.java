@@ -45,13 +45,13 @@ public class EmailService
    public void sendFailedEmail(Monitor monitor, Date lastCheck) throws EmailException
    {
       String subject = messageResource.getMessage("email.subjectPrefix") + monitor.getName();
-      sendEmail(subject, getFailedMessage(monitor.getUrl(), monitor.getContentRegex(), lastCheck), monitor.getEmailTo());
+      sendEmail(subject, getFailedMessage(monitor.getUrl(), monitor.getContentRegex(), lastCheck), monitor.getEmailToList());
    }
 
    public void sendSuccessEmail(Monitor monitor, Date lastCheck) throws EmailException
    {
       String subject = messageResource.getMessage("email.subjectPrefix") + monitor.getName();
-      sendEmail(subject, getSuccessMessage(monitor.getUrl(), lastCheck), monitor.getEmailTo());
+      sendEmail(subject, getSuccessMessage(monitor.getUrl(), lastCheck), monitor.getEmailToList());
    }
 
    private void sendEmail(String subject, String message, List<String> toEmailList) throws EmailException

@@ -18,7 +18,7 @@
 	
 	<div class="filter content-wrapper">
 		<ul class="list-h">
-			<li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name."/></li>
+			<li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name." value="${filterText}"/></li>
 			<li>
 				<button class="icon-list selected" id="list" title="List view"></button>
 				<button class="icon-grid" id="grid" title="Grid view"></button>

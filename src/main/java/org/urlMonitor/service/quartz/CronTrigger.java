@@ -43,7 +43,7 @@ public class CronTrigger
             Trigger trigger = TriggerBuilder
                   .newTrigger()
                   .withIdentity("Trigger:" + monitor.getName())
-                  .withSchedule(CronScheduleBuilder.cronSchedule(monitor.getCron().getExpression()))
+                  .withSchedule(CronScheduleBuilder.cronSchedule(monitor.getCron()))
                   .build();
 
             scheduler.getListenerManager().addJobListener(new MonitorJobListener(), KeyMatcher.keyEquals(jobKey));

@@ -2,6 +2,7 @@ package org.urlMonitor.controller;
 
 import java.util.*;
 
+import org.apache.commons.lang3.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -16,8 +17,12 @@ public class HomeController
    private UrlMonitorService urlMonitorService;
 
    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-   public String getIndexPage()
+   public String getIndexPage(@RequestParam(required = false) String filterText, ModelMap model)
    {
+      if(!StringUtils.isEmpty(filterText))
+      {
+         model.put("filterText", filterText);
+      }
       return "index";
    }
 

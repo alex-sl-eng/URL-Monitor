@@ -1,65 +1,52 @@
 package org.urlMonitor.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import javax.persistence.*;
 
-import org.apache.commons.lang3.StringUtils;
-import org.urlMonitor.exception.InvalidMonitorFileException;
-import org.urlMonitor.model.type.CronType;
-import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.util.DateUtil;
-import org.urlMonitor.util.MonitorValidator;
+import lombok.*;
+
+import org.apache.commons.lang3.*;
+import org.hibernate.validator.constraints.*;
+import org.urlMonitor.exception.*;
+import org.urlMonitor.model.type.*;
+import org.urlMonitor.util.*;
 
 /**
  * @author Alex Eng - loones1595@gmail.com
  *
  */
-@EqualsAndHashCode(of = { "name", "url", "contentRegex", "cron" })
-public class Monitor implements Serializable
+@Entity
+@NoArgsConstructor
+@Access(AccessType.FIELD)
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false, of = { "name", "url", "contentRegex", "cron" })
+public class Monitor extends ModelBase implements Serializable
 {
    private static final long serialVersionUID = 1L;
 
-   @Getter
-   @NonNull
-   private Long id;
-
-   @Getter
    @NonNull
    private String name;
 
-   @Getter
    private String description;
 
-   @Getter
    @NonNull
+   @URL
    private String url;
 
-   @Getter
+   @Enumerated(EnumType.STRING)
    private StatusType status = StatusType.Unknown;
-
-   @Getter
-   private Date lastCheck;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
-   @Getter
    @NonNull
-   private CronType cron = CronType.ONE_MINUTE; // DEFAULT: every 1 minutes
+   private String cron = CronHelper.CronType.ONE_MINUTE.getExpression(); // DEFAULT: every 1 minutes
 
-   @Getter
    private String contentRegex; //check for text exist if return http 200
 
-   @Setter
    private String emailToList;
 
    private String tag;
@@ -68,26 +55,11 @@ public class Monitor implements Serializable
     * This is used to expose formatted date to JSON object in script
     */
    @Getter
+   @Transient
    private String formattedLastCheck;
 
-   public Monitor(Properties prop) throws InvalidMonitorFileException
-   {
-      this.name = StringUtils.trimToEmpty(prop.getProperty("name"));
-      this.url = StringUtils.trimToEmpty(prop.getProperty("url"));
-      this.cron = CronType.getType(StringUtils.trimToEmpty(prop.getProperty("cronExpression")));
-      this.contentRegex = StringUtils.trimToEmpty(prop.getProperty("contentRegex"));
-
-      this.description = StringUtils.trimToEmpty(prop.getProperty("description"));
-      this.tag = StringUtils.trimToEmpty(prop.getProperty("tag"));
-      this.emailToList = StringUtils.trimToEmpty(prop.getProperty("emailToList"));
-
-      id = new Long(this.hashCode());
-
-      MonitorValidator.isMandatoryFieldsPresent(this);
-      MonitorValidator.validateNameRegexAndTag(this);
-   }
-
-   public List<String> getEmailTo()
+   @Transient
+   public List<String> getEmailToList()
    {
       if (!StringUtils.isEmpty(emailToList))
       {
@@ -96,7 +68,8 @@ public class Monitor implements Serializable
       return new ArrayList<String>();
    }
 
-   public List<String> getTag()
+   @Transient
+   public List<String> getTagList()
    {
       if (!StringUtils.isEmpty(tag))
       {
@@ -105,10 +78,24 @@ public class Monitor implements Serializable
       return new ArrayList<String>();
    }
 
+   @Transient
+   public CronHelper.CronType getCronType()
+   {
+      return CronHelper.getTypeFromExpression(getCron());
+   }
+
    public void update(StatusType status)
    {
       this.status = status;
-      this.lastCheck = new Date();
-      this.formattedLastCheck = DateUtil.formatShortDate(lastCheck);
+
+      //TODO: remove this once loaded from db
+      lastChanged = new Date();
+      afterUpdate();
+   }
+
+   @PostUpdate
+   private void afterUpdate()
+   {
+      formattedLastCheck = DateUtil.formatShortDate(getLastChanged());
    }
 }

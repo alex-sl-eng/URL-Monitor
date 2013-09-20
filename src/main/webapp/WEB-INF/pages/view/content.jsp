@@ -69,15 +69,15 @@
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Interval"/></td>
-	                    <td><span class="value" title="${monitor.cron.display}">${monitor.cron.display}</span></td>
+	                    <td><span class="value" title="${monitor.cronType.display}">${monitor.cronType.display}</span></td>
 	                </tr>
 	                <tr>
 	                    <td class="header"><spring:message code="monitor.details.Tag"/></td>
 	                    <td>
-	                        <c:if test="${not empty monitor.tag}">
-	                           <span class="value" title="${monitor.tag}">${monitor.tag}</span>
+	                        <c:if test="${not empty monitor.tagList}">
+	                           <span class="value" title="${monitor.tagList}">${monitor.tagList}</span>
 	                        </c:if>
-	                        <c:if test="${empty monitor.tag}">
+	                        <c:if test="${empty monitor.tagList}">
                                <i>No tag</i>
                             </c:if>
 	                    </td>

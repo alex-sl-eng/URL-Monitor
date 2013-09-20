@@ -37,6 +37,7 @@ import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.service.events.MonitorUpdateEvent;
 import org.urlMonitor.service.quartz.CronTrigger;
+import org.urlMonitor.util.*;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com
@@ -107,7 +108,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
                   prop.load(new FileInputStream(file));
                   try
                   {
-                     Monitor monitor = new Monitor(prop);
+                     Monitor monitor = MonitorEntityBuilder.buildFromProperties(prop);
                      if (!result.contains(monitor)) // remove duplicate
                      {
                         result.add(monitor);
@@ -149,7 +150,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
       for (Monitor monitor : list)
       {
-         if (isMatchTagOrName(monitor.getName(), monitor.getTag(), filters))
+         if (isMatchTagOrName(monitor.getName(), monitor.getTagList(), filters))
          {
             filteredList.add(monitor);
          }
@@ -210,7 +211,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          if (monitorFailedMap.containsKey(id) && monitorFailedMap.get(id).getCount() >= appConfiguration.getRetryCount())
          {
             monitorFailedMap.remove(id);
-            emailService.sendSuccessEmail(monitor, monitor.getLastCheck());
+            emailService.sendSuccessEmail(monitor, monitor.getLastChanged());
          }
       }
       else if (monitor.getStatus() == StatusType.Unknown || monitor.getStatus() == StatusType.Failed)
@@ -222,7 +223,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
             if (failedStates.getCount() == appConfiguration.getRetryCount())
             {
                log.info("Failed check max-" + monitor.getUrl());
-               emailService.sendFailedEmail(monitor, monitor.getLastCheck());
+               emailService.sendFailedEmail(monitor, monitor.getLastChanged());
             }
          }
          else

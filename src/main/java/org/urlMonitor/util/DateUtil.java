@@ -14,7 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  * 
  */
-public class DateUtil
+public final class DateUtil
 {
    private final static String DATE_TIME_SHORT_PATTERN = "dd/MM/yy HH:mm";
    private final static String TIME_SHORT_PATTERN = "hh:mm:ss";

@@ -40,8 +40,12 @@ $(document).ready(function(){
 	});
 	
 	$("#filter_text").change(function() {
+      var filterText = $('#filter_text').val();
+      if(filterText) {
+         //replace url here
+      }
 		$(".content").html(getLargeLoadingHtml());
-		filterList($('#filter_text').val());
+		filterList(filterText);
 	});
 })
 
