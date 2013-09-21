@@ -6,4 +6,30 @@
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
 						http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+  <changeSet id="1" author="aeng">
+    <createTable tableName="Monitor">
+      <column name="id" autoIncrement="true" type="INT">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="creationDate" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="lastChanged" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="url" type="varchar(2083)"/>
+      <column name="status" type="varchar(20)"/>
+      <column name="cron" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="contentRegex" type="varchar(255)"/>
+      <column name="emailToList" type="varchar(255)"/>
+      <column name="tag" type="varchar(255)"/>
+      <column name="lastFailed" type="TIMESTAMP"/>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>

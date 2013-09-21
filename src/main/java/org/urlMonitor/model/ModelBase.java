@@ -12,19 +12,20 @@ import lombok.*;
  */
 @MappedSuperclass
 @Getter
+@Setter
 public class ModelBase implements Serializable
 {
    @Id
    @GeneratedValue
-   @Setter
+   @NonNull
    protected Long id;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @Setter
+   @NonNull
    protected Date creationDate;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @Setter
+   @NonNull
    protected Date lastChanged;
 
    @PrePersist

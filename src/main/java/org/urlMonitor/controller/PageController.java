@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.urlMonitor.service.AppConfiguration;
 
 @Controller
-public class PageController
+public class PageController extends BaseController
 {
    @Autowired
    private AppConfiguration appConfiguration;
    
    @RequestMapping(value = "/about", method = RequestMethod.GET)
-   public String GetAboutPage(ModelMap model)
+   public String getAboutPage(ModelMap model)
    {
       model.addAttribute("replyTo", appConfiguration.getEmailReplyTo());
       model.addAttribute("buildVersion", appConfiguration.getBuildVersion());

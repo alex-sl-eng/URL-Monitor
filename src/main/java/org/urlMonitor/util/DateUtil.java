@@ -5,9 +5,8 @@ package org.urlMonitor.util;
 
 import java.util.Date;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.*;
+import org.joda.time.format.*;
 
 /**
  * 
@@ -47,5 +46,31 @@ public final class DateUtil
          return fmt.print(new DateTime(date));
       }
       return null;
+   }
+
+   public static String getHowLongAgoDescription(Date startDate, Date endDate)
+   {
+      Long milliseconds = endDate.getTime() - startDate.getTime();
+      Duration duration = new Duration(milliseconds);
+      PeriodFormatter formatter = new PeriodFormatterBuilder()
+              .appendDays()
+              .appendSuffix("d ")
+              .appendHours()
+              .appendSuffix("h ")
+              .appendMinutes()
+              .appendSuffix("m ")
+              .appendSeconds()
+              .appendSuffix("s ")
+              .toFormatter();
+      return formatter.print(duration.toPeriod()) + getDateDiffSuffix(milliseconds) ;
+   }
+
+   private static String getDateDiffSuffix(Long milliseconds)
+   {
+      if(milliseconds < 0)
+      {
+         return " incoming ";
+      }
+      return " ago ";
    }
 }

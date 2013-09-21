@@ -100,8 +100,8 @@ function refreshPage() {
 					$('#' + id + "-status").html(getLoadingHtml());
 				}
 				
-				if(data[i].formattedLastCheck){
-					$('#' + id + "-lastCheck").text(data[i].formattedLastCheck);
+				if(data[i].lastCheck){
+					$('#' + id + "-lastCheck").text(data[i].lastCheck);
 				}
 				else {
 					$('#' + id + "-lastCheck").html(getLoadingHtml());

@@ -38,6 +38,7 @@ import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.service.events.MonitorUpdateEvent;
 import org.urlMonitor.service.quartz.CronTrigger;
 import org.urlMonitor.util.*;
+import com.google.common.collect.*;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com
@@ -57,8 +58,8 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
    private final static String REGEX_PROPERTIES = "*.properties";
 
    private CronTrigger cronTrigger;
-   private Map<Long, Monitor> monitorMap = new HashMap<Long, Monitor>();
-   private Map<Long, FailedStates> monitorFailedMap = new HashMap<Long, FailedStates>();
+   private Map<Long, Monitor> monitorMap = Maps.newHashMap();
+   private Map<Long, FailedStates> monitorFailedMap = Maps.newHashMap();
 
    public static final Comparator<Monitor> MonitorComparator = new Comparator<Monitor>()
    {
@@ -91,7 +92,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
    private Set<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException
    {
-      Set<Monitor> result = new HashSet<Monitor>();
+      Set<Monitor> result = Sets.newHashSet();
 
       File dir = new File(appConfiguration.getFilesPath());
       if (dir.exists())
@@ -132,7 +133,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
 
    public List<Monitor> getMonitorList()
    {
-      List<Monitor> monitorList = new ArrayList<Monitor>(monitorMap.values());
+      List<Monitor> monitorList = Lists.newArrayList(monitorMap.values());
       Collections.sort(monitorList, MonitorComparator);
       return monitorList;
    }
@@ -145,7 +146,7 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          return list;
       }
 
-      List<Monitor> filteredList = new ArrayList<Monitor>();
+      List<Monitor> filteredList = Lists.newArrayList();
       String[] filters = filterText.split(";");
 
       for (Monitor monitor : list)

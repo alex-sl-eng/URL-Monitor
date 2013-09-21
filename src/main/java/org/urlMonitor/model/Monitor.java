@@ -28,35 +28,45 @@ public class Monitor extends ModelBase implements Serializable
    private static final long serialVersionUID = 1L;
 
    @NonNull
+   @Length(max = 100)
    private String name;
 
+   @Length(max = 255)
    private String description;
 
    @NonNull
    @URL
+   @Length(max = 2083)
    private String url;
 
    @Enumerated(EnumType.STRING)
+   @Length(max = 20)
    private StatusType status = StatusType.Unknown;
 
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
    @NonNull
+   @Length(max = 100)
    private String cron = CronHelper.CronType.ONE_MINUTE.getExpression(); // DEFAULT: every 1 minutes
 
+   @Length(max = 255)
    private String contentRegex; //check for text exist if return http 200
 
+   @Length(max = 255)
    private String emailToList;
 
+   @Length(max = 255)
    private String tag;
 
    /**
     * This is used to expose formatted date to JSON object in script
     */
-   @Getter
    @Transient
-   private String formattedLastCheck;
+   private String lastCheck;
+
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date lastFailed;
 
    @Transient
    public List<String> getEmailToList()
@@ -78,24 +88,25 @@ public class Monitor extends ModelBase implements Serializable
       return new ArrayList<String>();
    }
 
-   @Transient
-   public CronHelper.CronType getCronType()
-   {
-      return CronHelper.getTypeFromExpression(getCron());
-   }
-
    public void update(StatusType status)
    {
       this.status = status;
 
+      Date now = new Date();
+      if(status == StatusType.Failed)
+      {
+         lastFailed = now;
+      }
+
       //TODO: remove this once loaded from db
-      lastChanged = new Date();
+      lastChanged = now;
       afterUpdate();
    }
 
+   //TODO: remove this once loaded from db
    @PostUpdate
    private void afterUpdate()
    {
-      formattedLastCheck = DateUtil.formatShortDate(getLastChanged());
+      lastCheck = DateUtil.getHowLongAgoDescription(getLastChanged(), new Date());
    }
 }

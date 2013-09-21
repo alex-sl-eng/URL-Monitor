@@ -9,9 +9,10 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.urlMonitor.model.*;
 import org.urlMonitor.service.*;
+import org.urlMonitor.util.*;
 
 @Controller
-public class HomeController
+public class HomeController extends BaseController
 {
    @Autowired
    private UrlMonitorService urlMonitorService;
@@ -23,6 +24,7 @@ public class HomeController
       {
          model.put("filterText", filterText);
       }
+      model.put("cronHelper", getCronHelper());
       return "index";
    }
 
@@ -36,6 +38,7 @@ public class HomeController
    public String filterList(@RequestParam(required = false) String filterText, ModelMap model)
    {
       model.addAttribute("monitorList", urlMonitorService.getMonitorList(filterText));
+      model.put("cronHelper", getCronHelper());
       return "view/content";
    }
 }
