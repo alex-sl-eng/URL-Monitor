@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+  <!-- This is where we configure Spring-Security  -->
+  <security:http auto-config="true" use-expressions="true" access-denied-page="/auth/login?access=denied">
+    <security:intercept-url pattern="/monitoring" access="hasRole('ROLE_ADMIN')"/>
+    <security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+    <security:intercept-url pattern="/" access="permitAll"/>
+    <security:intercept-url pattern="/action" access="hasRole('ROLE_USER')"/>
+
+    <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
+    <security:openid-login user-service-ref="userDetailsService" login-page="/auth/login"
+                           authentication-failure-url="/auth/login?error=true" default-target-url="/home"/>
+
+    <security:logout invalidate-session="true" logout-success-url="/home" logout-url="/auth/logout"/>
+  </security:http>
+
+  <!-- Declare an authentication-manager to use a custom userDetailsService -->
+  <security:authentication-manager>
+    <security:authentication-provider user-service-ref="userDetailsService">
+      <security:password-encoder ref="passwordEncoder"/>
+    </security:authentication-provider>
+  </security:authentication-manager>
+
+  <!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+  <bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+
+  <!-- An in-memory list of users. No need to access an external database layer.
+      See Spring Security 3.1 Reference 5.2.1 In-Memory Authentication -->
+  <security:user-service id="userDetailsService">
+    <!-- user name is based on the returned OpenID identifier from Google -->
+    <security:user name="https://www.google.com/accounts/o8/id?id=AItxxioJSDLFJLjxcksdfjOpAASDFosSSoJ0E"
+                   password="" authorities="ROLE_USER, ROLE_ADMIN"/>
+  </security:user-service>
+
+</beans>

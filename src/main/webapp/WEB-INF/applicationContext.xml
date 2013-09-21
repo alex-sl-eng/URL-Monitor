@@ -21,6 +21,4 @@
     <property name="defaultEncoding" value="utf-8"/>
   </bean>
 
-  <import resource="hibernateContext.xml"/>
-
 </beans>
