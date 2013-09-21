@@ -24,7 +24,7 @@ public class HomeController extends BaseController
       {
          model.put("filterText", filterText);
       }
-      model.put("cronHelper", getCronHelper());
+      insertUtilInSession(model);
       return "index";
    }
 
@@ -38,7 +38,13 @@ public class HomeController extends BaseController
    public String filterList(@RequestParam(required = false) String filterText, ModelMap model)
    {
       model.addAttribute("monitorList", urlMonitorService.getMonitorList(filterText));
-      model.put("cronHelper", getCronHelper());
+      insertUtilInSession(model);
       return "view/content";
+   }
+
+   private void insertUtilInSession(ModelMap model)
+   {
+      model.put("cronHelper", getCronHelper());
+      model.put("dateUtil", getDateUtil());
    }
 }

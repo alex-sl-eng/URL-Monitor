@@ -65,6 +65,11 @@ public final class DateUtil
       return formatter.print(duration.toPeriod()) + getDateDiffSuffix(milliseconds) ;
    }
 
+   public static String getHowLongAgoDescription(Date startDate)
+   {
+      return getHowLongAgoDescription(startDate, new Date());
+   }
+
    private static String getDateDiffSuffix(Long milliseconds)
    {
       if(milliseconds < 0)

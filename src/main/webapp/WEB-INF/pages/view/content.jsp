@@ -54,17 +54,25 @@
             <td class="header"><spring:message code="monitor.details.Url"/></td>
             <td><span class="value" title="${monitor.url}"><a href="${monitor.url}">${monitor.url}</a></span></td>
           </tr>
+
+          <c:if test="${not empty monitor.lastFailed}">
+            <tr>
+              <td class="header"><spring:message code="monitor.details.LastFailed"/></td>
+              <td>${dateUtil.getHowLongAgoDescription(monitor.lastFailed)}</td>
+            </tr>
+          </c:if>
+
           <tr>
             <td class="header"><spring:message code="monitor.details.SearchText"/></td>
             <td>
-	                       <span class="value" title="${monitor.contentRegex}">
-	                           <c:if test="${not empty monitor.contentRegex}">
-                               ${monitor.contentRegex}
-                             </c:if>
-	                           <c:if test="${empty monitor.contentRegex}">
-                               <i>No pattern checking</i>
-                             </c:if>
-	                       </span>
+             <span class="value" title="${monitor.contentRegex}">
+                 <c:if test="${not empty monitor.contentRegex}">
+                   ${monitor.contentRegex}
+                 </c:if>
+                 <c:if test="${empty monitor.contentRegex}">
+                   <i>No pattern checking</i>
+                 </c:if>
+             </span>
             </td>
           </tr>
           <tr>

@@ -12,12 +12,12 @@ import lombok.*;
  */
 @MappedSuperclass
 @Getter
-@Setter
 public class ModelBase implements Serializable
 {
    @Id
    @GeneratedValue
    @NonNull
+   @Setter
    protected Long id;
 
    @Temporal(TemporalType.TIMESTAMP)
@@ -29,7 +29,7 @@ public class ModelBase implements Serializable
    protected Date lastChanged;
 
    @PrePersist
-   private void onPersist()
+   public void onPersist()
    {
       Date now = new Date();
       if (creationDate == null)

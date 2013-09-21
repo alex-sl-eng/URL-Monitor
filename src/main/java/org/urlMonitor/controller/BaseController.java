@@ -11,4 +11,7 @@ public class BaseController
 {
    @Getter
    private final CronHelper cronHelper = new CronHelper();
+
+   @Getter
+   private final DateUtil dateUtil = new DateUtil();
 }

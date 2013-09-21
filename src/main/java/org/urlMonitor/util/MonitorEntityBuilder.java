@@ -27,6 +27,7 @@ public final class MonitorEntityBuilder
 
       //TODO: remove this once loaded from db
       monitor.setId(new Long(monitor.hashCode()));
+      monitor.onPersist();
 
       return monitor;
    }
