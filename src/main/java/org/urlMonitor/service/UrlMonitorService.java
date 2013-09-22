@@ -3,41 +3,28 @@
  */
 package org.urlMonitor.service;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-import javax.annotation.PostConstruct;
+import javax.annotation.*;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.*;
 
-import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.mail.EmailException;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-import org.urlMonitor.exception.InvalidMonitorFileException;
-import org.urlMonitor.model.FailedStates;
-import org.urlMonitor.model.Monitor;
-import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.service.events.MonitorUpdateEvent;
+import org.apache.commons.io.filefilter.*;
+import org.apache.commons.lang3.*;
+import org.apache.commons.mail.*;
+import org.quartz.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.*;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.*;
+import org.urlMonitor.exception.*;
+import org.urlMonitor.model.*;
+import org.urlMonitor.model.type.*;
+import org.urlMonitor.service.events.*;
 import org.urlMonitor.service.quartz.CronTrigger;
 import org.urlMonitor.util.*;
+
 import com.google.common.collect.*;
 
 /**
@@ -157,6 +144,17 @@ public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent
          }
       }
       return filteredList;
+   }
+
+   public List<MonitorInfo> getMonitorInfoList()
+   {
+      List<MonitorInfo> result = Lists.newArrayList();
+      for (Monitor monitor : getMonitorList())
+      {
+         MonitorInfo info = new MonitorInfo(monitor.hashCode(), monitor.getStatus(), monitor.getLastChanged(), monitor.getLastFailed());
+         result.add(info);
+      }
+      return result;
    }
 
    private boolean isMatchTagOrName(String name, List<String> tags, String[] filterTextList)

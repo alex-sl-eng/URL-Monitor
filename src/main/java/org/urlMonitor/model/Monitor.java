@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.*;
 import org.urlMonitor.exception.*;
 import org.urlMonitor.model.type.*;
 import org.urlMonitor.util.*;
+import com.google.common.collect.*;
 
 /**
  * @author Alex Eng - loones1595@gmail.com
@@ -59,12 +60,6 @@ public class Monitor extends ModelBase implements Serializable
    @Length(max = 255)
    private String tag;
 
-   /**
-    * This is used to expose formatted date to JSON object in script
-    */
-   @Transient
-   private String lastCheck;
-
    @Temporal(TemporalType.TIMESTAMP)
    private Date lastFailed;
 
@@ -75,7 +70,7 @@ public class Monitor extends ModelBase implements Serializable
       {
          return Arrays.asList(emailToList.split(";"));
       }
-      return new ArrayList<String>();
+      return Lists.newArrayList();
    }
 
    @Transient
@@ -85,7 +80,7 @@ public class Monitor extends ModelBase implements Serializable
       {
          return Arrays.asList(tag.split(";"));
       }
-      return new ArrayList<String>();
+      return Lists.newArrayList();
    }
 
    public void update(StatusType status)
@@ -100,13 +95,5 @@ public class Monitor extends ModelBase implements Serializable
 
       //TODO: remove this once loaded from db
       lastChanged = now;
-      afterUpdate();
-   }
-
-   //TODO: remove this once loaded from db
-   @PostUpdate
-   private void afterUpdate()
-   {
-      lastCheck = DateUtil.getHowLongAgoDescription(getLastChanged(), new Date());
    }
 }

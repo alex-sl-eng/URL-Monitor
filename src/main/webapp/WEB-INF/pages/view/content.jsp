@@ -6,38 +6,25 @@
 </c:if>
 <c:if test="${not empty monitorList}">
   <c:forEach var="monitor" items="${monitorList}">
-    <div id="${monitor.id}-container" class="container ${monitor.status}">
+    <div id="${monitor.hashCode()}-container" class="container ${monitor.status}">
       <ul class="list-h">
         <li>
-          <c:if test="${monitor.status == 'Pass'}">
-            <span id="${monitor.id}-status" class="status icon-checkmark"></span>
-          </c:if>
-          <c:if test="${monitor.status == 'Failed'}">
-            <span id="${monitor.id}-status" class="status icon-close"></span>
-          </c:if>
-          <c:if test="${monitor.status == 'Unknown'}">
-		                <span id="${monitor.id}-status" class="status">
-		                    <img alt="Loading..." src="resources/images/loader.gif"/>
-		                </span>
-          </c:if>
+          <span class="status">
+              <img alt="Loading..." src="resources/images/loader.gif"/>
+          </span>
         </li>
         <li class="name">
           <a href="${monitor.url}" title="${monitor.name}">${monitor.name}</a>
         </li>
         <li class="time right">
-                    <span id="${monitor.id}-lastCheck">
-	                    <c:if test="${not empty monitor.lastCheck}">
-                        ${monitor.lastCheck}
-                      </c:if>
-	                    <c:if test="${empty monitor.lastCheck}">
-                        <img alt="Loading..." src="resources/images/loader.gif"/>
-                      </c:if>
-                    </span>
-          <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.id})"></a>
+          <span class="lastChecked">
+              <img alt="Loading..." src="resources/images/loader.gif"/>
+          </span>
+          <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.hashCode()})"></a>
         </li>
       </ul>
 
-      <div id="${monitor.id}-details" class="details">
+      <div class="details">
         <table class="small">
           <tr>
             <td class="header"><spring:message code="monitor.details.Description"/></td>
@@ -55,12 +42,13 @@
             <td><span class="value" title="${monitor.url}"><a href="${monitor.url}">${monitor.url}</a></span></td>
           </tr>
 
-          <c:if test="${not empty monitor.lastFailed}">
-            <tr>
-              <td class="header"><spring:message code="monitor.details.LastFailed"/></td>
-              <td>${dateUtil.getHowLongAgoDescription(monitor.lastFailed)}</td>
-            </tr>
-          </c:if>
+          <tr>
+            <td class="header"><spring:message code="monitor.details.LastFailed"/></td>
+            <td class="lastFailed">
+                None
+            </td>
+          </tr>
+
 
           <tr>
             <td class="header"><spring:message code="monitor.details.SearchText"/></td>

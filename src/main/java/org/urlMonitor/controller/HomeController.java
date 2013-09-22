@@ -8,6 +8,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.urlMonitor.model.*;
+import org.urlMonitor.model.type.*;
 import org.urlMonitor.service.*;
 import org.urlMonitor.util.*;
 
@@ -29,9 +30,9 @@ public class HomeController extends BaseController
    }
 
    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
-   public @ResponseBody List<Monitor> refreshPage()
+   public @ResponseBody List<MonitorInfo> refreshPage()
    {
-      return urlMonitorService.getMonitorList();
+      return urlMonitorService.getMonitorInfoList();
    }
 
    @RequestMapping(value = "/filterList", method = RequestMethod.GET)
@@ -45,6 +46,5 @@ public class HomeController extends BaseController
    private void insertUtilInSession(ModelMap model)
    {
       model.put("cronHelper", getCronHelper());
-      model.put("dateUtil", getDateUtil());
    }
 }
