@@ -26,10 +26,10 @@ public class EmailService
 {
    @Autowired
    private AppConfiguration appConfiguration;
-   
+
    @Autowired
    private MessageResource messageResource;
-   
+
    private Email getEmailClient()
    {
       Email email = new SimpleEmail();
@@ -38,7 +38,7 @@ public class EmailService
       email.setSSLOnConnect(appConfiguration.isEmailUseSsl());
       email.setStartTLSEnabled(appConfiguration.isEmailUseTsl());
       email.setAuthenticator(new DefaultAuthenticator(appConfiguration.getEmailUsername(), appConfiguration.getEmailPassword()));
-      
+
       return email;
    }
 
@@ -59,9 +59,9 @@ public class EmailService
       if (toEmailList != null && !toEmailList.isEmpty() && !StringUtils.isEmpty(message))
       {
          Email email = getEmailClient();
-         
+
          email.setFrom(appConfiguration.getEmailFrom());
-         
+
          for (String toEmail : toEmailList)
          {
             email.addTo(toEmail);
@@ -98,8 +98,10 @@ public class EmailService
 
       sb.append(messageResource.getMessage("email.failMessage", url, DateUtil.formatShortDate(lastFailedTime)));
       sb.append("\n");
-      sb.append(messageResource.getMessage("email.contentSearched", searchString));
-
+      if (!StringUtils.isEmpty(searchString))
+      {
+         sb.append(messageResource.getMessage("email.contentSearched", searchString));
+      }
       sb.append(getEmailFooter());
 
       return sb.toString();

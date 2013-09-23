@@ -2,8 +2,6 @@ package org.urlMonitor.service.quartz;
 
 import java.io.IOException;
 
-import lombok.extern.slf4j.Slf4j;
-
 import org.apache.http.client.ClientProtocolException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -15,6 +13,8 @@ import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.service.events.EventPublisher;
 import org.urlMonitor.service.events.MonitorUpdateEvent;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MonitorJob implements Job

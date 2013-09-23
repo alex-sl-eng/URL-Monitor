@@ -1,12 +1,12 @@
 package org.urlMonitor.model;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
-import lombok.*;
+import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.util.DateUtil;
 
-import org.urlMonitor.model.type.*;
-import org.urlMonitor.util.*;
+import lombok.Getter;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>

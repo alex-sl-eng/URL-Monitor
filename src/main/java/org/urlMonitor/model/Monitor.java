@@ -1,18 +1,30 @@
 package org.urlMonitor.model;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
-import javax.persistence.*;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
+import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.util.CronHelper;
+import com.google.common.collect.Lists;
 
-import lombok.*;
-
-import org.apache.commons.lang3.*;
-import org.hibernate.validator.constraints.*;
-import org.urlMonitor.exception.*;
-import org.urlMonitor.model.type.*;
-import org.urlMonitor.util.*;
-import com.google.common.collect.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * @author Alex Eng - loones1595@gmail.com
@@ -88,7 +100,7 @@ public class Monitor extends ModelBase implements Serializable
       this.status = status;
 
       Date now = new Date();
-      if(status == StatusType.Failed)
+      if (status == StatusType.Failed)
       {
          lastFailed = now;
       }

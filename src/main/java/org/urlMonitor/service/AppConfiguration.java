@@ -1,10 +1,10 @@
 package org.urlMonitor.service;
 
-import lombok.Getter;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import lombok.Getter;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com

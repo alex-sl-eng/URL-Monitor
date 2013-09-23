@@ -3,29 +3,41 @@
  */
 package org.urlMonitor.service;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import javax.annotation.PostConstruct;
 
-import javax.annotation.*;
-
-import lombok.extern.slf4j.*;
-
-import org.apache.commons.io.filefilter.*;
-import org.apache.commons.lang3.*;
-import org.apache.commons.mail.*;
-import org.quartz.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.*;
-import org.springframework.context.annotation.*;
-import org.springframework.stereotype.*;
-import org.urlMonitor.exception.*;
-import org.urlMonitor.model.*;
-import org.urlMonitor.model.type.*;
-import org.urlMonitor.service.events.*;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.EmailException;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.urlMonitor.exception.InvalidMonitorFileException;
+import org.urlMonitor.model.FailedStates;
+import org.urlMonitor.model.Monitor;
+import org.urlMonitor.model.MonitorInfo;
+import org.urlMonitor.model.type.StatusType;
+import org.urlMonitor.service.events.MonitorUpdateEvent;
 import org.urlMonitor.service.quartz.CronTrigger;
-import org.urlMonitor.util.*;
+import org.urlMonitor.util.MonitorEntityBuilder;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
-import com.google.common.collect.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Alex Eng(aeng)  loones1595@gmail.com

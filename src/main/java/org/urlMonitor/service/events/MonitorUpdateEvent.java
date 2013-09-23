@@ -1,9 +1,9 @@
 package org.urlMonitor.service.events;
 
-import lombok.Getter;
-
 import org.springframework.context.ApplicationEvent;
 import org.urlMonitor.model.type.StatusType;
+
+import lombok.Getter;
 
 public class MonitorUpdateEvent extends ApplicationEvent
 {

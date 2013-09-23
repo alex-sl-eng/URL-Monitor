@@ -1,16 +1,17 @@
 package org.urlMonitor.controller;
 
-import java.util.*;
+import java.util.List;
 
-import org.apache.commons.lang3.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
-import org.urlMonitor.model.*;
-import org.urlMonitor.model.type.*;
-import org.urlMonitor.service.*;
-import org.urlMonitor.util.*;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.urlMonitor.model.MonitorInfo;
+import org.urlMonitor.service.UrlMonitorService;
 
 @Controller
 public class HomeController extends BaseController

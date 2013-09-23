@@ -1,12 +1,11 @@
 package org.urlMonitor.util;
 
-import java.util.*;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.Monitor;
-import org.urlMonitor.model.type.*;
 
 public final class MonitorEntityBuilder
 {

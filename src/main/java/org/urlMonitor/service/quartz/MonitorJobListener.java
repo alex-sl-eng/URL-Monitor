@@ -1,11 +1,11 @@
 package org.urlMonitor.service.quartz;
 
-import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MonitorJobListener implements JobListener

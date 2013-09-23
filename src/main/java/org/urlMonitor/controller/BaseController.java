@@ -1,8 +1,9 @@
 package org.urlMonitor.controller;
 
-import lombok.*;
+import org.urlMonitor.util.CronHelper;
+import org.urlMonitor.util.DateUtil;
 
-import org.urlMonitor.util.*;
+import lombok.Getter;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>

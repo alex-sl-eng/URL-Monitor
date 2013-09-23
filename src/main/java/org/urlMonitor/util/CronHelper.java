@@ -1,6 +1,6 @@
 package org.urlMonitor.util;
 
-import lombok.*;
+import lombok.Getter;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
