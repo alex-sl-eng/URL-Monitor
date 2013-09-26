@@ -2,17 +2,17 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
   <changeSet id="1" author="aeng">
     <createTable tableName="Monitor">
-      <column name="id" autoIncrement="true" type="INT">
+      <column name="id" autoIncrement="true" type="bigint">
         <constraints primaryKey="true" nullable="false"/>
       </column>
-      <column name="creationDate" type="TIMESTAMP">
+      <column name="creation_date" type="TIMESTAMP">
         <constraints nullable="false"/>
       </column>
-      <column name="lastChanged" type="TIMESTAMP">
+      <column name="last_changed" type="TIMESTAMP">
         <constraints nullable="false"/>
       </column>
       <column name="name" type="varchar(100)">
@@ -24,10 +24,48 @@
       <column name="cron" type="varchar(100)">
         <constraints nullable="false"/>
       </column>
-      <column name="contentRegex" type="varchar(255)"/>
-      <column name="emailToList" type="varchar(255)"/>
+      <column name="content_regex" type="varchar(255)"/>
+      <column name="email_to_list" type="varchar(255)"/>
       <column name="tag" type="varchar(255)"/>
-      <column name="lastFailed" type="TIMESTAMP"/>
+      <column name="last_failed" type="TIMESTAMP"/>
     </createTable>
+  </changeSet>
+
+  <changeSet id="2" author="aeng">
+    <createTable tableName="User">
+      <column name="id" autoIncrement="true" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="creation_date" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_changed" type="TIMESTAMP">
+        <constraints nullable="false"/>
+      </column>
+      <column name="username" type="varchar(100)">
+        <constraints unique="true" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)"/>
+      <column name="email" type="varchar(100)"/>
+      <column name="enabled" type="INT" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="3" author="aeng">
+    <createTable tableName="User_Roles">
+      <column name="id" autoIncrement="true" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="user_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="role" type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseTableName="User_Roles" baseColumnNames="user_id" constraintName="FK_user_role_user" referencedTableName="User"
+      referencedColumnNames="id"/>
   </changeSet>
 </databaseChangeLog>

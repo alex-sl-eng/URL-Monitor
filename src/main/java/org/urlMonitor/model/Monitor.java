@@ -6,12 +6,15 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
@@ -23,7 +26,6 @@ import com.google.common.collect.Lists;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -40,16 +42,16 @@ public class Monitor extends ModelBase implements Serializable
 {
    private static final long serialVersionUID = 1L;
 
-   @NonNull
-   @Length(max = 100)
+   @NotNull
+   @Size(max = 100)
    private String name;
 
-   @Length(max = 255)
+   @Size(max = 255)
    private String description;
 
-   @NonNull
+   @NotNull
    @URL
-   @Length(max = 2083)
+   @Size(max = 2083)
    private String url;
 
    @Enumerated(EnumType.STRING)
@@ -59,20 +61,23 @@ public class Monitor extends ModelBase implements Serializable
    /**
     * see http://en.wikipedia.org/wiki/Cron#CRON_expression
     */
-   @NonNull
-   @Length(max = 100)
+   @NotNull
+   @Size(max = 100)
    private String cron = CronHelper.CronType.ONE_MINUTE.getExpression(); // DEFAULT: every 1 minutes
 
-   @Length(max = 255)
+   @Size(max = 255)
+   @Column(name = "content_regex")
    private String contentRegex; //check for text exist if return http 200
 
-   @Length(max = 255)
+   @Size(max = 255)
+   @Column(name = "email_to_list")
    private String emailToList;
 
-   @Length(max = 255)
+   @Size(max = 255)
    private String tag;
 
    @Temporal(TemporalType.TIMESTAMP)
+   @Column(name = "last_failed")
    private Date lastFailed;
 
    @Transient

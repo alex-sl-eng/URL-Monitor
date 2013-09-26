@@ -2,6 +2,7 @@ package org.urlMonitor.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -9,9 +10,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -23,16 +24,18 @@ public class ModelBase implements Serializable
 {
    @Id
    @GeneratedValue
-   @NonNull
+   @NotNull
    @Setter
    protected Long id;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @NonNull
+   @NotNull
+   @Column(name="creation_date")
    protected Date creationDate;
 
    @Temporal(TemporalType.TIMESTAMP)
-   @NonNull
+   @NotNull
+   @Column(name="last_changed")
    protected Date lastChanged;
 
    @PrePersist
