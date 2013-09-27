@@ -12,8 +12,6 @@ import org.urlMonitor.model.UserRoles;
 @Transactional
 public class UserRolesDAO extends AbstractDAO<UserRoles, Long>
 {
-   public static String USER_DEFAULT_ROLE = "ROLE_USER";
-
    protected UserRolesDAO()
    {
       super(UserRoles.class);
@@ -22,10 +20,5 @@ public class UserRolesDAO extends AbstractDAO<UserRoles, Long>
    public void createRole(User user, String role)
    {
       saveOrUpdate(new UserRoles(user, role));
-   }
-
-   public void createDefaultRole(User user)
-   {
-      createRole(user, USER_DEFAULT_ROLE);
    }
 }

@@ -15,15 +15,15 @@
     <security:intercept-url pattern="/action" access="hasRole('ROLE_USER')"/>
 
     <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
-    <security:openid-login user-service-ref="userDAO" login-page="/auth/login"
-                           authentication-failure-url="/auth/login?error=true" default-target-url="/home"/>
+    <security:openid-login user-service-ref="userService" login-page="/auth/login"
+                           authentication-failure-url="/auth/login?error=true" default-target-url="/auth/redirect"/>
 
     <security:logout invalidate-session="true" logout-success-url="/home" logout-url="/auth/logout"/>
   </security:http>
 
   <!-- Declare an authentication-manager to use a custom userDetailsService -->
   <security:authentication-manager>
-    <security:authentication-provider user-service-ref="userDAO">
+    <security:authentication-provider user-service-ref="userService">
       <security:password-encoder ref="passwordEncoder"/>
     </security:authentication-provider>
   </security:authentication-manager>

@@ -1,8 +1,12 @@
 package org.urlMonitor.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
 
 import lombok.Getter;
 
@@ -57,6 +61,9 @@ public class AppConfiguration
 
    @Value("${retry.count}")
    private String retryCount;
+
+   @Value("${admin.username}")
+   private String admins;
    
    public int getEmailPort()
    {
@@ -76,5 +83,10 @@ public class AppConfiguration
    public int getRetryCount()
    {
       return Integer.parseInt(retryCount);
+   }
+
+   public List<String> getAdminUsers()
+   {
+      return Lists.newArrayList(admins.split(","));
    }
 }

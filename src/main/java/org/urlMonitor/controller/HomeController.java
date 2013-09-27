@@ -2,7 +2,6 @@ package org.urlMonitor.controller;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,16 +21,12 @@ public class HomeController extends BaseController
    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
    public String getIndexPage(@RequestParam(required = false) String filterText, ModelMap model)
    {
-      if(!StringUtils.isEmpty(filterText))
-      {
-         model.put("filterText", filterText);
-      }
-      insertUtilInSession(model);
-      return "index";
+      return getIndexPage(filterText, model);
    }
 
    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
-   public @ResponseBody List<MonitorInfo> refreshPage()
+   public @ResponseBody
+   List<MonitorInfo> refreshPage()
    {
       return urlMonitorService.getMonitorInfoList();
    }
@@ -42,10 +37,5 @@ public class HomeController extends BaseController
       model.addAttribute("monitorList", urlMonitorService.getMonitorList(filterText));
       insertUtilInSession(model);
       return "view/content";
-   }
-
-   private void insertUtilInSession(ModelMap model)
-   {
-      model.put("cronHelper", getCronHelper());
    }
 }
