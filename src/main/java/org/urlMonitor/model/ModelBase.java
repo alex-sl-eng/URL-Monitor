@@ -24,7 +24,6 @@ public class ModelBase implements Serializable
 {
    @Id
    @GeneratedValue
-   @NotNull
    @Setter
    protected Long id;
 

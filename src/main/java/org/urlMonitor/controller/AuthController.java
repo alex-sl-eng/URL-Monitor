@@ -21,11 +21,11 @@ public class AuthController
    {
       if (error)
       {
-         model.put("error", "Please enter valid username or password!");
+         model.put("messages", "Invalid username or password");
       }
       else
       {
-         model.put("error", "");
+         model.put("messages", "");
       }
       return "auth/login";
    }
@@ -33,7 +33,6 @@ public class AuthController
    @RequestMapping(value = "/denied", method = RequestMethod.GET)
    public String getDeniedPage()
    {
-      log.warn("Received request to show denied page");
       return "auth/denied";
    }
 }

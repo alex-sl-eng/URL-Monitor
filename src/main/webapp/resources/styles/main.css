@@ -156,7 +156,12 @@ header h1 a, .right_menu_toggle span[class*='icon-'] {
 
 .content-wrapper {
     margin: auto !important;
-    max-width: 960px;
+    max-width: 65em;
+}
+
+.content-wrapper-small {
+    margin: auto !important;
+    max-width: 30em;
 }
 
 main .filter, main .content {
@@ -164,19 +169,42 @@ main .filter, main .content {
 }
 
 .huge {
-    font-size: 2.25em;
+    font-size: 2.25em !important;
+}
+
+.larger {
+    font-size: 1.75em !important;
+}
+
+.large {
+    font-size: 1.25em !important;
+}
+
+.medium {
+    font-size: 1.125em !important;
 }
 
 .small {
-    font-size: 0.9em;
+    font-size: 0.9em !important;
 }
 
-.label {
+form {
+    margin: 0;
+}
+
+.section {
+    box-shadow: rgba(0, 0, 0, 0.095) 0px 1px 2px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.full_width {
+    width: 100% !important;
+}
+
+.label, label {
     background-color: rgb(217, 225, 231);
-    color: rgb(242, 242, 242);
-    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px;
+    color: #667D95;
     padding: 0.1em 0.7em;
-    margin: 0.15em 0.4em;
 }
 
 .label-highlight {
@@ -184,7 +212,6 @@ main .filter, main .content {
     color: rgb(242, 242, 242);
     box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 2px;
     padding: 0.1em 0.7em;
-    margin: 0.15em 0.4em;
 }
 
 h1, h2, h3, h4, h5, h6, h1 a {
@@ -238,7 +265,7 @@ a.dark-background:hover {
     color: #88b9de;
 }
 
-body, a, button, select, li, .message, .container {
+body, a, button, select, li, .message, .container, input[type="submit"], .button {
     transition: 0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
@@ -269,6 +296,46 @@ span {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.pad-v-quarter {
+    padding-top: 0.40625em !important;
+    padding-bottom: 0.40625em !important;
+}
+
+.pad-h-quarter {
+    padding-left: 0.40625em !important;
+    padding-right: 0.40625em !important;
+}
+
+.pad-v-half {
+    padding-top: 0.8125em !important;
+    padding-bottom: 0.8125em !important;
+}
+
+.pad-h-half {
+    padding-left: 0.8125em !important;
+    padding-right: 0.8125em !important;
+}
+
+.push-v-half {
+    margin-top: 0.8125em !important;
+    margin-bottom: 0.8125em !important;
+}
+
+.push-h-half {
+    margin-left: 0.8125em !important;
+    margin-right: 0.8125em !important;
+}
+
+.push-v-quarter {
+    margin-top: 0.40625em !important;
+    margin-bottom: 0.40625em !important;
+}
+
+.push-h-quarter {
+    margin-left: 0.40625em !important;
+    margin-right: 0.40625em !important;
 }
 
 .container {
@@ -312,7 +379,7 @@ input[type="checkbox"] {
     vertical-align: middle;
 }
 
-input[type="text"], button {
+input[type="text"], button, input[type="submit"], .button {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 1px;
 }
@@ -320,10 +387,9 @@ input[type="text"], button {
 input[type="text"] {
     padding: 0.16em;
     font-size: 1.1em;
-    width: 100%;
 }
 
-button {
+button, input[type="submit"], .button {
     padding: 0.4em 0.8em;
     box-shadow: none;
     cursor: pointer;
@@ -331,11 +397,11 @@ button {
     vertical-align: middle;
 }
 
-button:hover {
+button:hover, input[type="submit"]:hover, .button:hover {
     opacity: 1;
 }
 
-button:active {
+button:active, input[type="submit"]:active, .button:active {
     box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.3);
 }
 
@@ -460,9 +526,19 @@ button:active {
     width: 35%;
 }
 
-w.value {
+.value {
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
+}
+
+.warning {
+    background-color: rgba(255, 255, 0, 0.25);
+    color: rgba(92, 92, 92, 0.75)
+}
+
+.error {
+    background-color: rgba(255, 0, 0, 0.25);
+    color: rgba(92, 92, 92, 0.75)
 }

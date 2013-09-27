@@ -55,9 +55,6 @@
 
   <changeSet id="3" author="aeng">
     <createTable tableName="User_Roles">
-      <column name="id" autoIncrement="true" type="bigint">
-        <constraints primaryKey="true" nullable="false"/>
-      </column>
       <column name="user_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -65,6 +62,7 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <addPrimaryKey tableName="User_Roles" columnNames="user_id,role"/>
     <addForeignKeyConstraint baseTableName="User_Roles" baseColumnNames="user_id" constraintName="FK_user_role_user" referencedTableName="User"
       referencedColumnNames="id"/>
   </changeSet>

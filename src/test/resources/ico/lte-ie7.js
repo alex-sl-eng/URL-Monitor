@@ -16,7 +16,9 @@ window.onload = function() {
 			'icon-health' : '&#xe005;',
 			'icon-list-2' : '&#xe009;',
 			'icon-cancel' : '&#xe006;',
-			'icon-twitter' : '&#xe007;'
+			'icon-envelope' : '&#xf003;',
+			'icon-google-plus' : '&#xe007;',
+			'icon-yahoo' : '&#xe008;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
