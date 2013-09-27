@@ -2,6 +2,7 @@ package org.urlMonitor.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,15 +54,14 @@ public class UserService implements UserDetailsService
       return new org.springframework.security.core.userdetails.User(username, "", user.isEnabled(), true, true, true, authorities);
    }
 
-   /**
-    * Return if user is new - account disabled or no entry in db
-    * @param username
-    * @return
-    */
-   public boolean isNewUser(String username)
+   public boolean isDetailsComplete(String username)
    {
       User user = userDAO.findByUsername(username);
-      return user == null || !user.isEnabled();
+      if(user != null)
+      {
+         return !StringUtils.isEmpty(user.getEmail()) && !StringUtils.isEmpty(user.getName());
+      }
+      return false;
    }
 
    /**
@@ -72,12 +72,12 @@ public class UserService implements UserDetailsService
     */
    public User createUserWithRoles(String username)
    {
-      User user = userDAO.createUser(username, false);
+      User user = userDAO.createUser(username, true);
       userDAO.getEntityManager().flush();
 
       userRolesDAO.createRole(user, USER_ROLE);
 
-      if (isUserAdmin(username))
+      if (isUserPredefinedAdmin(username))
       {
          userRolesDAO.createRole(user, USER_ADMIN);
       }
@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService
       return user;
    }
 
-   public boolean isUserAdmin(String username)
+   private boolean isUserPredefinedAdmin(String username)
    {
       for (String predefinedAdminUser : appConfiguration.getAdminUsers())
       {

@@ -1,7 +1,10 @@
 package org.urlMonitor.component;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Collection;
+
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
@@ -11,12 +14,9 @@ import org.urlMonitor.service.UserService;
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Component
-@Scope("session")
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Identity
 {
-   @Autowired
-   private UserService userService;
-
    private User user;
 
    public String getUsername()
@@ -29,9 +29,20 @@ public class Identity
       return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
    }
 
-   public boolean isNewUser()
+   public boolean isAdmin()
    {
-      return userService.isNewUser(getUsername());
+      if (isLoggedIn())
+      {
+         Collection<GrantedAuthority> authorities = user.getAuthorities();
+         for (GrantedAuthority auth : authorities)
+         {
+            if (auth.getAuthority().equals(UserService.USER_ADMIN))
+            {
+               return true;
+            }
+         }
+      }
+      return false;
    }
 
    private User getUser()

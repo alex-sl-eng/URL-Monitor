@@ -5,7 +5,7 @@ var view = 'list';
 
 $(document).ready(function () {
    $("#close_message_button").click(function () {
-      $(".message").toggleClass("visible_message");
+      $(".message").toggleClass("visible-message");
    });
 
    $("#list").click(function () {
@@ -144,8 +144,8 @@ function getErrorMessageHeader() {
 
 function displayMessage(messageHeaderHTML, message) {
    if (messageHeaderHTML) {
-      if (!$(".message").hasClass("visible_message")) {
-         $(".message").addClass("visible_message");
+      if (!$(".message").hasClass("visible-message")) {
+         $(".message").addClass("visible-message");
       }
       $("#message").html(messageHeaderHTML);
 

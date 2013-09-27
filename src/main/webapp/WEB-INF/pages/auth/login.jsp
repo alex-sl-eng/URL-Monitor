@@ -30,7 +30,7 @@
         <form action="${openIDLoginUrl}" method="post">
           <label for="openid_identifier">OpenID</label>
           <input id="openid_identifier" name="openid_identifier" type="text" maxlength="100" class="full_width large">
-          <input type="submit" value="Go" class="medium">
+          <input type="submit" value="Go">
         </form>
       </li>
     </ul>

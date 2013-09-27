@@ -20,7 +20,7 @@ public abstract class BaseController
    @Getter
    private final DateUtil dateUtil = new DateUtil();
 
-   public String getIndexPage(String filterText, ModelMap model)
+   protected String gotoIndexPage(String filterText, ModelMap model)
    {
       if (!StringUtils.isEmpty(filterText))
       {
@@ -30,7 +30,7 @@ public abstract class BaseController
       return "index";
    }
 
-   public void insertUtilInSession(ModelMap model)
+   protected void insertUtilInSession(ModelMap model)
    {
       model.put("cronHelper", getCronHelper());
    }

@@ -6,7 +6,7 @@
     .grid {
         width: 90% !important;
         border-left: 0.3em solid rgba(0, 0, 0, 0.08) !important;
-        border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-top: none !important;
     }
 
     .Pass:hover, .Failed:hover, .Unknown:hover {
@@ -14,15 +14,15 @@
     }
 
     .Pass:hover {
-        border-left-color: rgba(0, 128, 0, 0.5) !important;
+        border-color: rgba(0, 128, 0, 0.5) !important;
     }
 
     .Failed:hover {
-        border-left-color: rgba(255, 0, 0, 0.5) !important;
+        border-color: rgba(255, 0, 0, 0.5) !important;
     }
 
     .Unknown:hover {
-        border-left-color: rgba(255, 128, 24, 0.5) !important;
+        border-color: rgba(255, 128, 24, 0.5) !important;
     }
 
     .status {
@@ -66,30 +66,30 @@ header h1 {
     display: inline-block;
 }
 
-header h1 a, .right_menu_toggle span[class*='icon-'] {
+header h1 a, .right-menu-toggle span[class*='icon-'] {
     padding: 0.25em;
     display: inline-block;
     outline: none;
 }
 
-.right_menu_toggle {
+.right-menu-toggle {
     cursor: pointer;
     text-align: right;
 }
 
-.right_menu_toggle .right_menu {
+.right-menu-toggle .right-menu {
     display: none;
 }
 
-.right_menu_toggle:hover .right_menu {
+.right-menu-toggle:hover .right-menu {
     display: block;
 }
 
-.right_menu_toggle:hover span[class*='icon-'] {
+.right-menu-toggle:hover span[class*='icon-'] {
     background: rgba(0, 0, 0, 0.1);
 }
 
-.right_menu {
+.right-menu {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -102,21 +102,20 @@ header h1 a, .right_menu_toggle span[class*='icon-'] {
     min-width: 10em;
 }
 
-.right_menu a {
+.right-menu a {
     color: #e1e1e1 !important;
     display: block;
-    padding: 0.5em;
 }
 
-.right_menu>li:FIRST-CHILD {
+.right-menu>li:FIRST-CHILD {
     border-top: none;
 }
 
-.right_menu>li {
+.right-menu>li {
     border-top: 1px solid rgba(128, 128, 128, 0.8);
 }
 
-.right_menu>li:hover {
+.right-menu>li:hover {
     background-color: rgba(128, 128, 128, 0.5);
 }
 
@@ -145,11 +144,9 @@ header h1 a, .right_menu_toggle span[class*='icon-'] {
     background: none;
     border: none;
     color: lightgray;
-    font-size: 1.4em;
-    padding: 0.4em;
 }
 
-.visible_message {
+.visible-message {
     padding: 0.8em 0 !important;
     height: auto;
 }
@@ -178,10 +175,6 @@ main .filter, main .content {
 
 .large {
     font-size: 1.25em !important;
-}
-
-.medium {
-    font-size: 1.125em !important;
 }
 
 .small {
@@ -252,12 +245,12 @@ h6 {
     margin-top: 0.75em;
 }
 
-a, a:VISITED, .right_menu_toggle {
+a, a:VISITED, .right-menu-toggle {
     text-decoration: none;
     color: #3A8BC9;
 }
 
-a:hover, .right_menu_toggle:hover {
+a:hover, .right-menu-toggle:hover {
     color: #085997;
 }
 
@@ -339,26 +332,18 @@ span {
 }
 
 .container {
-    padding: 0.6em 0.3em;
-    margin: 0.2em;
+    margin: 0.075em;
     overflow: hidden;
     display: inline-block;
     text-align: left;
     width: 90%;
+    border-top: none;
     border-left: 0.3em solid rgba(0, 0, 0, 0.08);
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 1px;
-}
-
-.container:hover {
-    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .grid {
     width: 30%;
-    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: none;
     border-top: 0.3em solid rgba(0, 0, 0, 0.08);
 }
 
@@ -414,7 +399,7 @@ button:active, input[type="submit"]:active, .button:active {
 }
 
 .grid.Pass:hover, .grid.Failed:hover, .grid.Unknown:hover {
-    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: none;
 }
 
 .Pass {
@@ -423,11 +408,11 @@ button:active, input[type="submit"]:active, .button:active {
 
 .Pass:hover {
     color: rgba(0, 128, 0, 0.7);
-    border-left-color: rgba(0, 128, 0, 0.7);
+    border-color: rgba(0, 128, 0, 0.7);
 }
 
 .grid.Pass:hover {
-    border-top-color: rgba(0, 128, 0, 0.7);
+    border-color: rgba(0, 128, 0, 0.7);
 }
 
 .Failed {
@@ -436,11 +421,11 @@ button:active, input[type="submit"]:active, .button:active {
 
 .Failed:hover {
     color: rgba(255, 0, 0, 0.7);
-    border-left-color: rgba(255, 0, 0, 0.7);
+    border-color: rgba(255, 0, 0, 0.7);
 }
 
 .grid.Failed:hover {
-    border-top-color: rgba(255, 0, 0, 0.7);
+    border-color: rgba(255, 0, 0, 0.7);
 }
 
 .Unknown {
@@ -449,11 +434,11 @@ button:active, input[type="submit"]:active, .button:active {
 
 .Unknown:hover {
     color: rgba(255, 128, 24, 0.7);
-    border-left-color: rgba(255, 128, 24, 0.7);
+    border-color: rgba(255, 128, 24, 0.7);
 }
 
 .grid.Unknown:hover {
-    border-top-color: rgba(255, 128, 24, 0.7);
+    border-color: rgba(255, 128, 24, 0.7);
 }
 
 .right {
@@ -482,7 +467,6 @@ button:active, input[type="submit"]:active, .button:active {
 
 .time {
     font-size: 0.75em;
-    color: rgba(0, 0, 0, 0.8) !important;
     font-weight: bold;
 }
 

@@ -6,7 +6,7 @@
 </c:if>
 <c:if test="${not empty monitorList}">
   <c:forEach var="monitor" items="${monitorList}">
-    <div id="${monitor.hashCode()}-container" class="container ${monitor.status}">
+    <div id="${monitor.hashCode()}-container" class="pad-v-half pad-h-quarter section container ${monitor.status}">
       <ul class="list-h">
         <li>
           <span class="status">

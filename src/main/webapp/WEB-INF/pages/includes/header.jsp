@@ -1,7 +1,7 @@
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -31,18 +31,24 @@
     </a>
   </h1>
 
-  <div class="right huge right_menu_toggle">
+  <div class="right huge right-menu-toggle">
     <span class="icon-list-2"></span>
-    <ul class="right_menu">
-      <li><a href="about"><spring:message code="nav.About"/></a></li>
-      <li><a href="https://github.com/aeng/url-monitor/issues" target="_blank"><spring:message code="nav.ReportIssue"/></a></li>
+    <ul class="right-menu">
+      <li><a href="about" class="pad-v-half pad-h-quarter"><spring:message code="nav.About"/></a></li>
+      <li>
+        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-quarter">
+          <spring:message code="nav.ReportIssue"/>
+        </a>
+      </li>
+      <sec:authorize access="isAuthenticated()">
+      </sec>
     </ul>
   </div>
 
   <c:if test="${not empty messages}">
-    <ul class="message list-h small visible_message">
+    <ul class="message list-h small visible-message">
       <li>
-        <button id="close_message_button" class="icon-cancel"></button>
+        <button id="close_message_button" class="icon-cancel large"></button>
       </li>
       <li>
         <span id="message">${messages}</span>
@@ -62,5 +68,4 @@
       </li>
     </ul>
   </c:if>
-
 </header>

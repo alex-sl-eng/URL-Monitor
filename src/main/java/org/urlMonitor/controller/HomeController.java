@@ -21,7 +21,7 @@ public class HomeController extends BaseController
    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
    public String getIndexPage(@RequestParam(required = false) String filterText, ModelMap model)
    {
-      return getIndexPage(filterText, model);
+      return super.gotoIndexPage(filterText, model);
    }
 
    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
