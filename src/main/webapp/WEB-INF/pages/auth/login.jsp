@@ -7,29 +7,25 @@
     <c:url value="/j_spring_openid_security_check" var="openIDLoginUrl"/>
 
     <ul class="list-no-bullet pad-v-half pad-h-half section">
-      <li class="push-v-half pad-h-quarter button" onclick="googleForm.submit();">
-        <a href="#">
-          <form action="${openIDLoginUrl}" method="post" id="googleForm">
-            <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id">
-            <span class="icon-google-plus huge"></span>
-            <span class="push-h-half large">Google</span>
-          </form>
-        </a>
+      <li class="push-v-half pad-h-quarter button link" onclick="googleForm.submit();">
+        <form action="${openIDLoginUrl}" method="post" id="googleForm">
+          <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id">
+          <span class="icon-google-plus huge"></span>
+          <span class="push-h-half large">Google</span>
+        </form>
       </li>
 
-      <li class="push-v-half pad-h-quarter button" onclick="yahooForm.submit();">
-        <a href="#">
-          <form action="${openIDLoginUrl}" method="post" id="yahooForm">
-            <input name="openid_identifier" type="hidden" value="https://me.yahoo.com">
-            <span class="icon-yahoo huge"></span>
-            <span class="push-h-half large">Yahoo</span>
-          </form>
-        </a>
+      <li class="push-v-half pad-h-quarter button link" onclick="yahooForm.submit();">
+        <form action="${openIDLoginUrl}" method="post" id="yahooForm">
+          <input name="openid_identifier" type="hidden" value="https://me.yahoo.com">
+          <span class="icon-yahoo huge"></span>
+          <span class="push-h-half large">Yahoo</span>
+        </form>
       </li>
       <li class="push-v-half">
         <form action="${openIDLoginUrl}" method="post">
           <label for="openid_identifier">OpenID</label>
-          <input id="openid_identifier" name="openid_identifier" type="text" maxlength="100" class="full_width large">
+          <input id="openid_identifier" name="openid_identifier" type="text" maxlength="100" class="full-width large">
           <input type="submit" value="Go">
         </form>
       </li>

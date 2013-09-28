@@ -1,37 +1,38 @@
 package org.urlMonitor.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.openid.OpenIDAttribute;
+import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.urlMonitor.dao.UserDAO;
-import org.urlMonitor.dao.UserRolesDAO;
 import org.urlMonitor.model.User;
-import org.urlMonitor.model.UserRoles;
+import org.urlMonitor.model.UserRole;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Service
 @Scope("singleton")
-public class UserService implements UserDetailsService
+public class UserService implements AuthenticationUserDetailsService<OpenIDAuthenticationToken>, UserDetailsService
 {
    public static String USER_ROLE = "ROLE_USER";
    public static String USER_ADMIN = "ROLE_ADMIN";
 
    @Autowired
    private UserDAO userDAO;
-
-   @Autowired
-   private UserRolesDAO userRolesDAO;
 
    @Autowired
    private AppConfiguration appConfiguration;
@@ -43,21 +44,67 @@ public class UserService implements UserDetailsService
       boolean isNewUser = user == null;
       if (isNewUser)
       {
-         user = createUserWithRoles(username);
+         user = createUserWithRoles(username, "", "");
       }
 
       List<SimpleGrantedAuthority> authorities = Lists.newArrayList();
-      for (UserRoles role : user.getRoles())
+      for (UserRole role : user.getRoles())
       {
          authorities.add(new SimpleGrantedAuthority(role.getRole()));
       }
       return new org.springframework.security.core.userdetails.User(username, "", user.isEnabled(), true, true, true, authorities);
    }
 
+   @Override
+   public UserDetails loadUserDetails(OpenIDAuthenticationToken token) throws UsernameNotFoundException
+   {
+      String id = token.getIdentityUrl();
+      String email = null;
+      String firstName = null;
+      String lastName = null;
+      String fullName = null;
+
+      List<OpenIDAttribute> attributes = token.getAttributes();
+      for (OpenIDAttribute attribute : attributes)
+      {
+         if (attribute.getName().equals("email"))
+         {
+            email = attribute.getValues().get(0);
+         }
+         if (attribute.getName().equals("firstName"))
+         {
+            firstName = attribute.getValues().get(0);
+         }
+         if (attribute.getName().equals("lastName"))
+         {
+            lastName = attribute.getValues().get(0);
+         }
+         if (attribute.getName().equals("fullname"))
+         {
+            fullName = attribute.getValues().get(0);
+         }
+      }
+      fullName = getFullName(firstName, lastName, fullName);
+
+      User user = userDAO.findByEmail(email);
+      boolean isNewUser = user == null;
+      if (isNewUser)
+      {
+         user = createUserWithRoles(getUsername(email), fullName, email);
+      }
+
+      List<SimpleGrantedAuthority> authorities = Lists.newArrayList();
+      for (UserRole role : user.getRoles())
+      {
+         authorities.add(new SimpleGrantedAuthority(role.getRole()));
+      }
+      return new org.springframework.security.core.userdetails.User(user.getUsername(), "", user.isEnabled(), true, true, true, authorities);
+   }
+
    public boolean isDetailsComplete(String username)
    {
       User user = userDAO.findByUsername(username);
-      if(user != null)
+      if (user != null)
       {
          return !StringUtils.isEmpty(user.getEmail()) && !StringUtils.isEmpty(user.getName());
       }
@@ -70,19 +117,16 @@ public class UserService implements UserDetailsService
     * @param username
     * @return
     */
-   public User createUserWithRoles(String username)
+   public User createUserWithRoles(String username, String fullName, String email)
    {
-      User user = userDAO.createUser(username, true);
-      userDAO.getEntityManager().flush();
-
-      userRolesDAO.createRole(user, USER_ROLE);
+      Set<String> roles = Sets.newHashSet(USER_ROLE);
 
       if (isUserPredefinedAdmin(username))
       {
-         userRolesDAO.createRole(user, USER_ADMIN);
+         roles.add(USER_ADMIN);
       }
 
-      userDAO.getEntityManager().flush();
+      User user = userDAO.createUser(username, fullName, email, true, roles);
 
       return user;
    }
@@ -97,5 +141,28 @@ public class UserService implements UserDetailsService
          }
       }
       return false;
+   }
+
+   private String getFullName(String firstName, String lastName, String fullName)
+   {
+      if (StringUtils.isEmpty(fullName))
+      {
+         StringBuilder sb = new StringBuilder();
+         if (!StringUtils.isEmpty(firstName))
+         {
+            sb.append(firstName);
+         }
+         if (!StringUtils.isEmpty(lastName))
+         {
+            sb.append(" ").append(lastName);
+         }
+         return sb.toString();
+      }
+      return fullName;
+   }
+
+   private String getUsername(String email)
+   {
+      return email.substring(0, email.indexOf("@"));
    }
 }

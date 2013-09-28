@@ -46,7 +46,9 @@
         <constraints unique="true" nullable="false"/>
       </column>
       <column name="name" type="varchar(255)"/>
-      <column name="email" type="varchar(100)"/>
+      <column name="email" type="varchar(100)">
+        <constraints unique="true"/>
+      </column>
       <column name="enabled" type="INT" defaultValueBoolean="false">
         <constraints nullable="false"/>
       </column>
@@ -54,7 +56,7 @@
   </changeSet>
 
   <changeSet id="3" author="aeng">
-    <createTable tableName="User_Roles">
+    <createTable tableName="User_Role">
       <column name="user_id" type="bigint">
         <constraints nullable="false"/>
       </column>
@@ -62,8 +64,8 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-    <addPrimaryKey tableName="User_Roles" columnNames="user_id,role"/>
-    <addForeignKeyConstraint baseTableName="User_Roles" baseColumnNames="user_id" constraintName="FK_user_role_user" referencedTableName="User"
+    <addPrimaryKey tableName="User_Role" columnNames="user_id,role"/>
+    <addForeignKeyConstraint baseTableName="User_Role" baseColumnNames="user_id" constraintName="FK_user_role_user" referencedTableName="User"
       referencedColumnNames="id"/>
   </changeSet>
 </databaseChangeLog>

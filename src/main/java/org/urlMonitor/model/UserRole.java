@@ -1,6 +1,7 @@
 package org.urlMonitor.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -9,34 +10,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Entity
-@Table(name="User_Roles")
+@Table(name = "User_Role")
 @Getter
 @Setter
 @Access(AccessType.FIELD)
-public class UserRoles implements Serializable
+@NoArgsConstructor
+public class UserRole implements Serializable
 {
-   public UserRoles(User user, String role)
+   public UserRole(String role)
    {
-      this.user = user;
       this.role = role;
    }
 
-   @NotNull
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "user_id", nullable = false)
+   @JoinColumn(name = "user_id")
    @Id
    private User user;
 
-   @NotNull
    @Id
    private String role;
 }

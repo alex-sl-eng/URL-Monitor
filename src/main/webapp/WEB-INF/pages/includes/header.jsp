@@ -25,23 +25,34 @@
 
 <header>
   <h1>
-    <a href="home">
+    <a href="home" class="pad-v-eighth pad-h-eighth">
       <span class="logo icon-health"></span>
       <spring:message code="Application.name"/>
     </a>
   </h1>
 
-  <div class="right huge right-menu-toggle">
-    <span class="icon-list-2"></span>
+  <div class="right huge link right-menu-toggle">
+    <span class="icon-list-2 pad-v-eighth pad-h-eighth"></span>
     <ul class="right-menu">
-      <li><a href="about" class="pad-v-half pad-h-quarter"><spring:message code="nav.About"/></a></li>
+      <li><a href="about" class="pad-v-half pad-h-half"><spring:message code="nav.About"/></a></li>
       <li>
-        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-quarter">
+        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-half">
           <spring:message code="nav.ReportIssue"/>
         </a>
       </li>
       <sec:authorize access="isAuthenticated()">
-      </sec>
+        <li>
+          <a href="profile/" class="pad-v-half pad-h-half"><spring:message code="jsp.MyProfile"/></a>
+        </li>
+        <li>
+          <a href="auth/logout" class="pad-v-half pad-h-half"><spring:message code="nav.Logout"/></a>
+        </li>
+      </sec:authorize>
+      <sec:authorize access="! isAuthenticated()">
+      <li>
+        <a href="auth/login" class="pad-v-half pad-h-half"><spring:message code="nav.Login"/></a>
+      </li>
+      </sec:authorize>
     </ul>
   </div>
 
