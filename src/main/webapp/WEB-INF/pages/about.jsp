@@ -5,6 +5,7 @@
 
 <main>
   <ul class="small list-no-bullet list-v content-wrapper">
+    <h3>About</h3>
     <li class="push-v-half">
       <span class="label-highlight">Build</span>
       <span><c:out value="${buildDate}"/></span>
@@ -32,16 +33,18 @@
     <li class="push-v-half">
       <span class="label-highlight">Share</span>
       <span class="push-h-quarter">
-        <a href="https://twitter.com/UrlmonitorOrg" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @urlmonitor</a>
+        <a href="https://twitter.com/UrlMonitorOrg" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow
+          @UrlMonitorOrg</a>
         <script>!function (d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
+          var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
           if (!d.getElementById(id)) {
             js = d.createElement(s);
             js.id = id;
-            js.src = "//platform.twitter.com/widgets.js";
+            js.src = p + '://platform.twitter.com/widgets.js';
             fjs.parentNode.insertBefore(js, fjs);
           }
-        }(document, "script", "twitter-wjs");</script>
+        }(document, 'script', 'twitter-wjs');
+        </script>
       </span>
 
       <span class="push-h-quarter">
@@ -67,9 +70,6 @@
       <span class="push-h-quarter">
         <!-- Place this tag where you want the share button to render. -->
         <div class="g-plus" data-action="share" data-annotation="none"></div>
-      </span>
-
-      <span class="push-h-quarter">
         <!-- Place this tag after the last share tag. -->
         <script type="text/javascript">
           (function () {

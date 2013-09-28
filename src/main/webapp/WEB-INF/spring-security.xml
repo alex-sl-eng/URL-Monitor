@@ -17,7 +17,7 @@
 
     <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
     <security:openid-login user-service-ref="userService" login-page="/auth/login"
-      authentication-failure-url="/auth/login?error=true" default-target-url="/profile/redirect">
+      authentication-failure-url="/auth/login?error=true" default-target-url="/home">
 
       <security:attribute-exchange identifier-match="https://www.google.com/.*">
         <security:openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true"/>

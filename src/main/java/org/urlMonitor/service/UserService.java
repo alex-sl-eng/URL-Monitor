@@ -101,16 +101,6 @@ public class UserService implements AuthenticationUserDetailsService<OpenIDAuthe
       return new org.springframework.security.core.userdetails.User(user.getUsername(), "", user.isEnabled(), true, true, true, authorities);
    }
 
-   public boolean isDetailsComplete(String username)
-   {
-      User user = userDAO.findByUsername(username);
-      if (user != null)
-      {
-         return !StringUtils.isEmpty(user.getEmail()) && !StringUtils.isEmpty(user.getName());
-      }
-      return false;
-   }
-
    /**
     * Create user with enabled=false, with role {ROLE_USER} and
     * {ROLE_ADMIN} if username predefined in urlmonitor.properties

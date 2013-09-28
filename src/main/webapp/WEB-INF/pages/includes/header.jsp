@@ -45,12 +45,12 @@
           <a href="profile/" class="pad-v-half pad-h-half"><spring:message code="jsp.MyProfile"/></a>
         </li>
         <li>
-          <a href="auth/logout" class="pad-v-half pad-h-half"><spring:message code="nav.Logout"/></a>
+          <a href="auth/logout" class="pad-v-half pad-h-half"><spring:message code="jsp.Logout"/></a>
         </li>
       </sec:authorize>
       <sec:authorize access="! isAuthenticated()">
       <li>
-        <a href="auth/login" class="pad-v-half pad-h-half"><spring:message code="nav.Login"/></a>
+        <a href="auth/login" class="pad-v-half pad-h-half"><spring:message code="jsp.Login"/></a>
       </li>
       </sec:authorize>
     </ul>
