@@ -316,14 +316,14 @@ span {
     padding-right: 0.8125em !important;
 }
 
-.push-v-half {
-    margin-top: 0.8125em !important;
-    margin-bottom: 0.8125em !important;
+.push-v-eighth {
+    margin-top: 0.203125em !important;
+    margin-bottom: 0.203125em !important;
 }
 
-.push-h-half {
-    margin-left: 0.8125em !important;
-    margin-right: 0.8125em !important;
+.push-h-eighth {
+    margin-left: 0.203125em !important;
+    margin-right: 0.203125em !important;
 }
 
 .push-v-quarter {
@@ -334,6 +334,16 @@ span {
 .push-h-quarter {
     margin-left: 0.40625em !important;
     margin-right: 0.40625em !important;
+}
+
+.push-v-half {
+    margin-top: 0.8125em !important;
+    margin-bottom: 0.8125em !important;
+}
+
+.push-h-half {
+    margin-left: 0.8125em !important;
+    margin-right: 0.8125em !important;
 }
 
 .container {
