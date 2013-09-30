@@ -22,29 +22,15 @@ public class UserDAO extends AbstractDAO<User, Long>
       super(User.class);
    }
 
-   public User createUser(String username, String fullName, String email, boolean enabled, Set<String> roles)
+   public User createUser(String fullName, String email, boolean enabled, Set<String> roles)
    {
-      User user = new User(username, fullName, email, enabled);
+      User user = new User(fullName, email, enabled);
       for (String userRole : roles)
       {
          user.addRole(new UserRole(userRole));
       }
       saveOrUpdate(user);
       return user;
-   }
-
-   public User findByUsername(String username)
-   {
-      Query query = getEntityManager().createQuery("from User u where u.username=:username");
-      query.setParameter("username", username);
-      try
-      {
-         return (User) query.getSingleResult();
-      }
-      catch (NoResultException e)
-      {
-         return null;
-      }
    }
 
    public User findByEmail(String email)

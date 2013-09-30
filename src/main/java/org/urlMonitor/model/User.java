@@ -33,18 +33,12 @@ import com.google.common.collect.Sets;
 @NoArgsConstructor
 public class User extends ModelBase implements Serializable
 {
-   public User(String username, String name, String email, boolean enabled)
+   public User(String name, String email, boolean enabled)
    {
-      this.username = username;
       this.name = name;
       this.email = email;
       this.enabled = enabled;
    }
-
-   @NotNull
-   @Size(max = 100)
-   @Column(unique = true)
-   private String username;
 
    @NotNull
    @Size(max = 255)

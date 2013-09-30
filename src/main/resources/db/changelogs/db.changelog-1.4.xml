@@ -42,9 +42,6 @@
       <column name="last_changed" type="TIMESTAMP">
         <constraints nullable="false"/>
       </column>
-      <column name="username" type="varchar(100)">
-        <constraints unique="true" nullable="false"/>
-      </column>
       <column name="name" type="varchar(255)"/>
       <column name="email" type="varchar(100)">
         <constraints unique="true"/>

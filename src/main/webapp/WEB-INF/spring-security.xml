@@ -8,41 +8,55 @@
         http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
   <!-- This is where we configure Spring-Security  -->
-  <security:http auto-config="true" use-expressions="true" access-denied-page="/auth/denied">
-    <security:intercept-url pattern="/monitoring/**" access="hasRole('ROLE_ADMIN')"/>
-    <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-    <security:intercept-url pattern="/profile/**" access="isAuthenticated()"/>
-    <security:intercept-url pattern="/auth/**" access="permitAll"/>
-    <security:intercept-url pattern="/**" access="permitAll"/>
+  <security:http auto-config="true" use-expressions="true"
+    access-denied-page="/auth/denied">
+    <security:intercept-url pattern="/monitoring/**"
+      access="hasRole('ROLE_ADMIN')" />
+    <security:intercept-url pattern="/admin/**"
+      access="hasRole('ROLE_ADMIN')" />
+    <security:intercept-url pattern="/profile/**" access="isAuthenticated()" />
+    <security:intercept-url pattern="/auth/**" access="permitAll" />
+    <security:intercept-url pattern="/**" access="permitAll" />
 
     <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
-    <security:openid-login user-service-ref="userService" login-page="/auth/login"
-      authentication-failure-url="/auth/login?error=true" default-target-url="/home">
+    <security:openid-login user-service-ref="userService"
+      login-page="/auth/login"
+      authentication-failure-url="/auth/login?error=true"
+      default-target-url="/auth/redirect">
 
       <security:attribute-exchange identifier-match="https://www.google.com/.*">
-        <security:openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true"/>
-        <security:openid-attribute name="firstName" type="http://axschema.org/namePerson/first" required="true"/>
-        <security:openid-attribute name="lastName" type="http://axschema.org/namePerson/last" required="true"/>
+        <security:openid-attribute name="email"
+          type="http://schema.openid.net/contact/email" required="true" />
+        <security:openid-attribute name="firstName"
+          type="http://axschema.org/namePerson/first" required="true" />
+        <security:openid-attribute name="lastName"
+          type="http://axschema.org/namePerson/last" required="true" />
       </security:attribute-exchange>
 
       <security:attribute-exchange identifier-match=".*yahoo.com.*">
-        <security:openid-attribute name="email" type="http://axschema.org/contact/email" required="true"/>
-        <security:openid-attribute name="fullname" type="http://axschema.org/namePerson" required="true"/>
+        <security:openid-attribute name="email"
+          type="http://axschema.org/contact/email" required="true" />
+        <security:openid-attribute name="fullname"
+          type="http://axschema.org/namePerson" required="true" />
       </security:attribute-exchange>
 
       <security:attribute-exchange identifier-match=".*">
-        <security:openid-attribute name="email" type="http://schema.openid.net/contact/email" required="true" count="1"/>
-        <security:openid-attribute name="fullname" type="http://schema.openid.net/namePerson" required="true"/>
+        <security:openid-attribute name="email"
+          type="http://schema.openid.net/contact/email" required="true"
+          count="1" />
+        <security:openid-attribute name="fullname"
+          type="http://schema.openid.net/namePerson" required="true" />
       </security:attribute-exchange>
     </security:openid-login>
 
-    <security:logout invalidate-session="true" logout-success-url="/home" logout-url="/auth/logout"/>
+    <security:logout invalidate-session="true" logout-success-url="/home"
+      logout-url="/auth/logout" />
   </security:http>
 
   <!-- Declare an authentication-manager to use a custom userDetailsService -->
   <security:authentication-manager>
     <security:authentication-provider user-service-ref="userService">
-      <security:password-encoder ref="passwordEncoder"/>
+      <security:password-encoder ref="passwordEncoder" />
     </security:authentication-provider>
   </security:authentication-manager>
 
@@ -57,6 +71,8 @@
 
 
   <!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
-  <bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+  <bean
+    class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"
+    id="passwordEncoder" />
 
 </beans>

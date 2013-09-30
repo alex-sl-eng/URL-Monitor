@@ -15,42 +15,36 @@ import org.urlMonitor.service.UserService;
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class Identity
-{
-   private User user;
+public class Identity {
+    private User user;
 
-   public String getUsername()
-   {
-      return getUser().getUsername();
-   }
+    public String getEmail() {
+        return getUser().getUsername();
+    }
 
-   public boolean isLoggedIn()
-   {
-      return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-   }
+    public boolean isLoggedIn() {
+        return SecurityContextHolder.getContext().getAuthentication()
+                .isAuthenticated();
+    }
 
-   public boolean isAdmin()
-   {
-      if (isLoggedIn())
-      {
-         Collection<GrantedAuthority> authorities = user.getAuthorities();
-         for (GrantedAuthority auth : authorities)
-         {
-            if (auth.getAuthority().equals(UserService.USER_ADMIN))
-            {
-               return true;
+    public boolean isAdmin() {
+        if (isLoggedIn()) {
+            Collection<GrantedAuthority> authorities = user.getAuthorities();
+            for (GrantedAuthority auth : authorities) {
+                if (auth.getAuthority().equals(UserService.USER_ADMIN)) {
+                    return true;
+                }
             }
-         }
-      }
-      return false;
-   }
+        }
+        return false;
+    }
 
-   private User getUser()
-   {
-      if (user == null)
-      {
-         user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      }
-      return user;
-   }
+    private User getUser() {
+        if (user == null) {
+            user =
+                    (User) SecurityContextHolder.getContext()
+                            .getAuthentication().getPrincipal();
+        }
+        return user;
+    }
 }

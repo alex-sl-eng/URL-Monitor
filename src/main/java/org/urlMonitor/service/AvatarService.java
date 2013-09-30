@@ -17,20 +17,20 @@ public class AvatarService {
     private static final String GRAVATAR_URL =
             "http://www.gravatar.com/avatar/";
 
-    private static final String DEFAULT_AVATAR = "resources/images/user.png";
+    private static final String GRAVATAR_URL_POSTFIX = "?d=mm";
 
     public String getUserAvatar(String email, Integer size) {
         if (StringUtils.isEmpty(email)) {
-            return DEFAULT_AVATAR;
+            return GRAVATAR_URL + GRAVATAR_URL_POSTFIX;
         }
 
         if (size != null) {
             return GRAVATAR_URL + HashUtil.md5Hex(email.toLowerCase()) + "?s="
-                    + size;
+                    + size + GRAVATAR_URL_POSTFIX;
         } else {
-            return GRAVATAR_URL + HashUtil.md5Hex(email.toLowerCase());
+            return GRAVATAR_URL + HashUtil.md5Hex(email.toLowerCase())
+                    + GRAVATAR_URL_POSTFIX;
         }
 
     }
-
 }

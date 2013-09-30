@@ -35,8 +35,12 @@
     <span class="icon-list-2 pad-v-eighth pad-h-eighth"></span>
     <ul class="right-menu">
       <sec:authorize access="isAuthenticated()">
+        <sec:authentication property="principal.username" var="email" />
         <li>
-          <img src="${avatarService.getAvatar()}"/><a href="profile/" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.MyProfile"/></a>
+          <a href="profile/" class="pad-v-half pad-h-half dark-background">
+            <img src="${avatarService.getUserAvatar(email, 75)}" class="avatar push-h-quarter"/>
+            <spring:message code="jsp.MyProfile"/>
+          </a>
         </li>
         <li>
           <a href="auth/logout" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Logout"/></a>

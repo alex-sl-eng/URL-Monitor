@@ -87,12 +87,18 @@ header h1 a {
   margin: 0;
   padding: 0;
   font-size: 0.4em;
-  background-color: rgba(51, 51, 51, 1);
+  background-color: rgb(68, 76, 84);
   letter-spacing: 0.1em;
   position: absolute;
   right: 0;
   z-index: 2;
-  min-width: 10em;
+  min-width: 10.25em;
+}
+
+.avatar {
+  width: 2.2em;
+  height: 2.2em;
+  vertical-align: bottom;
 }
 
 .right-menu a {
@@ -105,11 +111,11 @@ header h1 a {
 }
 
 .right-menu>li {
-  border-top: 1px solid rgba(128, 128, 128, 0.8);
+  border-top: 1px solid rgba(128, 128, 128, 0.6);
 }
 
 .right-menu>li:hover {
-  background-color: rgba(128, 128, 128, 0.25);
+  background-color: #2d3338;
 }
 
 .message {
@@ -191,6 +197,7 @@ form {
   background-color: rgb(217, 225, 231);
   color: #667D95;
   padding: 0.1em 0.7em;
+  vertical-align: middle;
 }
 
 .label-highlight {
@@ -249,11 +256,11 @@ a:hover, .link:hover {
 }
 
 a.dark-background {
-  color: rgba(118,174,217, 0.75);
+  color: rgb(118, 174, 217);
 }
 
 a.dark-background:hover {
-  color: rgba(118,174,217, 1);
+  color: rgb(158, 198, 228);
 }
 
 body, a, button, select, li, .message, .container, input[type="submit"], .button {
@@ -385,11 +392,9 @@ input[type="checkbox"] {
 input[type="text"] {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 2px;
-}
-
-input[type="text"] {
-  padding: 0.16em;
-  font-size: 1.1em;
+  padding: 0.2em;
+  font-size: 1.16em;
+  color: #808080;
 }
 
 .button-primary {
@@ -414,12 +419,12 @@ button, input[type="submit"], .button {
   font-weight: 600 !important;
   border: none;
   color: #808080;
-  background-color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0.025);
   border-radius: 2px;
 }
 
 button:hover, input[type="submit"]:hover, .button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.065);
 }
 
 button:active, input[type="submit"]:active, .button:active, .selected {
@@ -476,6 +481,18 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 .left {
   float: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
 }
 
 .status, .name, .time, .more-info {
