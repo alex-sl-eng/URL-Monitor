@@ -6,7 +6,8 @@
 </c:if>
 <c:if test="${not empty monitorList}">
   <c:forEach var="monitor" items="${monitorList}">
-    <div id="${monitor.hashCode()}-container" class="pad-v-half pad-h-quarter section container ${monitor.status}">
+    <div id="${monitor.hashCode()}-container"
+      class="pad-v-half pad-h-quarter section container ${monitor.status}">
       <ul class="list-h">
         <li>
           <span class="status">
@@ -20,14 +21,16 @@
           <span class="lastChecked">
               <img alt="Loading..." src="resources/images/loader.gif"/>
           </span>
-          <a href='#' class="more-info icon-chevron-down" title="More details" onclick="toggleDetails(this, ${monitor.hashCode()})"></a>
+          <a href='#' class="more-info icon-chevron-down" title="More details"
+            onclick="toggleDetails(this, ${monitor.hashCode()})"></a>
         </li>
       </ul>
 
       <div class="details">
         <table class="small">
           <tr>
-            <td class="header"><spring:message code="monitor.details.Description"/></td>
+            <td class="header"><spring:message
+              code="monitor.details.Description"/></td>
             <td>
               <c:if test="${not empty monitor.description}">
                 ${monitor.description}
@@ -39,19 +42,22 @@
           </tr>
           <tr>
             <td class="header"><spring:message code="monitor.details.Url"/></td>
-            <td><span class="value" title="${monitor.url}"><a href="${monitor.url}">${monitor.url}</a></span></td>
+            <td><span class="value" title="${monitor.url}"><a
+              href="${monitor.url}">${monitor.url}</a></span></td>
           </tr>
 
           <tr>
-            <td class="header"><spring:message code="monitor.details.LastFailed"/></td>
+            <td class="header"><spring:message
+              code="monitor.details.LastFailed"/></td>
             <td class="lastFailed">
-                None
+              None
             </td>
           </tr>
 
 
           <tr>
-            <td class="header"><spring:message code="monitor.details.SearchText"/></td>
+            <td class="header"><spring:message
+              code="monitor.details.SearchText"/></td>
             <td>
              <span class="value" title="${monitor.contentRegex}">
                  <c:if test="${not empty monitor.contentRegex}">
@@ -64,17 +70,19 @@
             </td>
           </tr>
           <tr>
-            <td class="header"><spring:message code="monitor.details.Interval"/></td>
+            <td class="header"><spring:message
+              code="monitor.details.Interval"/></td>
             <td>
               <span class="value"
-                    title="${cronHelper.getTypeFromExpression(monitor.cron).display}">${cronHelper.getTypeFromExpression(monitor.cron).display}</span>
+                title="${cronHelper.getTypeFromExpression(monitor.cron).display}">${cronHelper.getTypeFromExpression(monitor.cron).display}</span>
             </td>
           </tr>
           <tr>
             <td class="header"><spring:message code="monitor.details.Tag"/></td>
             <td>
               <c:if test="${not empty monitor.tagList}">
-                <span class="value" title="${monitor.tagList}">${monitor.tagList}</span>
+                <span class="value"
+                  title="${monitor.tagList}">${monitor.tagList}</span>
               </c:if>
               <c:if test="${empty monitor.tagList}">
                 <i>No tag</i>

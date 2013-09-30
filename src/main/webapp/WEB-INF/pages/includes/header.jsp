@@ -36,7 +36,7 @@
     <ul class="right-menu">
       <sec:authorize access="isAuthenticated()">
         <li>
-          <a href="profile/" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.MyProfile"/></a>
+          <img src="${avatarService.getAvatar()}"/><a href="profile/" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.MyProfile"/></a>
         </li>
         <li>
           <a href="auth/logout" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Logout"/></a>

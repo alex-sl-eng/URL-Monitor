@@ -90,7 +90,7 @@ public class UserService implements AuthenticationUserDetailsService<OpenIDAuthe
       boolean isNewUser = user == null;
       if (isNewUser)
       {
-         user = createUserWithRoles(getUsername(email), fullName, email);
+         user = createUserWithRoles(getUsernameFromEmail(email), fullName, email);
       }
 
       List<SimpleGrantedAuthority> authorities = Lists.newArrayList();
@@ -151,7 +151,7 @@ public class UserService implements AuthenticationUserDetailsService<OpenIDAuthe
       return fullName;
    }
 
-   private String getUsername(String email)
+   private String getUsernameFromEmail(String email)
    {
       return email.substring(0, email.indexOf("@"));
    }
