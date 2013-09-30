@@ -36,20 +36,20 @@
     <ul class="right-menu">
       <sec:authorize access="isAuthenticated()">
         <li>
-          <a href="profile/" class="pad-v-half pad-h-half"><spring:message code="jsp.MyProfile"/></a>
+          <a href="profile/" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.MyProfile"/></a>
         </li>
         <li>
-          <a href="auth/logout" class="pad-v-half pad-h-half"><spring:message code="jsp.Logout"/></a>
+          <a href="auth/logout" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Logout"/></a>
         </li>
       </sec:authorize>
       <sec:authorize access="! isAuthenticated()">
         <li>
-          <a href="auth/login" class="pad-v-half pad-h-half"><spring:message code="jsp.Login"/></a>
+          <a href="auth/login" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Login"/></a>
         </li>
       </sec:authorize>
-      <li><a href="about" class="pad-v-half pad-h-half"><spring:message code="nav.About"/></a></li>
+      <li><a href="about" class="pad-v-half pad-h-half dark-background"><spring:message code="nav.About"/></a></li>
       <li>
-        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-half">
+        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-half dark-background">
           <spring:message code="nav.ReportIssue"/>
         </a>
       </li>
