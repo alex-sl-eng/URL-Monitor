@@ -22,7 +22,7 @@
     <security:openid-login user-service-ref="userService"
       login-page="/auth/login"
       authentication-failure-url="/auth/login?error=true"
-      default-target-url="/auth/redirect">
+      default-target-url="/home">
 
       <security:attribute-exchange identifier-match="https://www.google.com/.*">
         <security:openid-attribute name="email"

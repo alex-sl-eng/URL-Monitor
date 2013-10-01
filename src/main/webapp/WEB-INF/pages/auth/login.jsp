@@ -9,7 +9,7 @@
     <c:url value="/j_spring_openid_security_check" var="openIDLoginUrl"/>
 
     <ul class="list-no-bullet pad-v-half pad-h-half section">
-      <li class="push-v-half pad-h-quarter button button-primary" onclick="googleForm.submit();">
+      <li class="push-v-half pad-h-quarter button" onclick="googleForm.submit();">
         <form action="${openIDLoginUrl}" method="post" id="googleForm">
           <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id">
           <span class="icon-google-plus huge"></span>
@@ -17,7 +17,7 @@
         </form>
       </li>
 
-      <li class="push-v-half pad-h-quarter button button-primary" onclick="yahooForm.submit();">
+      <li class="push-v-half pad-h-quarter button" onclick="yahooForm.submit();">
         <form action="${openIDLoginUrl}" method="post" id="yahooForm">
           <input name="openid_identifier" type="hidden" value="https://me.yahoo.com">
           <span class="icon-yahoo huge"></span>

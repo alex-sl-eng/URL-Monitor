@@ -2,14 +2,11 @@ package org.urlMonitor.controller;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.urlMonitor.component.Identity;
-import org.urlMonitor.service.UserService;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
@@ -18,12 +15,6 @@ import org.urlMonitor.service.UserService;
 @RequestMapping(value = "/auth")
 @Slf4j
 public class AuthController extends BaseController {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private Identity identity;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(
@@ -40,13 +31,5 @@ public class AuthController extends BaseController {
     @RequestMapping(value = "/denied", method = RequestMethod.GET)
     public String getDeniedPage() {
         return "auth/denied";
-    }
-
-    @RequestMapping(value = "/redirect", method = RequestMethod.GET)
-    public String getEditProfile(ModelMap model) {
-        if (userService.isNewUser(identity.getEmail())) {
-            return "profile/edit";
-        }
-        return gotoIndexPage("", model);
     }
 }

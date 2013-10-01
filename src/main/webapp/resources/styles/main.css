@@ -279,13 +279,13 @@ span {
   line-height: 1.2em
 }
 
-.list-h li {
+.list-h>li {
   display: inline-block;
   vertical-align: middle;
   padding: 0 !important;
 }
 
-.list-v li {
+.list-v>li {
   border-bottom: 0.1em solid rgba(0, 0, 0, 0.05);
   padding: 0.5em;
 }
@@ -326,6 +326,16 @@ span {
   padding-right: 0.8125em !important;
 }
 
+.pad-v-1 {
+  padding-top: 1.5em !important;
+  padding-bottom: 1.5em !important;
+}
+
+.pad-h-1 {
+  padding-left: 1.5em !important;
+  padding-right: 1.5em !important;
+}
+
 .push-v-eighth {
   margin-top: 0.203125em !important;
   margin-bottom: 0.203125em !important;
@@ -354,6 +364,16 @@ span {
 .push-h-half {
   margin-left: 0.8125em !important;
   margin-right: 0.8125em !important;
+}
+
+.push-v-1 {
+  margin-top: 1.5em !important;
+  margin-bottom: 1.5em !important;
+}
+
+.push-h-1 {
+  margin-left: 1.5em !important;
+  margin-right: 1.5em !important;
 }
 
 .container {
@@ -398,16 +418,16 @@ input[type="text"] {
 }
 
 .button-primary {
-  background-color: rgba(58, 139, 201, 0.85) !important;
+  background-color: rgba(58, 139, 201, 1) !important;
   color: #FFFFFF !important;
 }
 
 .button-primary:hover {
-  background-color: rgba(58, 139, 201, 0.95) !important;
+  background-color: rgba(52, 125, 180, 1) !important;
 }
 
 .button-primary:active {
-  background-color: rgba(58, 139, 201, 1) !important;
+  background-color: rgba(46, 111, 160, 1) !important;
 }
 
 button, input[type="submit"], .button {
@@ -428,7 +448,7 @@ button:hover, input[type="submit"]:hover, .button:hover {
 }
 
 button:active, input[type="submit"]:active, .button:active, .selected {
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45);
   background-color: rgba(0, 0, 0, 0.1);
 }
 

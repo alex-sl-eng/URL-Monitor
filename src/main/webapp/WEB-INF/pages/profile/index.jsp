@@ -4,28 +4,25 @@
 
 <main>
   <sec:authentication property="principal.username" var="username"/>
-  <div class="content-wrapper">
-    <h3>${username}</h3><button class="right button-primary">Edit Profile</button>
-    <form class="section pad-v-half pad-h-half">
-      <ul class="list-no-bullet">
-        <li class="pad-v-quarter align-center">
-          <img src="${avatarService.getUserAvatar(username, 100)}" title="${username}"/>
-        </li>
-        <li class="pad-v-quarter">
-          <label>Name</label><input type="text" class="full-width"/>
-        </li>
-        <li class="pad-v-quarter">
-          <label>Email</label>
-          <input type="text" class="full-width" disabled="true" value="${username}"/>
-        </li>
-        <li class="pad-v-quarter">
-          <label>Roles</label><input type="text" class="full-width" disabled="true"/>
-        </li>
-        <li class="pad-v-quarter">
-          <label class="label-highlight">Member Since</label>
-        </li>
-      </ul>
-
-    </form>
+  <c:set var="name" value="Alex Eng"/>
+  <c:set var="joinedDate" value="12/12/2013"/>
+  <div class="content-wrapper-small">
+    <ul class="list-h section push-v-1 pad-v-1 pad-h-1 align-center">
+      <li class="push-h-half">
+        <img src="${avatarService.getUserAvatar(username, 120)}"
+          title="${username}"/>
+      </li>
+      <li class="push-h-half">
+        <ul class="align-left list-v list-no-bullet">
+          <li><label class="push-h-quarter">Email</label>${username}</li>
+          <li><label class="push-h-quarter">Name</label>${name}</li>
+          <li><label class="push-h-quarter">Member since</label>${joinedDate}
+          </li>
+          <li>
+            <button class="button-primary" onclick="">Update Profile</button>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </main>
