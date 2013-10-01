@@ -180,6 +180,10 @@ main .filter, main .content {
   font-size: 0.9em !important;
 }
 
+.small-spacing {
+  letter-spacing: 0.1em;
+}
+
 form {
   margin: 0;
 }

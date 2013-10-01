@@ -107,6 +107,10 @@ public class UserService implements
         return user;
     }
 
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
+
     private boolean isUserPredefinedAdmin(String username) {
         for (String predefinedAdminUser : appConfiguration.getAdminUsers()) {
             if (username.equals(predefinedAdminUser)) {
