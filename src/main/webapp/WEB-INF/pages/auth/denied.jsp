@@ -4,7 +4,7 @@
 <main>
   <div class="content-wrapper-small">
     <h3>Access Denied</h3>
-    <div class="pad-v-half pad-h-half section large warning">
+    <div class="l--pad-v-half l--pad-h-half section txt--large warning">
       You are not authorised to access to this page
     </div>
   </div>

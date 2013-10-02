@@ -4,28 +4,28 @@
 <jsp:include page="includes/header.jsp"/>
 
 <main>
-  <ul class="small list-no-bullet list-v content-wrapper">
+  <ul class="txt--small list-no-bullet list-v content-wrapper">
     <h3>About</h3>
-    <li class="push-v-half">
+    <li class="l--push-v-half">
       <span class="label-highlight">Build</span>
-      <span class="push-h-eighth"><c:out value="${buildDate}"/></span>
+      <span class="l--push-h-eighth"><c:out value="${buildDate}"/></span>
       <span class="label-highlight">Version</span>
-      <span class="push-h-eighth"><c:out value="${buildVersion}"/></span>
+      <span class="l--push-h-eighth"><c:out value="${buildVersion}"/></span>
     </li>
-    <li class="push-v-half">
+    <li class="l--push-v-half">
       <span class="label-highlight">Contact</span>
-      <span class="push-h-eighth"><a href="mailto:${replyTo}">${replyTo}</a></span>
+      <span class="l--push-h-eighth"><a href="mailto:${replyTo}">${replyTo}</a></span>
     </li>
-    <li class="push-v-half">
+    <li class="l--push-v-half">
       <span class="label-highlight">Project</span>
-        <span class="push-h-eighth">
+        <span class="l--push-h-eighth">
           <a href="https://github.com/aeng/URL-Monitor" target="_blank">GitHub</a>
         </span>
-        <span class="push-h-eighth">
+        <span class="l--push-h-eighth">
           <iframe src="http://ghbtns.com/github-btn.html?user=aeng&repo=url-monitor&type=watch"
             allowtransparency="true" frameborder="0" scrolling="0" width="56" height="20"></iframe>
         </span>
-        <span class="push-h-eighth">
+        <span class="l--push-h-eighth">
         <a href="https://twitter.com/UrlMonitorOrg" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow
           @UrlMonitorOrg</a>
         <script>!function (d, s, id) {
@@ -40,14 +40,14 @@
         </script>
       </span>
     </li>
-    <li class="push-v-half">
+    <li class="l--push-v-half">
       <span class="label-highlight">License</span>
-      <span class="push-h-eighth"><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></span>
+      <span class="l--push-h-eighth"><a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></span>
     </li>
-    <li class="push-v-half">
+    <li class="l--push-v-half">
       <span class="label-highlight">Share</span>
 
-      <span class="push-h-quarter">
+      <span class="l--push-h-quarter">
         <div id="fb-root"></div>
         <script>(function (d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -62,7 +62,7 @@
           data-send="false"></div>
       </span>
 
-      <span class="push-h-quarter">
+      <span class="l--push-h-quarter">
         <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-count="none">Tweet</a>
         <script>!function (d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -75,14 +75,14 @@
         }(document, "script", "twitter-wjs");</script>
       </span>
 
-      <span class="push-h-quarter">
+      <span class="l--push-h-quarter">
         <script src="//platform.linkedin.com/in.js" type="text/javascript">
           lang: en_US
         </script>
         <script type="IN/Share"></script>
       </span>
 
-      <span class="push-h-quarter">
+      <span class="l--push-h-quarter">
         <!-- Place this tag where you want the share button to render. -->
         <div class="g-plus" data-action="share" data-annotation="none"></div>
         <!-- Place this tag after the last share tag. -->
@@ -98,7 +98,7 @@
         </script>
       </span>
 
-      <span class="push-h-quarter">
+      <span class="l--push-h-quarter">
         <a href="http://www.reddit.com/submit"
           onclick="window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false">
           <img src="http://www.reddit.com/static/spreddit7.gif" alt="submit to reddit" border="0"/>

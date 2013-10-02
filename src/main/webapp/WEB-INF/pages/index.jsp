@@ -12,7 +12,7 @@
     });
   </script>
 
-    <span class="small">
+    <span class="txt--small">
     <input title="Refresh page every 30 seconds" type="checkbox" id="auto_refresh" value="true" checked="checked"/>Auto refresh
     <span id="refresh_status"></span>
     </span>

@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Slf4j
 public class ProfileController extends BaseController {
 
-    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
-    public String getMyProfile(ModelMap model) {
-        return "profile/index";
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String getEditProfile(ModelMap model) {
+        return "profile/update";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEditProfile(ModelMap model) {
-        return "profile/edit";
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String postEditProfile(ModelMap model) {
+        return "profile/update";
     }
 }

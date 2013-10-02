@@ -32,4 +32,9 @@ public class AuthController extends BaseController {
     public String getDeniedPage() {
         return "auth/denied";
     }
+
+    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+    public String getSettingsPage() {
+        return "auth/settings";
+    }
 }

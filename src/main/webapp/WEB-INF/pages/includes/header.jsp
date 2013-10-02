@@ -25,45 +25,45 @@
 
 <header>
   <h1>
-    <a href="home" class="pad-v-eighth pad-h-eighth">
+    <a href="home" class="l--pad-v-eighth l--pad-h-eighth">
       <span class="logo icon-health"></span>
       <spring:message code="Application.name"/>
     </a>
   </h1>
 
-  <div class="right huge link right-menu-toggle">
-    <span class="icon-list-2 pad-v-eighth pad-h-eighth"></span>
+  <div class="l--float-right txt--huge link right-menu-toggle">
+    <span class="icon-list-2 l--pad-v-eighth l--pad-h-eighth"></span>
     <ul class="right-menu">
       <sec:authorize access="isAuthenticated()">
         <sec:authentication property="principal.username" var="email" />
         <li>
-          <a href="profile/" class="pad-v-half pad-h-half dark-background">
-            <img src="${avatarService.getUserAvatar(email, 75)}" class="avatar push-h-quarter"/>
-            <spring:message code="jsp.MyProfile"/>
+          <a href="auth/settings" class="l--pad-v-half l--pad-h-half dark-background">
+            <img src="${avatarService.getUserAvatar(email, 75)}" class="avatar l--push-h-quarter"/>
+            <spring:message code="jsp.Settings"/>
           </a>
         </li>
         <li>
-          <a href="auth/logout" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Logout"/></a>
+          <a href="auth/logout" class="l--pad-v-half l--pad-h-half dark-background"><spring:message code="jsp.Logout"/></a>
         </li>
       </sec:authorize>
       <sec:authorize access="! isAuthenticated()">
         <li>
-          <a href="auth/login" class="pad-v-half pad-h-half dark-background"><spring:message code="jsp.Login"/></a>
+          <a href="auth/login" class="l--pad-v-half l--pad-h-half dark-background"><spring:message code="jsp.Login"/></a>
         </li>
       </sec:authorize>
-      <li><a href="about" class="pad-v-half pad-h-half dark-background"><spring:message code="nav.About"/></a></li>
+      <li><a href="about" class="l--pad-v-half l--pad-h-half dark-background"><spring:message code="jsp.About"/></a></li>
       <li>
-        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="pad-v-half pad-h-half dark-background">
-          <spring:message code="nav.ReportIssue"/>
+        <a href="https://github.com/aeng/url-monitor/issues" target="_blank" class="l--pad-v-half l--pad-h-half dark-background">
+          <spring:message code="jsp.ReportIssue"/>
         </a>
       </li>
     </ul>
   </div>
 
   <c:if test="${not empty messages}">
-    <ul class="message list-h small visible-message">
+    <ul class="message list-h txt--small visible-message">
       <li>
-        <button id="close_message_button" class="icon-cancel large"></button>
+        <button id="close_message_button" class="icon-cancel txt--large"></button>
       </li>
       <li>
         <span id="message">${messages}</span>
@@ -73,7 +73,7 @@
   </c:if>
 
   <c:if test="${empty messages}">
-    <ul class="message list-h small">
+    <ul class="message list-h txt--small">
       <li>
         <button id="close_message_button" class="icon-cancel"></button>
       </li>
