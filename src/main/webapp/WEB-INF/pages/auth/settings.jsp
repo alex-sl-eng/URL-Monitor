@@ -3,43 +3,62 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <jsp:include page="../includes/header.jsp"/>
 
-<main class="l--pad-h-1 txt--align-center ">
+<main class="l--pad-h-1">
     <sec:authentication property="principal.username" var="username"/>
     <h3><spring:message code="jsp.Settings"/></h3>
-    <ul class="list-h">
-        <li class="content-wrapper-small section l--pad-v-half l--pad-h-half l--align-top">
-            <ul class="list-h txt--small txt--small-spacing">
-                <li class="l--push-h-half">
-                    <img src="${avatarService.getUserAvatar(username, 120)}"
-                            title="${username}"/>
-                </li>
-                <li class="l--push-h-half">
-                    <ul class="txt--align-left list-v list-no-bullet">
-                        <li><label
-                                class="l--push-h-quarter"><spring:message
-                                code="jsp.Email"/></label>${username}
-                        </li>
-                        <li><label
-                                class="l--push-h-quarter"><spring:message
-                                code="jsp.Name"/></label>${identity.getName()}
-                        </li>
-                        <li><label
-                                class="l--push-h-quarter"><spring:message
-                                code="jsp.Roles"/></label>${identity.getRoles()}
-                        </li>
-                        <li><label class="l--push-h-quarter"><spring:message
-                                code="jsp.MemberSince"/></label>${identity.getJoinedDate()}
-                        </li>
-                        <li>
-                            <button class="button-primary"
-                                    onclick="document.location='profile/update';return false;">
-                                <spring:message
-                                        code="jsp.UpdateProfile"/></button>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+
+    <ul class="list-h tab">
+        <li class="tab-selected">
+            <a href="#"><spring:message code="jsp.Profile"/></a>
         </li>
+        <c:if test="${identity.isAdmin()}">
+            <li>
+                <a href="#"><spring:message code="jsp.System"/></a>
+            </li>
+        </c:if>
+    </ul>
+    <div class="section l--pad-h-half l--pad-v-half">
+        <ul class="list-h txt--small txt--small-spacing">
+            <li class="l--push-h-half">
+                <img src="${avatarService.getUserAvatar(username, 120)}"
+                        title="${username}"/>
+            </li>
+            <li class="l--push-h-half">
+                <ul class="txt--align-left list-v list-no-bullet">
+                    <li class="l--pad-v-quarter">
+                        <label><spring:message code="jsp.Name"/></label>
+                        <input type="text" class="full-width"
+                                value="${identity.getName()}"/>
+                    </li>
+                    <li class="l--pad-v-quarter">
+                        <label><spring:message code="jsp.Email"/></label>
+                        <input type="text" class="full-width" disabled="true"
+                                value="${identity.getEmail()}"/>
+                    </li>
+                    <li class="l--pad-v-quarter">
+                        <label><spring:message code="jsp.Roles"/></label>
+                        <input type="text" class="full-width"
+                                disabled="true" value="${identity.getRoles()}"/>
+                    </li>
+                    <li class="l--pad-v-quarter">
+                        <label>
+                            <spring:message code="jsp.MemberSince"/>
+                        </label>
+                        <input type="text" class="full-width" disabled="true"
+                                value="${identity.getJoinedDate()}"/>
+                    </li>
+                    <li class="l--pad-v-quarter txt--align-right">
+                        <button class="button-primary">
+                            <spring:message code="jsp.Update"/></button>
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <br/> <br/>
+    <ul class="list-h">
         <c:if test="${identity.isAdmin()}">
             <li class="content-wrapper-small section l--pad-v-half l--pad-h-half l--align-top">
                 <a href="monitoring">Java Melody</a>

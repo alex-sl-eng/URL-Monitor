@@ -276,6 +276,23 @@ span {
   vertical-align: middle;
 }
 
+.tab>li.tab-selected, .tab>li.tab-selected a, .tab>li:hover, .tab>li:hover a {
+  border-color: rgb(46, 111, 160);
+  color: rgb(46, 111, 160);
+}
+
+.tab>li a {
+  color: rgba(58, 139, 201, 0.6);
+  font-weight: 600;
+}
+
+.tab>li {
+  border-bottom: 0.3em solid rgba(58, 139, 201, 0.6);
+  padding-right: 3.5em;
+  margin-right: 0.35em;
+  cursor: pointer;
+}
+
 .list-h {
   list-style: none;
   margin: 0;
@@ -298,9 +315,11 @@ span {
   margin: 0;
   padding: 0;
 }
+
 .l--align-top, .txt--align-top {
   vertical-align: top !important;
 }
+
 .l--pad-v-eighth {
   padding-top: 0.203125em !important;
   padding-bottom: 0.203125em !important;
@@ -446,6 +465,7 @@ button, input[type="submit"], .button {
   color: #808080;
   background-color: rgba(0, 0, 0, 0.025);
   border-radius: 2px;
+  outline: none;
 }
 
 button:hover, input[type="submit"]:hover, .button:hover {
