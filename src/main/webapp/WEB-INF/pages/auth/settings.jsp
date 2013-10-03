@@ -9,11 +9,11 @@
 
     <ul class="list-h tab">
         <li class="tab-selected">
-            <a href="#"><spring:message code="jsp.Profile"/></a>
+            <spring:message code="jsp.Profile"/>
         </li>
         <c:if test="${identity.isAdmin()}">
             <li>
-                <a href="#"><spring:message code="jsp.System"/></a>
+                <spring:message code="jsp.System"/>
             </li>
         </c:if>
     </ul>

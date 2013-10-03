@@ -276,21 +276,18 @@ span {
   vertical-align: middle;
 }
 
-.tab>li.tab-selected, .tab>li.tab-selected a, .tab>li:hover, .tab>li:hover a {
-  border-color: rgb(46, 111, 160);
+.tab>li.tab-selected, .tab>li.tab-selected, .tab>li:hover {
   color: rgb(46, 111, 160);
-}
-
-.tab>li a {
-  color: rgba(58, 139, 201, 0.6);
-  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgb(46, 111, 160);
 }
 
 .tab>li {
-  border-bottom: 0.3em solid rgba(58, 139, 201, 0.6);
-  padding-right: 3.5em;
-  margin-right: 0.35em;
+  border-bottom: 0.3em solid rgba(0,0,0, 0.08);
+  color: rgba(58, 139, 201, 0.6);
+  padding: 0.2em 3.5em 0.2em 0.5em;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .list-h {
