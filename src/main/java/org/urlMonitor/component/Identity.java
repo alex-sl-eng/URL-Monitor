@@ -48,7 +48,7 @@ public class Identity {
 
     public boolean isAdmin() {
         if (isLoggedIn()) {
-            for (GrantedAuthority auth : userDetails.getAuthorities()) {
+            for (GrantedAuthority auth : getUserDetails().getAuthorities()) {
                 if (auth.getAuthority().equals(UserService.USER_ADMIN)) {
                     return true;
                 }
