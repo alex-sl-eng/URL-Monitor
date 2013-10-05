@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,33 +32,47 @@ import com.google.common.collect.Sets;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class User extends ModelBase implements Serializable
-{
-   public User(String name, String email, boolean enabled)
-   {
-      this.name = name;
-      this.email = email;
-      this.enabled = enabled;
-   }
+public class User extends ModelBase implements Serializable {
+    public User(String name, String email, boolean enabled) {
+        this.name = name;
+        this.email = email;
+        this.enabled = enabled;
+    }
 
-   @NotNull
-   @Size(max = 255)
-   private String name;
+    @NotNull
+    @Size(max = 255)
+    private String name;
 
-   @Size(max = 100)
-   @Email
-   @Column(unique = true)
-   private String email;
+    @Size(max = 100)
+    @Email
+    @Column(unique = true)
+    private String email;
 
-   @NotNull
-   private boolean enabled;
+    @NotNull
+    private boolean enabled;
 
-   @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-   private Set<UserRole> roles = Sets.newHashSet();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter(AccessLevel.NONE)
+    private Set<UserRole> roles = Sets.newHashSet();
 
-   public void addRole(UserRole userRole)
-   {
-      roles.add(userRole);
-      userRole.setUser(this);
-   }
+    public boolean addRole(String role) {
+        for (UserRole userRole : roles) {
+            if (userRole.getRole().equals(role)) {
+                return false;
+            }
+        }
+        roles.add(new UserRole(this, role));
+        return true;
+    }
+
+    public boolean removeRole(String role) {
+        for (UserRole userRole : roles) {
+            if (userRole.getRole().equals(role)) {
+                roles.remove(userRole);
+                return true;
+            }
+        }
+        return false;
+    }
 }

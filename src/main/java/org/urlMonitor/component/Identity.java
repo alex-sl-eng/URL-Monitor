@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.urlMonitor.model.User;
+import org.urlMonitor.service.Impl.UserServiceImpl;
 import org.urlMonitor.service.UserService;
 import org.urlMonitor.util.DateUtil;
 
@@ -19,7 +20,7 @@ import org.urlMonitor.util.DateUtil;
 public class Identity {
 
     @Autowired
-    private UserService userService;
+    private UserService userServiceImpl;
 
     private User user;
 
@@ -37,10 +38,6 @@ public class Identity {
         return DateUtil.getMonthAndYear(getUser().getCreationDate());
     }
 
-    public String getRoles() {
-        return getUserDetails().getAuthorities().toString();
-    }
-
     public boolean isLoggedIn() {
         return SecurityContextHolder.getContext().getAuthentication()
                 .isAuthenticated();
@@ -49,7 +46,7 @@ public class Identity {
     public boolean isAdmin() {
         if (isLoggedIn()) {
             for (GrantedAuthority auth : getUserDetails().getAuthorities()) {
-                if (auth.getAuthority().equals(UserService.USER_ADMIN)) {
+                if (auth.getAuthority().equals(UserServiceImpl.USER_ADMIN)) {
                     return true;
                 }
             }
@@ -68,7 +65,7 @@ public class Identity {
 
     private User getUser() {
         if (user == null) {
-            user = userService.findByEmail(getEmail());
+            user = userServiceImpl.findByEmail(getEmail());
         }
         return user;
     }

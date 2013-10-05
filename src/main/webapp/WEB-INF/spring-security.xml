@@ -16,11 +16,13 @@
       access="hasRole('ROLE_ADMIN')" />
     <security:intercept-url pattern="/auth/settings"
       access="isAuthenticated()" />
+    <security:intercept-url pattern="/auth/settings/**"
+      access="isAuthenticated()" />
     <security:intercept-url pattern="/auth/**" access="permitAll" />
     <security:intercept-url pattern="/**" access="permitAll" />
 
     <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->
-    <security:openid-login user-service-ref="userService"
+    <security:openid-login user-service-ref="userServiceImpl"
       login-page="/auth/login"
       authentication-failure-url="/auth/login?error=true"
       default-target-url="/home">
@@ -56,7 +58,7 @@
 
   <!-- Declare an authentication-manager to use a custom userDetailsService -->
   <security:authentication-manager>
-    <security:authentication-provider user-service-ref="userService">
+    <security:authentication-provider user-service-ref="userServiceImpl">
       <security:password-encoder ref="passwordEncoder" />
     </security:authentication-provider>
   </security:authentication-manager>

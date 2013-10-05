@@ -24,18 +24,17 @@ import lombok.Setter;
 @Setter
 @Access(AccessType.FIELD)
 @NoArgsConstructor
-public class UserRole implements Serializable
-{
-   public UserRole(String role)
-   {
-      this.role = role;
-   }
+public class UserRole implements Serializable {
+    public UserRole(User user, String role) {
+        this.user = user;
+        this.role = role;
+    }
 
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "user_id")
-   @Id
-   private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @Id
+    private User user;
 
-   @Id
-   private String role;
+    @Id
+    private String role;
 }

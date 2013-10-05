@@ -28,7 +28,7 @@
   </div>
 
   <div class="content content-wrapper">
-    <jsp:include page="view/content.jsp"/>
+    <jsp:include page="view/index_content.jsp"/>
   </div>
 </main>
 

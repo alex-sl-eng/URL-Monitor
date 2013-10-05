@@ -2,6 +2,7 @@ package org.urlMonitor.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,29 +14,33 @@ import org.urlMonitor.model.MonitorInfo;
 import org.urlMonitor.service.UrlMonitorService;
 
 @Controller
-public class HomeController extends BaseController
-{
-   @Autowired
-   private UrlMonitorService urlMonitorService;
+public class HomeController extends BaseController {
 
-   @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-   public String getIndexPage(@RequestParam(required = false) String filterText, ModelMap model)
-   {
-      return super.gotoIndexPage(filterText, model);
-   }
+    @Autowired
+    private UrlMonitorService urlMonitorService;
 
-   @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
-   public @ResponseBody
-   List<MonitorInfo> refreshPage()
-   {
-      return urlMonitorService.getMonitorInfoList();
-   }
+    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+    public String getIndexPage(
+            @RequestParam(required = false) String filterText, ModelMap model) {
+        if (!StringUtils.isEmpty(filterText)) {
+            model.put("filterText", filterText);
+        }
+        insertUtilInSession(model);
+        return "index";
+    }
 
-   @RequestMapping(value = "/filterList", method = RequestMethod.GET)
-   public String filterList(@RequestParam(required = false) String filterText, ModelMap model)
-   {
-      model.addAttribute("monitorList", urlMonitorService.getMonitorList(filterText));
-      insertUtilInSession(model);
-      return "view/content";
-   }
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
+    public @ResponseBody
+    List<MonitorInfo> refreshPage() {
+        return urlMonitorService.getMonitorInfoList();
+    }
+
+    @RequestMapping(value = "/filterList", method = RequestMethod.GET)
+    public String filterList(@RequestParam(required = false) String filterText,
+            ModelMap model) {
+        model.addAttribute("monitorList",
+                urlMonitorService.getMonitorList(filterText));
+        insertUtilInSession(model);
+        return "view/index_content";
+    }
 }
