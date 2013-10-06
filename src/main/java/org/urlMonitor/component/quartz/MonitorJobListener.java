@@ -1,4 +1,4 @@
-package org.urlMonitor.service.quartz;
+package org.urlMonitor.component.quartz;
 
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobExecutionContext;

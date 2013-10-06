@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.urlMonitor.service.quartz;
+package org.urlMonitor.component.quartz;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;

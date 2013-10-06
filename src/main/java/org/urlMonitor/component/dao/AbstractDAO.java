@@ -1,4 +1,4 @@
-package org.urlMonitor.dao;
+package org.urlMonitor.component.dao;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package org.urlMonitor.service.quartz;
+package org.urlMonitor.component.quartz;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import org.urlMonitor.component.WebClient;
 import org.urlMonitor.component.WebClientManager;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.service.events.EventPublisher;
-import org.urlMonitor.service.events.MonitorUpdateEvent;
+import org.urlMonitor.events.EventPublisher;
+import org.urlMonitor.events.MonitorUpdateEvent;
 
 import lombok.extern.slf4j.Slf4j;
 

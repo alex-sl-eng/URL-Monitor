@@ -1,4 +1,4 @@
-package org.urlMonitor.service.events;
+package org.urlMonitor.events;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;

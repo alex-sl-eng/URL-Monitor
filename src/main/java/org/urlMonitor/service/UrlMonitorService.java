@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+
 import javax.annotation.PostConstruct;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.commons.lang3.ArrayUtils;
@@ -30,217 +33,191 @@ import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.MonitorInfo;
 import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.service.events.MonitorUpdateEvent;
-import org.urlMonitor.service.quartz.CronTrigger;
+import org.urlMonitor.events.MonitorUpdateEvent;
+import org.urlMonitor.component.quartz.CronTrigger;
 import org.urlMonitor.util.MonitorEntityBuilder;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
- * @author Alex Eng(aeng)  loones1595@gmail.com
- *
+ * @author Alex Eng(aeng) loones1595@gmail.com
+ * 
  */
 @Service
 @Scope("singleton")
 @Slf4j
-public class UrlMonitorService implements ApplicationListener<MonitorUpdateEvent>
-{
-   @Autowired
-   private AppConfiguration appConfiguration;
+public class UrlMonitorService implements
+        ApplicationListener<MonitorUpdateEvent> {
 
-   @Autowired
-   private EmailService emailService;
+    @Autowired
+    private AppConfiguration appConfiguration;
 
-   private final static String REGEX_PROPERTIES = "*.properties";
+    @Autowired
+    private EmailService emailServiceImpl;
 
-   private CronTrigger cronTrigger;
-   private Map<Long, Monitor> monitorMap = Maps.newHashMap();
-   private Map<Long, FailedStates> monitorFailedMap = Maps.newHashMap();
+    private final static String REGEX_PROPERTIES = "*.properties";
 
-   public static final Comparator<Monitor> MonitorComparator = new Comparator<Monitor>()
-   {
-      @Override
-      public int compare(Monitor o1, Monitor o2)
-      {
-         return o1.getName().compareTo(o2.getName());
-      }
-   };
+    private CronTrigger cronTrigger;
+    private Map<Long, Monitor> monitorMap = Maps.newHashMap();
+    private Map<Long, FailedStates> monitorFailedMap = Maps.newHashMap();
 
-   @PostConstruct
-   public void init() throws SchedulerException, FileNotFoundException, IOException
-   {
-      log.info("==================================================");
-      log.info("================= URL Monitor ====================");
-      log.info("==================================================");
+    public static final Comparator<Monitor> MonitorComparator =
+            new Comparator<Monitor>() {
+                @Override
+                public int compare(Monitor o1, Monitor o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            };
 
-      log.info("Initialising jobs...");
+    @PostConstruct
+    public void init() throws SchedulerException, FileNotFoundException,
+            IOException {
+        log.info("==================================================");
+        log.info("================= URL Monitor ====================");
+        log.info("==================================================");
 
-      cronTrigger = new CronTrigger();
+        log.info("Initialising jobs...");
 
-      for (Monitor monitor : loadMonitorFiles())
-      {
-         if (cronTrigger.scheduleMonitor(monitor))
-         {
-            monitorMap.put(monitor.getId(), monitor);
-         }
-      }
-   }
+        cronTrigger = new CronTrigger();
 
-   private Set<Monitor> loadMonitorFiles() throws FileNotFoundException, IOException
-   {
-      Set<Monitor> result = Sets.newHashSet();
-
-      File dir = new File(appConfiguration.getFilesPath());
-      if (dir.exists())
-      {
-         FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
-         File[] files = dir.listFiles(fileFilter);
-         if (!ArrayUtils.isEmpty(files))
-         {
-            for (File file : files)
-            {
-               if (!file.isDirectory())
-               {
-                  Properties prop = new Properties();
-                  prop.load(new FileInputStream(file));
-                  try
-                  {
-                     Monitor monitor = MonitorEntityBuilder.buildFromProperties(prop);
-                     if (!result.contains(monitor)) // remove duplicate
-                     {
-                        result.add(monitor);
-                     }
-                  }
-                  catch (InvalidMonitorFileException e)
-                  {
-                     log.info("Ingoring incomplete monitor info: " + file.getName());
-                  }
-
-               }
+        for (Monitor monitor : loadMonitorFiles()) {
+            if (cronTrigger.scheduleMonitor(monitor)) {
+                monitorMap.put(monitor.getId(), monitor);
             }
-         }
-      }
-      else
-      {
-         log.warn("Monitor files not found {0}", appConfiguration.getFilesPath());
-      }
-      return result;
-   }
+        }
+    }
 
-   public List<Monitor> getMonitorList()
-   {
-      List<Monitor> monitorList = Lists.newArrayList(monitorMap.values());
-      Collections.sort(monitorList, MonitorComparator);
-      return monitorList;
-   }
+    private Set<Monitor> loadMonitorFiles() throws FileNotFoundException,
+            IOException {
+        Set<Monitor> result = Sets.newHashSet();
 
-   public List<Monitor> getMonitorList(String filterText)
-   {
-      List<Monitor> list = getMonitorList();
-      if (StringUtils.isEmpty(filterText))
-      {
-         return list;
-      }
+        File dir = new File(appConfiguration.getFilesPath());
+        if (dir.exists()) {
+            FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
+            File[] files = dir.listFiles(fileFilter);
+            if (!ArrayUtils.isEmpty(files)) {
+                for (File file : files) {
+                    if (!file.isDirectory()) {
+                        Properties prop = new Properties();
+                        prop.load(new FileInputStream(file));
+                        try {
+                            Monitor monitor =
+                                    MonitorEntityBuilder
+                                            .buildFromProperties(prop);
+                            if (!result.contains(monitor)) // remove duplicate
+                            {
+                                result.add(monitor);
+                            }
+                        } catch (InvalidMonitorFileException e) {
+                            log.info("Ingoring incomplete monitor info: "
+                                    + file.getName());
+                        }
 
-      List<Monitor> filteredList = Lists.newArrayList();
-      String[] filters = filterText.split(";");
-
-      for (Monitor monitor : list)
-      {
-         if (isMatchTagOrName(monitor.getName(), monitor.getTagList(), filters))
-         {
-            filteredList.add(monitor);
-         }
-      }
-      return filteredList;
-   }
-
-   public List<MonitorInfo> getMonitorInfoList()
-   {
-      List<MonitorInfo> result = Lists.newArrayList();
-      for (Monitor monitor : getMonitorList())
-      {
-         MonitorInfo info = new MonitorInfo(monitor.hashCode(), monitor.getStatus(), monitor.getLastChanged(), monitor.getLastFailed());
-         result.add(info);
-      }
-      return result;
-   }
-
-   private boolean isMatchTagOrName(String name, List<String> tags, String[] filterTextList)
-   {
-      for (String filterText : filterTextList)
-      {
-         if (name.contains(filterText))
-         {
-            return true;
-         }
-         else
-         {
-            for (String tag : tags)
-            {
-               if (tag.contains(filterText))
-               {
-                  return true;
-               }
+                    }
+                }
             }
-         }
-      }
-      return false;
-   }
+        } else {
+            log.warn("Monitor files not found {0}",
+                    appConfiguration.getFilesPath());
+        }
+        return result;
+    }
 
-   public void onApplicationEvent(MonitorUpdateEvent event)
-   {
-      if (monitorMap.containsKey(event.getId()))
-      {
-         Monitor monitor = monitorMap.get(event.getId());
-         monitor.update(event.getStatus());
+    public List<Monitor> getMonitorList() {
+        List<Monitor> monitorList = Lists.newArrayList(monitorMap.values());
+        Collections.sort(monitorList, MonitorComparator);
+        return monitorList;
+    }
 
-         try
-         {
-            updateStates(monitor);
-         }
-         catch (EmailException e)
-         {
-            log.error("Unable to send notification email-" + e);
-         }
-      }
-   }
+    public List<Monitor> getMonitorList(String filterText) {
+        List<Monitor> list = getMonitorList();
+        if (StringUtils.isEmpty(filterText)) {
+            return list;
+        }
 
-   /**
-    * retry MAX_RETRY_COUNT times if failed or unknown, then send email
-    * @param monitor
-    * @throws EmailException 
-    */
-   private void updateStates(Monitor monitor) throws EmailException
-   {
-      Long id = monitor.getId();
-      if (monitor.getStatus() == StatusType.Pass)
-      {
-         if (monitorFailedMap.containsKey(id) && monitorFailedMap.get(id).getCount() >= appConfiguration.getRetryCount())
-         {
-            monitorFailedMap.remove(id);
-            emailService.sendSuccessEmail(monitor, monitor.getLastChanged());
-         }
-      }
-      else if (monitor.getStatus() == StatusType.Unknown || monitor.getStatus() == StatusType.Failed)
-      {
-         if (monitorFailedMap.containsKey(id))
-         {
-            FailedStates failedStates = monitorFailedMap.get(id);
-            failedStates.addCount();
-            if (failedStates.getCount() == appConfiguration.getRetryCount())
-            {
-               log.info("Failed check max-" + monitor.getUrl());
-               emailService.sendFailedEmail(monitor, monitor.getLastChanged());
+        List<Monitor> filteredList = Lists.newArrayList();
+        String[] filters = filterText.split(";");
+
+        for (Monitor monitor : list) {
+            if (isMatchTagOrName(monitor.getName(), monitor.getTagList(),
+                    filters)) {
+                filteredList.add(monitor);
             }
-         }
-         else
-         {
-            monitorFailedMap.put(id, new FailedStates());
-         }
-      }
-   }
+        }
+        return filteredList;
+    }
+
+    public List<MonitorInfo> getMonitorInfoList() {
+        List<MonitorInfo> result = Lists.newArrayList();
+        for (Monitor monitor : getMonitorList()) {
+            MonitorInfo info =
+                    new MonitorInfo(monitor.hashCode(), monitor.getStatus(),
+                            monitor.getLastChanged(), monitor.getLastFailed());
+            result.add(info);
+        }
+        return result;
+    }
+
+    private boolean isMatchTagOrName(String name, List<String> tags,
+            String[] filterTextList) {
+        for (String filterText : filterTextList) {
+            if (name.contains(filterText)) {
+                return true;
+            } else {
+                for (String tag : tags) {
+                    if (tag.contains(filterText)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public void onApplicationEvent(MonitorUpdateEvent event) {
+        if (monitorMap.containsKey(event.getId())) {
+            Monitor monitor = monitorMap.get(event.getId());
+            monitor.update(event.getStatus());
+
+            try {
+                updateStates(monitor);
+            } catch (EmailException e) {
+                log.error("Unable to send notification email-" + e);
+            }
+        }
+    }
+
+    /**
+     * retry MAX_RETRY_COUNT times if failed or unknown, then send email
+     * 
+     * @param monitor
+     * @throws EmailException
+     */
+    private void updateStates(Monitor monitor) throws EmailException {
+        Long id = monitor.getId();
+        if (monitor.getStatus() == StatusType.Pass) {
+            if (monitorFailedMap.containsKey(id)
+                    && monitorFailedMap.get(id).getCount() >= appConfiguration
+                            .getRetryCount()) {
+                monitorFailedMap.remove(id);
+                emailServiceImpl.sendSuccessEmail(monitor,
+                    monitor.getLastChanged());
+            }
+        } else if (monitor.getStatus() == StatusType.Unknown
+                || monitor.getStatus() == StatusType.Failed) {
+            if (monitorFailedMap.containsKey(id)) {
+                FailedStates failedStates = monitorFailedMap.get(id);
+                failedStates.addCount();
+                if (failedStates.getCount() == appConfiguration.getRetryCount()) {
+                    log.info("Failed check max-" + monitor.getUrl());
+                    emailServiceImpl.sendFailedEmail(monitor,
+                            monitor.getLastChanged());
+                }
+            } else {
+                monitorFailedMap.put(id, new FailedStates());
+            }
+        }
+    }
 }

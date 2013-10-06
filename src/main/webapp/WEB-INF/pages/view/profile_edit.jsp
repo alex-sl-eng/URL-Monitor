@@ -9,7 +9,7 @@
   commandName="profileForm">
   <ul class="list-h txt--small txt--small-spacing">
     <li class="l--push-h-half">
-      <img src="${avatarService.getUserAvatar(username, 120)}"
+      <img src="${avatarServiceImpl.getUserAvatar(username, 120)}"
         title="${username}"/>
     </li>
     <li class="l--push-h-half">

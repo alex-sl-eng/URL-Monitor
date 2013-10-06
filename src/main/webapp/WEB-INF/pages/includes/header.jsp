@@ -42,7 +42,7 @@
         <li>
           <a href="auth/settings"
             class="l--pad-v-half l--pad-h-half dark-background">
-            <img src="${avatarService.getUserAvatar(email, 75)}"
+            <img src="${avatarServiceImpl.getUserAvatar(email, 75)}"
               class="avatar l--push-h-quarter"/>
             <spring:message code="jsp.Settings"/>
           </a>

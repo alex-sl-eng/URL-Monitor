@@ -18,7 +18,7 @@ import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.urlMonitor.component.Identity;
-import org.urlMonitor.dao.UserDAO;
+import org.urlMonitor.component.dao.UserDAO;
 import org.urlMonitor.model.User;
 import org.urlMonitor.model.UserRole;
 import org.urlMonitor.service.AppConfiguration;
