@@ -140,6 +140,7 @@ header h1 a {
 
 #close_message_button {
   background: rgba(255, 255, 255, 0.5);
+  color: inherit;
 }
 
 .visible-message {
@@ -708,19 +709,15 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 .info {
   background-color: rgba(101, 158, 199, 0.5);
-  color: rgba(92, 92, 92, 0.9);
+  color: rgba(21, 49, 126, 0.8);
 }
 
 .warning {
-  background-color: rgba(255, 255, 0, 0.25);
-  color: rgba(92, 92, 92, 0.75);
+  background-color: rgba(255, 255, 0, 0.2);
+  color: #696900;
 }
 
 .error {
   background-color: rgba(255, 0, 0, 0.15);
-  color: #CD0000;
-}
-
-.txt--error {
   color: #CD0000;
 }

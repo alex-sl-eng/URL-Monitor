@@ -2,7 +2,6 @@ package org.urlMonitor.controller;
 
 import lombok.Getter;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.ui.ModelMap;
 import org.urlMonitor.util.CronHelper;
 
@@ -15,5 +14,15 @@ public abstract class BaseController {
 
     protected void insertUtilInSession(ModelMap model) {
         model.put("cronHelper", getCronHelper());
+    }
+
+    protected void addMessages(String severity, String message, ModelMap model) {
+        model.put("messages", message);
+        model.put("severity", severity);
+    }
+
+    protected void clearMessages(ModelMap model) {
+        model.remove("messages");
+        model.remove("severity");
     }
 }

@@ -3,7 +3,6 @@ package org.urlMonitor.component;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,14 +12,13 @@ import org.springframework.stereotype.Component;
 import org.urlMonitor.model.User;
 import org.urlMonitor.service.Impl.UserServiceImpl;
 import org.urlMonitor.service.UserService;
-import org.urlMonitor.service.events.UserUpdateEvent;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class Identity implements ApplicationListener<UserUpdateEvent> {
+public class Identity {
 
     @Autowired
     private UserService userServiceImpl;
@@ -73,11 +71,7 @@ public class Identity implements ApplicationListener<UserUpdateEvent> {
         return user;
     }
 
-    @Override
-    public void onApplicationEvent(UserUpdateEvent event) {
-        //force refresh of user details if updated
-        if (getEmail().equals(event.getEmail())) {
-            this.user = null;
-        }
+    public void refresh() {
+        this.user = null;
     }
 }

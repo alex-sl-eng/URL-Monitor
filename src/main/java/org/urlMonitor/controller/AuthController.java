@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.urlMonitor.component.Identity;
+import org.urlMonitor.component.MessageResource;
 import org.urlMonitor.controller.form.ProfileForm;
 import org.urlMonitor.model.User;
 import org.urlMonitor.service.UserService;
@@ -33,14 +34,18 @@ public class AuthController extends BaseController {
     @Autowired
     private UserService userServiceImpl;
 
+    @Autowired
+    private MessageResource messageResource;
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(
             @RequestParam(value = "error", required = false) boolean error,
             ModelMap model) {
         if (error) {
-            model.put("messages", "Invalid username or password");
+            addMessages("error",
+                    messageResource.getMessage("error.login.invalid"), model);
         } else {
-            model.put("messages", "");
+            clearMessages(model);
         }
         return "auth/login";
     }
@@ -73,7 +78,7 @@ public class AuthController extends BaseController {
         refreshData(profileForm, user);
 
         model.put("profileForm", profileForm);
-        model.put("messages", "Profile updated.");
+        addMessages("info", messageResource.getMessage("jsp.Profile.Updated"), model);
         return "auth/settings";
     }
 
@@ -111,6 +116,6 @@ public class AuthController extends BaseController {
                             .get(UserService.USER_ROLE).booleanValue() : false;
             profileForm.setAdmin(isAdmin);
             profileForm.setUser(isUser);
-        }
+     }
     }
 }

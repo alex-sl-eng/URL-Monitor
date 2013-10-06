@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.urlMonitor.component.Identity;
 import org.urlMonitor.dao.UserDAO;
 import org.urlMonitor.model.User;
 import org.urlMonitor.model.UserRole;
@@ -26,8 +27,6 @@ import org.urlMonitor.service.UserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.urlMonitor.service.events.EventPublisher;
-import org.urlMonitor.service.events.UserUpdateEvent;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
@@ -44,7 +43,7 @@ public class UserServiceImpl implements
     private AppConfiguration appConfiguration;
 
     @Autowired
-    private EventPublisher eventPublisher;
+    private Identity identity;
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -144,7 +143,9 @@ public class UserServiceImpl implements
 
             if (changed) {
                 userDAO.saveOrUpdate(user);
-                eventPublisher.fireEvent(new UserUpdateEvent(this, email));
+                if (identity.getEmail().equals(email)) {
+                    identity.refresh();
+                }
             }
         }
         return user;
