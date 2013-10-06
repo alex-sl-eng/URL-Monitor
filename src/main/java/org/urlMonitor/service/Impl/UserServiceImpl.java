@@ -50,7 +50,7 @@ public class UserServiceImpl implements
             throws UsernameNotFoundException {
 
         List<SimpleGrantedAuthority> authorities =
-                Lists.newArrayList(new SimpleGrantedAuthority(USER_ROLE));
+                Lists.newArrayList(new SimpleGrantedAuthority(ROLE_USER));
         return new org.springframework.security.core.userdetails.User(username,
                 "", true, true, true, true, authorities);
     }
@@ -103,10 +103,10 @@ public class UserServiceImpl implements
      * @return
      */
     public User createUserWithRoles(String fullName, String email) {
-        Set<String> roles = Sets.newHashSet(USER_ROLE);
+        Set<String> roles = Sets.newHashSet(ROLE_USER);
 
         if (isUserPredefinedAdmin(email)) {
-            roles.add(USER_ADMIN);
+            roles.add(ROLE_ADMIN);
         }
 
         User user = userDAO.createUser(fullName, email, true, roles);
@@ -130,15 +130,15 @@ public class UserServiceImpl implements
                 changed = true;
             }
             if (isAdmin) {
-                changed |= user.addRole(USER_ADMIN);
+                changed |= user.addRole(ROLE_ADMIN);
             } else {
-                changed |= user.removeRole(USER_ADMIN);
+                changed |= user.removeRole(ROLE_ADMIN);
             }
 
             if (isUser) {
-                changed |= user.addRole(USER_ROLE);
+                changed |= user.addRole(ROLE_USER);
             } else {
-                changed |= user.removeRole(USER_ROLE);
+                changed |= user.removeRole(ROLE_USER);
             }
 
             if (changed) {
@@ -172,8 +172,8 @@ public class UserServiceImpl implements
      */
     private Map<String, Boolean> getAllRoles() {
         Map<String, Boolean> roles = Maps.newHashMap();
-        roles.put(USER_ROLE, false);
-        roles.put(USER_ADMIN, false);
+        roles.put(ROLE_USER, false);
+        roles.put(ROLE_ADMIN, false);
         return roles;
     }
 

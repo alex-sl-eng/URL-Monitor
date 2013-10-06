@@ -92,11 +92,11 @@ public class AuthController extends BaseController {
             Map<String, Boolean> userRoles =
                     userServiceImpl.getUserRoles(identity.getEmail());
             boolean isAdmin =
-                    userRoles.containsKey(UserService.USER_ADMIN) ? userRoles
-                            .get(UserService.USER_ADMIN) : false;
+                    userRoles.containsKey(UserService.ROLE_ADMIN) ? userRoles
+                            .get(UserService.ROLE_ADMIN) : false;
             boolean isUser =
-                    userRoles.containsKey(UserService.USER_ROLE) ? userRoles
-                            .get(UserService.USER_ROLE).booleanValue() : false;
+                    userRoles.containsKey(UserService.ROLE_USER) ? userRoles
+                            .get(UserService.ROLE_USER).booleanValue() : false;
             profileForm.setAdmin(isAdmin);
             profileForm.setUser(isUser);
 
@@ -109,11 +109,11 @@ public class AuthController extends BaseController {
             Map<String, Boolean> userRoles =
                     userServiceImpl.getUserRoles(user.getEmail());
             boolean isAdmin =
-                    userRoles.containsKey(UserService.USER_ADMIN) ? userRoles
-                            .get(UserService.USER_ADMIN) : false;
+                    userRoles.containsKey(UserService.ROLE_ADMIN) ? userRoles
+                            .get(UserService.ROLE_ADMIN) : false;
             boolean isUser =
-                    userRoles.containsKey(UserService.USER_ROLE) ? userRoles
-                            .get(UserService.USER_ROLE).booleanValue() : false;
+                    userRoles.containsKey(UserService.ROLE_USER) ? userRoles
+                            .get(UserService.ROLE_USER).booleanValue() : false;
             profileForm.setAdmin(isAdmin);
             profileForm.setUser(isUser);
      }

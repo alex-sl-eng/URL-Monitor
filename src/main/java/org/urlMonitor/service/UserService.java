@@ -11,8 +11,8 @@ import org.urlMonitor.model.User;
 @Transactional
 public interface UserService {
 
-    public static String USER_ROLE = "ROLE_USER";
-    public static String USER_ADMIN = "ROLE_ADMIN";
+    public static String ROLE_USER = "ROLE_USER";
+    public static String ROLE_ADMIN = "ROLE_ADMIN";
 
     /**
      * Load all roles available in application
