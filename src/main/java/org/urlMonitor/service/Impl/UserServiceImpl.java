@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.NonNull;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +26,8 @@ import org.urlMonitor.service.UserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.urlMonitor.service.events.EventPublisher;
+import org.urlMonitor.service.events.UserUpdateEvent;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
@@ -33,14 +37,14 @@ import com.google.common.collect.Sets;
 public class UserServiceImpl implements
         AuthenticationUserDetailsService<OpenIDAuthenticationToken>,
         UserDetailsService, UserService {
-    public static String USER_ROLE = "ROLE_USER";
-    public static String USER_ADMIN = "ROLE_ADMIN";
-
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private AppConfiguration appConfiguration;
+
+    @Autowired
+    private EventPublisher eventPublisher;
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -117,37 +121,30 @@ public class UserServiceImpl implements
     }
 
     @Override
-    public User updateUserByEmail(String email, String updatedName) {
-        if (!StringUtils.isEmpty(email) && !StringUtils.isEmpty(updatedName)) {
-            User user = findByEmail(email);
-            if (user != null && !user.getName().equals(updatedName)) {
-                user.setName(updatedName);
-                userDAO.saveOrUpdate(user);
-            }
-            return user;
-        }
-        return null;
-    }
-
-    @Override
-    public User updateUserByEmail(String email, String updatedName,
-            Map<String, Boolean> roles) {
-        User user = updateUserByEmail(email, updatedName);
+    public User updateUserByEmail(@NonNull String email,
+            @NonNull String updatedName, boolean isAdmin, boolean isUser) {
+        User user = findByEmail(email);
         if (user != null) {
             boolean changed = false;
-            for (Map.Entry<String, Boolean> entry : roles.entrySet()) {
-                if (entry.getValue().booleanValue()) {
-                    if (user.addRole(entry.getKey())) {
-                        changed = true;
-                    }
-                } else {
-                    if (user.removeRole(entry.getKey())) {
-                        changed = true;
-                    }
-                }
+            if (!user.getName().equals(updatedName)) {
+                user.setName(updatedName);
+                changed = true;
             }
+            if (isAdmin) {
+                changed |= user.addRole(USER_ADMIN);
+            } else {
+                changed |= user.removeRole(USER_ADMIN);
+            }
+
+            if (isUser) {
+                changed |= user.addRole(USER_ROLE);
+            } else {
+                changed |= user.removeRole(USER_ROLE);
+            }
+
             if (changed) {
                 userDAO.saveOrUpdate(user);
+                eventPublisher.fireEvent(new UserUpdateEvent(this, email));
             }
         }
         return user;

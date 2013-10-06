@@ -2,16 +2,19 @@ package org.urlMonitor.controller;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.urlMonitor.component.Identity;
+import org.urlMonitor.controller.form.ProfileForm;
 import org.urlMonitor.model.User;
 import org.urlMonitor.service.UserService;
 import org.urlMonitor.util.DateUtil;
@@ -49,50 +52,65 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/settings/**", method = RequestMethod.GET)
     public String getSettingsPage(ModelMap model) {
-        DataForm dataForm = new DataForm();
-        refreshData(dataForm, null);
+        ProfileForm profileForm = new ProfileForm();
+        refreshData(profileForm, null);
 
-        model.put("dataForm", dataForm);
+        model.put("profileForm", profileForm);
         return "auth/settings";
     }
 
     @RequestMapping(value = "/settings/profile", method = RequestMethod.POST)
-    public String onUpdateProfile(
-            @ModelAttribute("dataForm") DataForm dataForm, ModelMap model) {
-
-        String email = dataForm.getData().get("email");
-        String updatedName = dataForm.getData().get("name");
-        Map<String, Boolean> roles = dataForm.getBooleanData();
-
-        User user = null;
-        if (roles.isEmpty()) {
-            user = userServiceImpl.updateUserByEmail(email, updatedName);
-        } else {
-            user = userServiceImpl.updateUserByEmail(email, updatedName, roles);
+    public String onUpdateProfile(@Valid ProfileForm profileForm,
+            BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "auth/settings";
         }
-        refreshData(dataForm, user);
 
-        model.put("dataForm", dataForm);
+        User user =
+                userServiceImpl.updateUserByEmail(profileForm.getEmail(),
+                        profileForm.getName(), profileForm.isAdmin(),
+                        profileForm.isUser());
+        refreshData(profileForm, user);
+
+        model.put("profileForm", profileForm);
         model.put("messages", "Profile updated.");
         return "auth/settings";
     }
 
-    private void refreshData(DataForm dataForm, User user) {
+    private void refreshData(ProfileForm profileForm, User user) {
         if (user == null) {
-            dataForm.getData().put("name", identity.getName());
-            dataForm.getData().put("email", identity.getEmail());
-            dataForm.getBooleanData().clear();
-            dataForm.getBooleanData().putAll(
-                    userServiceImpl.getUserRoles(identity.getEmail()));
-            dataForm.getData().put("joinedDate", identity.getJoinedDate());
+            profileForm.setName(identity.getName());
+            profileForm.setEmail(identity.getEmail());
+            profileForm.setJoinedDate(DateUtil.getMonthAndYear(identity
+                    .getJoinedDate()));
+
+            Map<String, Boolean> userRoles =
+                    userServiceImpl.getUserRoles(identity.getEmail());
+            boolean isAdmin =
+                    userRoles.containsKey(UserService.USER_ADMIN) ? userRoles
+                            .get(UserService.USER_ADMIN) : false;
+            boolean isUser =
+                    userRoles.containsKey(UserService.USER_ROLE) ? userRoles
+                            .get(UserService.USER_ROLE).booleanValue() : false;
+            profileForm.setAdmin(isAdmin);
+            profileForm.setUser(isUser);
+
         } else {
-            dataForm.getData().put("name", user.getName());
-            dataForm.getData().put("email", user.getEmail());
-            dataForm.getBooleanData().clear();
-            dataForm.getBooleanData().putAll(
-                    userServiceImpl.getUserRoles(user.getEmail()));
-            dataForm.getData().put("joinedDate",
-                    DateUtil.getMonthAndYear(user.getCreationDate()));
+            profileForm.setName(user.getName());
+            profileForm.setEmail(user.getEmail());
+            profileForm.setJoinedDate(DateUtil.getMonthAndYear(user
+                    .getCreationDate()));
+
+            Map<String, Boolean> userRoles =
+                    userServiceImpl.getUserRoles(user.getEmail());
+            boolean isAdmin =
+                    userRoles.containsKey(UserService.USER_ADMIN) ? userRoles
+                            .get(UserService.USER_ADMIN) : false;
+            boolean isUser =
+                    userRoles.containsKey(UserService.USER_ROLE) ? userRoles
+                            .get(UserService.USER_ROLE).booleanValue() : false;
+            profileForm.setAdmin(isAdmin);
+            profileForm.setUser(isUser);
         }
     }
 }

@@ -11,6 +11,9 @@ import org.urlMonitor.model.User;
 @Transactional
 public interface UserService {
 
+    public static String USER_ROLE = "ROLE_USER";
+    public static String USER_ADMIN = "ROLE_ADMIN";
+
     /**
      * Load all roles available in application
      * 
@@ -21,8 +24,6 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    User updateUserByEmail(String email, String updatedName);
-
     User updateUserByEmail(String email, String updatedName,
-            Map<String, Boolean> roles);
+            boolean isAdmin, boolean isUser);
 }

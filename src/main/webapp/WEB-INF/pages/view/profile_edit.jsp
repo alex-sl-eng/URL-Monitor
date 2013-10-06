@@ -5,55 +5,64 @@
 
 <sec:authentication property="principal.username" var="username"/>
 
-<form:form method="post" action="auth/settings/profile" modelAttribute="dataForm">
-    <ul class="list-h txt--small txt--small-spacing">
-        <li class="l--push-h-half">
-            <img src="${avatarService.getUserAvatar(username, 120)}"
-                    title="${username}"/>
+<form:form method="post" action="auth/settings/profile"
+  commandName="profileForm">
+  <ul class="list-h txt--small txt--small-spacing">
+    <li class="l--push-h-half">
+      <img src="${avatarService.getUserAvatar(username, 120)}"
+        title="${username}"/>
+    </li>
+    <li class="l--push-h-half">
+      <ul class="txt--align-left list-v list-no-bullet">
+        <li class="l--pad-v-quarter">
+          <label><spring:message code="jsp.Name"/></label>
+          <form:errors path="name" cssClass="l--pad-h-eighth l--pad-v-eighth error"/>
+          <form:input path="name" class="full-width" maxlength="255"/>
         </li>
-        <li class="l--push-h-half">
-            <ul class="txt--align-left list-v list-no-bullet">
-                <li class="l--pad-v-quarter">
-                    <label><spring:message code="jsp.Name"/></label>
-                    <input type="text" class="full-width" name="data['name']"
-                            value="${dataForm.data['name']}"/>
-                </li>
-                <li class="l--pad-v-quarter">
-                    <label>
-                        <spring:message code="jsp.Email"/>
-                    </label>
-                    <input type="text" class="full-width" readonly
-                            name="data['email']"
-                            value="${dataForm.data['email']}"/>
-                </li>
-                <li class="l--pad-v-quarter">
-                    <c:forEach var="userRole" items="${dataForm.booleanData}">
-                        <span class="l--push-right-1">
-                            <input type="checkbox" id="chk-${userRole.key}"
-                                    onchange="document.getElementById('${userRole.key}').value=this.checked"
-                                    <c:if test="${! identity.isAdmin()}">disabled</c:if>
-                                    <c:if test="${userRole.value}">checked</c:if>/>
-                            <label class="label-none"
-                                    for="chk-${userRole.key}">${userRole.key}</label>
+        <li class="l--pad-v-quarter">
+          <label>
+            <spring:message code="jsp.Email"/>
+          </label>
+          <form:input path="email" class="full-width" readonly="true"/>
+        </li>
+        <li class="l--pad-v-quarter">
+          <span class="l--push-right-1">
+            <c:choose>
+              <c:when test="${identity.isAdmin()}">
+                <form:checkbox path="user" id="chk-isUser"/>
+              </c:when>
+              <c:otherwise>
+                <form:checkbox path="user" id="chk-isUser" disabled="true"/>
+              </c:otherwise>
+            </c:choose>
+            <label class="label-none" for="chk-isUser">User</label>
+          </span>
 
-                            <input type="hidden" id="${userRole.key}"
-                                    value="${userRole.value}"
-                                    name="booleanData['${userRole.key}']"/>
-                        </span>
-                    </c:forEach>
-                </li>
-                <li class="l--pad-v-half">
-                    <label class="txt--small label-none">
-                        <spring:message
-                                code="jsp.MemberSince"/>: ${dataForm.data['joinedDate']}
-                    </label>
-                </li>
-                <li class="l--pad-v-quarter txt--align-right">
-                    <button class="button-primary">
-                        <spring:message code="jsp.Update"/></button>
-                    </button>
-                </li>
-            </ul>
+          <span class="l--push-right-1">
+            <c:choose>
+              <c:when test="${identity.isAdmin()}">
+                <form:checkbox path="admin" id="chk-isAdmin"/>
+              </c:when>
+              <c:otherwise>
+                <form:checkbox path="admin" id="chk-isAdmin" disabled="true"/>
+              </c:otherwise>
+            </c:choose>
+            <label class="label-none" for="chk-isAdmin">Admin</label>
+          </span>
         </li>
-    </ul>
+        <li class="l--pad-v-half">
+          <label class="txt--small label-none">
+            <spring:message code="jsp.MemberSince"/>:
+          </label>
+          <form:label path="joinedDate"
+            cssClass="label-none txt-small">${profileForm.joinedDate}</form:label>
+        </li>
+        <li class="l--pad-v-quarter txt--align-right">
+          <button class="button-primary">
+            <spring:message code="jsp.Update"/></button>
+          </button>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </form:form>
