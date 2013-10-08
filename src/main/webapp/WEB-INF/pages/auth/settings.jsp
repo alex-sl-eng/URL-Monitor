@@ -10,7 +10,7 @@
             <input type="radio" name="tabs" id="tab1" checked>
             <label class="tab animated" for="tab1"><spring:message code="jsp.Profile"/></label>
 
-            <div class="section l--pad-h-half l--pad-v-half">
+            <div class="section l--pad-h-half l--pad-v-half l--display-none">
                 <jsp:include page="../view/profile_edit.jsp"/>
             </div>
         </li>
@@ -19,7 +19,7 @@
                 <input type="radio" name="tabs" id="tab2">
                 <label class="tab animated" for="tab2"><spring:message code="jsp.System"/></label>
 
-                <div class="section l--pad-h-half l--pad-v-half">
+                <div class="section l--pad-h-half l--pad-v-half l--display-none">
                     <a href="monitoring">Java Melody</a> <br/>
                     <a href="#">Stop all monitoring</a> <br/>
                     <a href="#">Resume all monitoring</a> <br/>

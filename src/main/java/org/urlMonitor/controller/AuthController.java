@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +66,8 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/settings/profile", method = RequestMethod.POST)
-    public String onUpdateProfile(@Valid ProfileForm profileForm,
+    public String onUpdateProfile(
+            @Valid @ModelAttribute("profileForm") ProfileForm profileForm,
             BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "auth/settings";
@@ -78,7 +80,8 @@ public class AuthController extends BaseController {
         refreshData(profileForm, user);
 
         model.put("profileForm", profileForm);
-        addMessages("info", messageResource.getMessage("jsp.Profile.Updated"), model);
+        addMessages("info", messageResource.getMessage("jsp.Profile.Updated"),
+                model);
         return "auth/settings";
     }
 
@@ -116,6 +119,6 @@ public class AuthController extends BaseController {
                             .get(UserService.ROLE_USER).booleanValue() : false;
             profileForm.setAdmin(isAdmin);
             profileForm.setUser(isUser);
-     }
+        }
     }
 }

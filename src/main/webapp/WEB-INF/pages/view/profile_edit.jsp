@@ -17,13 +17,14 @@
         <li class="l--pad-v-quarter">
           <label><spring:message code="jsp.Name"/></label>
           <form:errors path="name" cssClass="l--pad-h-eighth l--pad-v-eighth error"/>
-          <form:input path="name" class="full-width" maxlength="255"/>
+          <span id="name_error" class="l--pad-h-eighth l--pad-v-eighth l--display-none error"></span>
+          <form:input path="name" class="full-width" maxlength="255" onblur="validateName(this.value)"/>
         </li>
         <li class="l--pad-v-quarter">
           <label>
             <spring:message code="jsp.Email"/>
           </label>
-          <form:input path="email" class="full-width" readonly="true"/>
+          <form:input path="email" class="full-width" readonly="true" tabindex="-1"/>
         </li>
         <li class="l--pad-v-quarter">
           <span class="l--push-right-1">

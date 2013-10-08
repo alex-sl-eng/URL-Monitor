@@ -320,7 +320,6 @@ span {
 }
 
 .list-tab .section {
-  display: none;
   position: absolute;
   margin-top: 0.5em;
   left: 1.5em;
@@ -540,6 +539,12 @@ input[type="text"] {
   color: #808080;
 }
 
+input[readonly]
+{
+  cursor: not-allowed;
+  background-color:#eeeeee;
+}
+
 .button-primary {
   background-color: rgba(58, 139, 201, 1) !important;
   color: #FFFFFF !important;
@@ -720,4 +725,12 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 .error {
   background-color: rgba(255, 0, 0, 0.15);
   color: #CD0000;
+}
+
+.l--display-none {
+  display: none;
+}
+
+.l--display-inline-block {
+  display: inline-block;
 }

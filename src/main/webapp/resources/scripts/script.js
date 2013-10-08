@@ -164,3 +164,24 @@ function toggleDetails(toggleBtn, rowId) {
   details.toggleClass("visible");
   $(toggleBtn).toggleClass("rotated");
 }
+
+function validateName(name) {
+  $.ajax({
+    type : "POST",
+    url : contextPath + "/validateName",
+    data : "name=" + name,
+    success : function(response) {
+      if (response.status == "Failed") {
+        $('#name_error').html(response.result);
+        $('#name_error').addClass("l--display-inline-block")
+      } else {
+        $('#name_error').html('');
+        $('#name_error').removeClass("l--display-inline-block")
+      }
+    },
+    error : function(XMLHttpRequest, textStatus, errorThrown) {
+      displayMessage('error', getErrorMessageHeader(), errorThrown);
+      $('#refresh_status').html("");
+    }
+  });
+}
