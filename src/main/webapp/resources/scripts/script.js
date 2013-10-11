@@ -1,34 +1,37 @@
 var refreshPageInterval = 5000; //30 seconds
 var refreshPageIntervalId = 0;
 var contextPath;
-var view = 'list';
+var VIEW_GRID= 'grid-view';
+var VIEW_LIST = 'list-view';
+
+var view = 'list-view';
 
 $(document).ready(function() {
   $("#close_message_button").click(function() {
     $(".message").toggleClass("visible-message");
   });
 
-  $("#list").click(function() {
-    if (!$("#list").hasClass("selected")) {
-      $('#list').addClass('selected');
+  $("#list-view").click(function() {
+    if (!$("#list-view").hasClass("selected")) {
+      $('#list-view').addClass('selected');
     }
-    $('#grid').removeClass('selected');
-    $(".container").removeClass("grid");
+    $('#grid-view').removeClass('selected');
+    $(".container").removeClass(VIEW_GRID);
 
-    view = 'list';
+    view = VIEW_LIST;
   });
 
-  $("#grid").click(function() {
-    if (!$("#grid").hasClass("selected")) {
-      $('#grid').addClass('selected');
+  $("#grid-view").click(function() {
+    if (!$("#grid-view").hasClass("selected")) {
+      $('#grid-view').addClass('selected');
     }
-    $('#list').removeClass('selected');
+    $('#list-view').removeClass('selected');
 
-    if (!$(".container").hasClass("grid")) {
-      $(".container").addClass("grid");
+    if (!$(".container").hasClass(VIEW_GRID)) {
+      $(".container").addClass(VIEW_GRID);
     }
 
-    view = 'grid';
+    view = VIEW_GRID;
   });
 
   $("#auto_refresh").click(function() {
@@ -59,10 +62,10 @@ function filterList(filterText) {
     success : function(response) {
       $(".content").html(response);
 
-      if (view == 'grid') {
-        $('#grid').trigger('click');
+      if (view == VIEW_GRID) {
+        $('#grid-view').trigger('click');
       } else {
-        $('#list').trigger('click');
+        $('#list-view').trigger('click');
       }
     },
     error : function(XMLHttpRequest, textStatus, errorThrown) {

@@ -21,8 +21,8 @@
     <ul class="list-h">
       <li style="width: 50%"><input type="text" id="filter_text" title="Search by tag or name." value="${filterText}" class="full-width"/></li>
       <li>
-        <button class="icon-list selected" id="list" title="List view"></button>
-        <button class="icon-grid" id="grid" title="Grid view"></button>
+        <button class="icon-list selected" id="list-view" title="List view"></button>
+        <button class="icon-grid" id="grid-view" title="Grid view"></button>
       </li>
     </ul>
   </div>

@@ -27,7 +27,7 @@
       <li class="l--push-v-half">
         <form action="${openIDLoginUrl}" method="post">
           <label for="openid_identifier">OpenID</label>
-          <input id="openid_identifier" name="openid_identifier" type="text" maxlength="100" class="full-width txt--large">
+          <input id="openid_identifier" name="openid_identifier" type="text" maxlength="100" class="full-width">
           <input type="submit" value="${login}" class="button-primary"/>
         </form>
       </li>
