@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,6 +56,10 @@ public class User extends ModelBase implements Serializable {
             cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter(AccessLevel.NONE)
     private Set<UserRole> roles = Sets.newHashSet();
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "maintainers",
+            cascade = CascadeType.ALL)
+    private Set<Monitor> maintainerMonitor = Sets.newHashSet();
 
     public boolean addRole(String role) {
         for (UserRole userRole : roles) {

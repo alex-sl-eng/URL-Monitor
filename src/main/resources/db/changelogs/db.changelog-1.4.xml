@@ -1,68 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
   <changeSet id="1" author="aeng">
+    <comment>Add table to for Monitor</comment>
     <createTable tableName="Monitor">
       <column name="id" autoIncrement="true" type="bigint">
-        <constraints primaryKey="true" nullable="false"/>
+        <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="creation_date" type="TIMESTAMP">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
       <column name="last_changed" type="TIMESTAMP">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
       <column name="name" type="varchar(100)">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
-      <column name="description" type="varchar(255)"/>
-      <column name="url" type="varchar(2083)"/>
-      <column name="status" type="varchar(20)"/>
+      <column name="description" type="varchar(255)" />
+      <column name="url" type="varchar(2083)" />
+      <column name="status" type="varchar(20)" />
+      <column name="visibility" type="varchar(20)" />
       <column name="cron" type="varchar(100)">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
-      <column name="content_regex" type="varchar(255)"/>
-      <column name="email_to_list" type="varchar(255)"/>
-      <column name="tag" type="varchar(255)"/>
-      <column name="last_failed" type="TIMESTAMP"/>
+      <column name="content_regex" type="varchar(255)" />
+      <column name="email_to_list" type="varchar(255)" />
+      <column name="tag" type="varchar(255)" />
+      <column name="last_failed" type="TIMESTAMP" />
     </createTable>
   </changeSet>
 
   <changeSet id="2" author="aeng">
+    <comment>Add table to for users</comment>
     <createTable tableName="User">
       <column name="id" autoIncrement="true" type="bigint">
-        <constraints primaryKey="true" nullable="false"/>
+        <constraints primaryKey="true" nullable="false" />
       </column>
       <column name="creation_date" type="TIMESTAMP">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
       <column name="last_changed" type="TIMESTAMP">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
-      <column name="name" type="varchar(255)"/>
+      <column name="name" type="varchar(255)" />
       <column name="email" type="varchar(100)">
-        <constraints unique="true"/>
+        <constraints unique="true" />
       </column>
       <column name="enabled" type="INT" defaultValueBoolean="false">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
     </createTable>
   </changeSet>
 
   <changeSet id="3" author="aeng">
+    <comment>Add table to for user roles</comment>
     <createTable tableName="User_Role">
       <column name="user_id" type="bigint">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
       <column name="role" type="varchar(50)">
-        <constraints nullable="false"/>
+        <constraints nullable="false" />
       </column>
     </createTable>
-    <addPrimaryKey tableName="User_Role" columnNames="user_id,role"/>
-    <addForeignKeyConstraint baseTableName="User_Role" baseColumnNames="user_id" constraintName="FK_user_role_user" referencedTableName="User"
-      referencedColumnNames="id"/>
+    <addPrimaryKey tableName="User_Role" columnNames="user_id,role" />
+    <addForeignKeyConstraint baseTableName="User_Role" baseColumnNames="user_id"
+      constraintName="FK_user_role_user" referencedTableName="User"
+      referencedColumnNames="id" />
+  </changeSet>
+
+  <changeSet id="4" author="aeng">
+    <comment>Add table to store many-many Monitor to User</comment>
+    <createTable tableName="Monitor_Maintainer">
+      <column name="monitor_id" type="bigint">
+        <constraints nullable="false" />
+      </column>
+      <column name="user_id" type="bigint">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addPrimaryKey tableName="Monitor_Maintainer"
+      columnNames="monitor_id, user_id" />
+    <addForeignKeyConstraint baseTableName="Monitor_Maintainer"
+      baseColumnNames="monitor_id"
+      constraintName="FK_monitor_maintainer_monitor"
+      referencedTableName="Monitor" referencedColumnNames="id" />
+    <addForeignKeyConstraint baseTableName="Monitor_Maintainer"
+      baseColumnNames="user_id" constraintName="FK_monitor_maintainer_user"
+      referencedTableName="User" referencedColumnNames="id" />
   </changeSet>
 </databaseChangeLog>
