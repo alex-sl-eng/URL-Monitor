@@ -1,6 +1,6 @@
 @media screen and (max-width: 524px) {
-  header h1, .txt--huge {
-    font-size: 180% !important;
+  .nav-header, .nav-item {
+    font-size: 2em !important;
   }
 
   .grid-view {
@@ -40,13 +40,18 @@ header {
   line-height: 1.5em;
 }
 
-header h1 {
-  margin: 0;
-  letter-spacing: 0.05em;
-}
-
 nav {
   overflow: hidden;
+}
+
+.nav-header, .nav-item {
+  display: inline-block;
+  font-size: 2.25em;
+  padding: 0.2em;
+}
+
+.nav-header {
+  letter-spacing: 0.05em;
 }
 
 form {
@@ -412,41 +417,39 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 /* ============== Class ==============*/
 
-.right-menu-toggle .right-menu {
+.dropdown-menu {
   display: none;
 }
 
-.right-menu-toggle:hover .right-menu {
+.dropdown:hover .dropdown-menu {
   display: block;
 }
 
-.right-menu-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.dropdown:hover, .dropdown-menu>li:hover, .dropdown-menu>li:hover a {
+  background-color: rgba(58, 139, 201, 0.8);
+  color: #ffffff;
 }
 
-.right-menu a {
+.dropdown-menu>li>a {
   display: block;
-  text-align: right;
 }
 
-.right-menu>li:FIRST-CHILD {
+.dropdown-menu>li:FIRST-CHILD {
   border-top: none;
 }
 
-.right-menu>li {
-  border-top: 1px solid rgba(128, 128, 128, 0.6);
+.dropdown-menu>li {
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-.right-menu>li:hover {
-  background-color: #2d3338;
-}
-
-.right-menu {
+.dropdown-menu {
   list-style: none;
-  margin: 0;
+  margin: 0.5em 0 0 0;
   padding: 0;
   font-size: 0.4em;
-  background-color: rgb(68, 76, 84);
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.175);
   letter-spacing: 0.1em;
   position: absolute;
   right: 0;
@@ -554,7 +557,6 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 .list-tab .section {
   position: absolute;
-  margin-top: 0.12em;
   left: 1.5em;
   right: 1.5em;
 }
