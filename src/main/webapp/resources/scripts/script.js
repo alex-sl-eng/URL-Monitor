@@ -1,4 +1,4 @@
-var refreshPageInterval = 5000; //30 seconds
+var refreshPageInterval = 30000; //30 seconds
 var refreshPageIntervalId = 0;
 var contextPath;
 var VIEW_GRID= 'grid-view';
@@ -96,7 +96,6 @@ function refreshPage() {
         statusDiv.removeClass('icon-checkmark icon-close icon-question');
         statusDiv.html('');
 
-        statusDiv.addClass('icon-close');
         if (status == 'Pass') {
           statusDiv.addClass('icon-checkmark');
         } else if (status == 'Failed') {
