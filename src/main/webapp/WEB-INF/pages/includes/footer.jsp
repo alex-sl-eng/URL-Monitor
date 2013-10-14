@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <footer>
-  <c:if test="${fn:contains(pageContext.request.contextPath, 'live-urlmonitor.rhcloud.com')}">
+  <c:if test="${fn:contains(url, 'live-urlmonitor.rhcloud.com')}">
     <script>
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

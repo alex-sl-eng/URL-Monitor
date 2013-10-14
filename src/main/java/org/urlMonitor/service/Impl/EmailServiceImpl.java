@@ -92,7 +92,9 @@ public class EmailServiceImpl implements EmailService {
         StringBuilder sb = new StringBuilder();
         sb.append(getEmailHeader());
 
-        sb.append(messageResource.getMessage("email.successMessage", url,
+        sb.append(messageResource.getMessage("email.successMessage", url));
+        sb.append("\n");
+        sb.append(messageResource.getMessage("email.lastChecked",
                 DateUtil.formatShortDate(lastCheck)));
 
         sb.append(getEmailFooter());
@@ -105,9 +107,10 @@ public class EmailServiceImpl implements EmailService {
         StringBuilder sb = new StringBuilder();
         sb.append(getEmailHeader());
 
-        sb.append(messageResource.getMessage("email.failMessage", url,
-                DateUtil.formatShortDate(lastFailedTime)));
+        sb.append(messageResource.getMessage("email.failMessage", url));
         sb.append("\n");
+        sb.append(messageResource.getMessage("email.lastChecked",
+                DateUtil.formatShortDate(lastFailedTime)));
         if (!StringUtils.isEmpty(searchString)) {
             sb.append(messageResource.getMessage("email.contentSearched",
                     searchString));
@@ -129,17 +132,18 @@ public class EmailServiceImpl implements EmailService {
     private String getEmailFooter() {
         StringBuilder sb = new StringBuilder();
         try {
+            sb.append("\n");
+            sb.append("\n");
             InetAddress addr = InetAddress.getLocalHost();
-            sb.append("\n");
-            sb.append("\n");
-            sb.append(addr.getHostName());
+            sb.append(addr.getCanonicalHostName());
             sb.append("\n");
         } catch (UnknownHostException e) {
+            log.warn("Can't retrieve hostname-" + e);
+        } finally {
+            if (!StringUtils.isEmpty(appConfiguration.getEmailReplyTo())) {
+                sb.append(appConfiguration.getEmailReplyTo());
+            }
+            return sb.toString();
         }
-
-        if (!StringUtils.isEmpty(appConfiguration.getEmailReplyTo())) {
-            sb.append(appConfiguration.getEmailReplyTo());
-        }
-        return sb.toString();
     }
 }

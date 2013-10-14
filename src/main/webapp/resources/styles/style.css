@@ -127,14 +127,6 @@ a:hover, .link:hover {
   color: #085997;
 }
 
-a.dark-background {
-  color: rgb(118, 174, 217);
-}
-
-a.dark-background:hover {
-  color: rgb(158, 198, 228);
-}
-
 body, a, button, select, li, .message, .container, input[type="submit"], .button, .animated {
   transition: 0.3s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
@@ -144,9 +136,18 @@ span {
   vertical-align: middle;
 }
 
-input[type="checkbox"] {
+.checkbox {
+  display: inline-block;
+}
+
+.checkbox label, .checkbox input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+  margin: 0 0.3em 0 0;
   vertical-align: middle;
-  margin: 0;
+  outline: none;
 }
 
 input[type="text"] {
@@ -373,6 +374,10 @@ button:active, input[type="submit"]:active, .button:active, .selected {
   display: inline-block;
 }
 
+.l--display-block {
+  display: block !important;
+}
+
 /* ============== End Layout ===============*/
 
 /* ============== Text ===============*/
@@ -401,6 +406,10 @@ button:active, input[type="submit"]:active, .button:active, .selected {
   letter-spacing: 0.1em;
 }
 
+.txt--smaller-spacing {
+  letter-spacing: 0.05em;
+}
+
 .txt--align-center {
   text-align: center;
 }
@@ -421,11 +430,7 @@ button:active, input[type="submit"]:active, .button:active, .selected {
   display: none;
 }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.dropdown:hover, .dropdown-menu>li:hover, .dropdown-menu>li:hover a {
+.dropdown-toggle:hover, .dropdown-toggle-active, .dropdown-menu>li:hover, .dropdown-menu>li:hover a {
   background-color: rgba(58, 139, 201, 0.8);
   color: #ffffff;
 }
@@ -444,9 +449,9 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 .dropdown-menu {
   list-style: none;
-  margin: 0.5em 0 0 0;
+  margin: 0;
   padding: 0;
-  font-size: 0.4em;
+  font-size: 0.9em;
   background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.175);

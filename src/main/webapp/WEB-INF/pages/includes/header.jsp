@@ -31,50 +31,48 @@
             <spring:message code="Application.name"/>
         </a>
 
-        <div class="l--float-right nav-item link dropdown">
-            <span class="icon-list-2"></span>
-            <ul class="dropdown-menu">
-                <sec:authorize access="isAuthenticated()">
-                    <sec:authentication property="principal.username"
-                            var="email"/>
-                    <li>
-                        <a href="auth/settings"
-                                class="l--pad-v-half l--pad-h-half">
-                            <spring:message code="jsp.Settings"/>
-                            <img src="${avatarServiceImpl.getUserAvatar(email, 75)}"
-                                    class="avatar l--push-h-quarter"/>
+        <a class="l--float-right nav-item dropdown-toggle icon-list-2"></a>
+        <ul class="dropdown-menu">
+            <sec:authorize access="isAuthenticated()">
+                <sec:authentication property="principal.username"
+                        var="email"/>
+                <li>
+                    <a href="auth/settings"
+                            class="l--pad-v-half l--pad-h-half">
+                        <spring:message code="jsp.Settings"/>
+                        <img src="${avatarServiceImpl.getUserAvatar(email, 75)}"
+                                class="avatar l--push-h-quarter"/>
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="auth/logout"
-                                class="l--pad-v-half l--pad-h-half">
-                            <spring:message code="jsp.Logout"/></a>
-                    </li>
-                </sec:authorize>
-                <sec:authorize access="! isAuthenticated()">
-                    <li>
-                        <a href="auth/login"
-                                class="l--pad-v-half l--pad-h-half">
-                            <spring:message code="jsp.Login"/>
-                        </a>
-                    </li>
-                </sec:authorize>
-                <li>
-                    <a href="about"
-                            class="l--pad-v-half l--pad-h-half">
-                        <spring:message code="jsp.About"/>
                     </a>
                 </li>
                 <li>
-                    <a href="https://github.com/aeng/url-monitor/issues"
-                            target="_blank"
+                    <a href="auth/logout"
                             class="l--pad-v-half l--pad-h-half">
-                        <spring:message code="jsp.ReportIssue"/>
+                        <spring:message code="jsp.Logout"/></a>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="! isAuthenticated()">
+                <li>
+                    <a href="auth/login"
+                            class="l--pad-v-half l--pad-h-half">
+                        <spring:message code="jsp.Login"/>
                     </a>
                 </li>
-            </ul>
-        </div>
+            </sec:authorize>
+            <li>
+                <a href="about"
+                        class="l--pad-v-half l--pad-h-half">
+                    <spring:message code="jsp.About"/>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/aeng/url-monitor/issues"
+                        target="_blank"
+                        class="l--pad-v-half l--pad-h-half">
+                    <spring:message code="jsp.ReportIssue"/>
+                </a>
+            </li>
+        </ul>
     </nav>
 
     <ul
