@@ -168,6 +168,7 @@ input[type="text"]:focus {
 input[readonly] {
   cursor: not-allowed;
   background-color: #eeeeee;
+  outline: none;
 }
 
 button, input[type="submit"], .button {
@@ -426,40 +427,52 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 /* ============== Class ==============*/
 
-.dropdown-menu {
-  display: none;
-}
-
-.dropdown-toggle:hover, .dropdown-toggle-active, .dropdown-menu>li:hover, .dropdown-menu>li:hover a {
+.dropdown-toggle:hover, .dropdown-toggle-active,
+.dropdown-menu>li:hover, .dropdown-menu>li:hover a,
+.hover-toggle:hover, .hover-toggle-active,
+.hover-menu>li:hover, .hover-menu>li:hover a {
   background-color: rgba(58, 139, 201, 0.8);
   color: #ffffff;
 }
 
-.dropdown-menu>li>a {
+.dropdown-menu>li>a, .hover-menu>li>a {
   display: block;
 }
 
-.dropdown-menu>li:FIRST-CHILD {
+.dropdown-menu>li:FIRST-CHILD, .hover-menu>li:FIRST-CHILD {
   border-top: none;
 }
 
-.dropdown-menu>li {
+.dropdown-menu>li, .hover-menu>li {
   border-top: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-.dropdown-menu {
+.dropdown-menu, .hover-menu {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0.9em;
-  background-color: #FFFFFF;
+  position: absolute;
+  letter-spacing: 0.1em;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.175);
-  letter-spacing: 0.1em;
-  position: absolute;
-  right: 0;
+  background-color: #FFFFFF;
+  display: none;
   z-index: 2;
+}
+
+.dropdown-menu {
+  font-size: 0.9em;
+  right: 0;
   min-width: 10.25em;
+}
+
+.hover-menu {
+  font-size: 0.6em;
+  margin-left: -2.8em;
+}
+
+.hover-toggle:hover .hover-menu {
+  display: block;
 }
 
 .avatar {
@@ -652,7 +665,7 @@ button:active, input[type="submit"]:active, .button:active, .selected {
   border-color: rgba(255, 128, 24, 0.7);
 }
 
-.status, .name, .time, .more-info {
+.status, .name, .time {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -662,15 +675,7 @@ button:active, input[type="submit"]:active, .button:active, .selected {
   max-width: 84%;
 }
 
-.more-info {
-  margin: 0 0 0 0.5em;
-  font-size: 1.5em;
-  display: inline-block;
-  vertical-align: middle;
-  outline: none;
-}
-
-.more-info.rotated {
+.rotated {
   transform: rotateZ(180deg);
   -ms-transform: rotate(180deg);
   -webkit-transform: rotateZ(180deg);
@@ -683,16 +688,11 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 
 .details {
   max-height: 0;
-  clear: both;
   transition: 0.5s cubic-bezier(0.26, 0.47, 0.36, 0.94);
 }
 
 .visible {
   max-height: 20em;
-}
-
-.details table {
-  table-layout: fixed;
 }
 
 .value {

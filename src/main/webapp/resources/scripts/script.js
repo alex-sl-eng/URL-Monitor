@@ -60,7 +60,6 @@ $(document).ready(
                 "l--display-block");
             $(".dropdown-toggle").toggleClass("dropdown-toggle-active");
           });
-
     })
 
 function filterList(filterText) {
@@ -179,7 +178,7 @@ function clearSeverityMessage() {
 }
 
 function toggleDetails(toggleBtn, rowId) {
-  var details = $('#' + rowId + "-container").find("div.details");
+  var details = $('#' + rowId + "-container").find(".details");
   details.toggleClass("visible");
   $(toggleBtn).toggleClass("rotated");
 }

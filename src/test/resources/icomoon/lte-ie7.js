@@ -18,7 +18,9 @@ window.onload = function() {
 			'icon-cancel' : '&#xe006;',
 			'icon-envelope' : '&#xf003;',
 			'icon-google-plus' : '&#xe007;',
-			'icon-yahoo' : '&#xe008;'
+			'icon-yahoo' : '&#xe008;',
+			'icon-cog' : '&#xe00a;',
+			'icon-menu' : '&#xe00b;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
