@@ -34,98 +34,56 @@
                 </li>
             </ul>
 
-            <div class="details">
-                <table class="txt--small l--pad-v-quarter l--pad-h-quarter full-width">
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message
-                                        code="monitor.details.Description"/>
-                            </strong>
-                        </td>
-                        <td>
-                            <c:if test="${not empty monitor.description}">
-                                ${monitor.description}
-                            </c:if>
-                            <c:if test="${empty monitor.description}">
-                                <i>No description</i>
-                            </c:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message code="monitor.details.Url"/>
-                            </strong>
-                        </td>
-                        <td>
-                            <span class="value full-width" title="${monitor.url}">
-                                <a href="${monitor.url}">${monitor.url}</a>
-                            </span>
-                        </td>
-                    </tr>
+            <div class="details txt--small l--pad-h-half">
+                <div title="${monitor.url}" class="value l--push-v-half">
+                    <a href="${monitor.url}">${monitor.url}</a>
 
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message
-                                        code="monitor.details.LastFailed"/>
-                            </strong>
-                        </td>
-                        <td class="lastFailed">
-                            None
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message
-                                        code="monitor.details.SearchText"/>
-                            </strong>
-                        </td>
-                        <td>
-                         <span class="value full-width" title="${monitor.contentRegex}">
-                             <c:if test="${not empty monitor.contentRegex}">
-                                 ${monitor.contentRegex}
-                             </c:if>
-                             <c:if test="${empty monitor.contentRegex}">
-                                 <i>No pattern checking</i>
-                             </c:if>
-                         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message
-                                        code="monitor.details.Interval"/>
-                            </strong>
-                        </td>
-                        <td>
-                          <span class="value full-width"
-                                  title="${cronHelper.getTypeFromExpression(monitor.cron).display}">
-                                  ${cronHelper.getTypeFromExpression(monitor.cron).display}
-                          </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>
-                                <spring:message code="monitor.details.Tag"/>
-                            </strong>
-                        </td>
-                        <td>
-                            <c:if test="${not empty monitor.tagList}">
-                                <span class="value full-width"
-                                        title="${monitor.tagList}">${monitor.tagList}
-                                </span>
-                            </c:if>
-                            <c:if test="${empty monitor.tagList}">
-                                <i>No tag</i>
-                            </c:if>
-                        </td>
-                    </tr>
-                </table>
+                    <div>
+                        <c:if test="${not empty monitor.description}">
+                            ${monitor.description}
+                        </c:if>
+                        <c:if test="${empty monitor.description}">
+                            <i><spring:message code="jsp.NoDescription"/></i>
+                        </c:if>
+                    </div>
+                </div>
+
+                <div title="${monitor.contentRegex}" class="value">
+                    <strong><spring:message code="jsp.SearchText"/></strong>
+                    <c:if test="${not empty monitor.contentRegex}">
+                        "${monitor.contentRegex}"
+                    </c:if>
+                    <c:if test="${empty monitor.contentRegex}">
+                        <i><spring:message code="jsp.NoPatternChecking"/></i>
+                    </c:if>
+
+                    <div>
+                        Check every
+                        <strong>
+                                ${cronHelper.getTypeFromExpression(monitor.cron).display}.
+                        </strong>
+
+                        <strong><spring:message
+                                code="jsp.LastFailed"/>:</strong>
+                        <c:if test="${empty monitor.lastFailed}">
+                            <i>None</i>
+                        </c:if>
+                        <c:if test="${not empty monitor.lastFailed}">
+                            ${monitor.lastFailed}
+                        </c:if>
+                    </div>
+
+                    <div>
+                        <c:if test="${not empty monitor.tagList}">
+                        <span title="${monitor.tagList}">
+                                ${monitor.tagList}
+                        </span>
+                        </c:if>
+                    </div>
+
+                </div>
+
+
             </div>
         </div>
     </c:forEach>

@@ -698,7 +698,6 @@ button:active, input[type="submit"]:active, .button:active, .selected {
 .value {
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
 }
 
 .info {
