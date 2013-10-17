@@ -1,6 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <c:if test="${empty monitorList}">
     <h3><spring:message code="jsp.NoEntry"/></h3>
 </c:if>

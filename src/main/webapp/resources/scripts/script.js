@@ -1,38 +1,11 @@
 var refreshPageInterval = 5000; //30 seconds
 var refreshPageIntervalId = 0;
 var contextPath;
-var VIEW_GRID = 'grid-view';
-var VIEW_LIST = 'list-view';
-
-var view = 'list-view';
 
 $(document).ready(
     function() {
       $("#close_message_button").click(function() {
         $(".message").toggleClass("visible-message");
-      });
-
-      $("#list-view").click(function() {
-        if (!$("#list-view").hasClass("selected")) {
-          $('#list-view').addClass('selected');
-        }
-        $('#grid-view').removeClass('selected');
-        $(".container").removeClass(VIEW_GRID);
-
-        view = VIEW_LIST;
-      });
-
-      $("#grid-view").click(function() {
-        if (!$("#grid-view").hasClass("selected")) {
-          $('#grid-view').addClass('selected');
-        }
-        $('#list-view').removeClass('selected');
-
-        if (!$(".container").hasClass(VIEW_GRID)) {
-          $(".container").addClass(VIEW_GRID);
-        }
-
-        view = VIEW_GRID;
       });
 
       $("#auto_refresh").click(
@@ -71,12 +44,6 @@ function filterList(filterText) {
     }),
     success : function(response) {
       $(".content").html(response);
-
-      if (view == VIEW_GRID) {
-        $('#grid-view').trigger('click');
-      } else {
-        $('#list-view').trigger('click');
-      }
     },
     error : function(XMLHttpRequest, textStatus, errorThrown) {
       clearInterval(refreshPageIntervalId);

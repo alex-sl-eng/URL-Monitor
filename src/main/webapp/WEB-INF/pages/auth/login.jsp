@@ -3,7 +3,7 @@
 <jsp:include page="../includes/header.jsp"/>
 
 <main>
-  <div class="content-wrapper-small">
+  <div class="content-wrapper-smaller">
     <spring:message code="jsp.Login" var="login"/>
     <h3>${login}</h3>
     <c:url value="/j_spring_openid_security_check" var="openIDLoginUrl"/>

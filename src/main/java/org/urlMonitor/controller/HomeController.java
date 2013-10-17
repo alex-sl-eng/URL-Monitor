@@ -30,8 +30,7 @@ public class HomeController extends BaseController {
     }
 
     @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
-    public @ResponseBody
-    List<MonitorInfo> refreshPage() {
+    public @ResponseBody List<MonitorInfo> refreshPage() {
         return urlMonitorService.getMonitorInfoList();
     }
 

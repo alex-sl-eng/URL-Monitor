@@ -4,7 +4,7 @@
 <jsp:include page="includes/header.jsp"/>
 
 <main>
-    <ul class="txt--small list-no-bullet list-v content-wrapper">
+    <ul class="txt--small list-no-bullet list-v content-wrapper-small">
         <h3>About</h3>
         <li class="l--push-v-half">
             <span class="label-highlight">Build</span>

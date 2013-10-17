@@ -13,36 +13,46 @@
         });
     </script>
 
-    <ul class="list-h txt--small">
-        <li class="checkbox">
-            <label>
-                <input type="checkbox" id="auto_refresh" value="true"
-                        checked="checked"/>Auto refresh
-            </label>
-        </li>
-        <li class="txt--smaller txt--smaller-spacing">
-            <span id="refresh_status"></span>
-        </li>
-    </ul>
-
-
-    <div class="filter content-wrapper">
-        <ul class="list-h">
-            <li style="width: 50%"><input type="text" id="filter_text"
-                    title="Search by tag or name." value="${filterText}"
-                    class="full-width"/></li>
-            <li>
-                <button class="icon-list selected" id="list-view"
-                        title="List view"></button>
-                <button class="icon-grid" id="grid-view"
-                        title="Grid view"></button>
+    <div class="l--push-v-half">
+        <ul class="list-h txt--small">
+            <li class="checkbox">
+                <label>
+                    <input type="checkbox" id="auto_refresh" value="true"
+                            checked="checked"/>Auto refresh
+                </label>
+            <span id="refresh_status"
+                    class="txt--smaller txt--smaller-spacing l--pad-h-quarter"></span>
             </li>
         </ul>
+        <div class="content-wrapper-small">
+            <input type="text" id="filter_text" title="Search by tag or name."
+                    value="${filterText}" class="full-width input-large"/>
+        </div>
     </div>
+    <ul class="list-tab content-wrapper-small">
+        <li>
+            <input type="radio" name="tabs" id="tab_public" checked>
+            <label class="tab animated" for="tab_public">
+                <spring:message code="jsp.All"/>
+            </label>
 
-    <div class="content content-wrapper">
-        <jsp:include page="view/index_content.jsp"/>
-    </div>
+            <div class="section content  l--pad-h-half l--pad-v-half l--display-none">
+                <jsp:include page="view/index_content.jsp"/>
+            </div>
+        </li>
+        <sec:authorize access="isAuthenticated()">
+            <li>
+                <input type="radio" name="tabs" id="tab_private">
+                <label class="tab animated" for="tab_private">
+                    <spring:message code="jsp.MyMonitor"/>
+                </label>
+
+                <div class="section l--pad-h-half l--pad-v-half l--display-none">
+                        <%--<jsp:include page="view/index_content.jsp"/>--%>
+                </div>
+            </li>
+        </sec:authorize>
+    </ul>
 </main>
 
 <jsp:include page="includes/footer.jsp"/>
