@@ -18,9 +18,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
  * 
  */
 public final class DateUtil {
-    private final static String DATE_TIME_SHORT_PATTERN = "dd/MM/yy HH:mm";
-    private final static String MONTH_YEAR_PATTERN = "MMM yyyy";
-    private final static String TIME_SHORT_PATTERN = "hh:mm:ss";
+    public final static String DATE_TIME_SHORT_PATTERN = "dd/MM/yy hh:mm";
+    public final static String MONTH_YEAR_PATTERN = "MMM yyyy";
+    public final static String TIME_SHORT_PATTERN = "hh:mm:ss";
 
     /**
      * Format date to dd/MM/yy hh:mm a
@@ -52,10 +52,16 @@ public final class DateUtil {
         return null;
     }
 
+    /**
+     * Format date to MMM yyyy
+     * 
+     * @param date
+     * @return
+     */
     public static String getMonthAndYear(Date date) {
         if (date != null) {
             DateTimeFormatter fmt =
-                DateTimeFormat.forPattern(MONTH_YEAR_PATTERN);
+                    DateTimeFormat.forPattern(MONTH_YEAR_PATTERN);
             return fmt.print(new DateTime(date));
         }
         return null;
@@ -65,11 +71,12 @@ public final class DateUtil {
         Long milliseconds = endDate.getTime() - startDate.getTime();
         Duration duration = new Duration(milliseconds);
         PeriodFormatter formatter =
-                new PeriodFormatterBuilder().appendDays().appendSuffix("d ")
-                        .appendHours().appendSuffix("h ").appendMinutes()
-                        .appendSuffix("m ").appendSeconds().appendSuffix("s ")
+                new PeriodFormatterBuilder().appendDays().appendSuffix("d")
+                        .appendSeparator(" ").appendHours().appendSuffix("h")
+                        .appendSeparator(" ").appendMinutes().appendSuffix("m")
+                        .appendSeparator(" ").appendSeconds().appendSuffix("s")
                         .toFormatter();
-        return formatter.print(duration.toPeriod())
+        return formatter.print(duration.toPeriod().normalizedStandard())
                 + getDateDiffSuffix(milliseconds);
     }
 
@@ -79,8 +86,8 @@ public final class DateUtil {
 
     private static String getDateDiffSuffix(Long milliseconds) {
         if (milliseconds < 0) {
-            return " incoming ";
+            return " incoming";
         }
-        return " ago ";
+        return " ago";
     }
 }
