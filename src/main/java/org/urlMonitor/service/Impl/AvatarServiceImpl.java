@@ -12,7 +12,6 @@ import org.urlMonitor.util.HashUtil;
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Service
-@Scope("singleton")
 @Slf4j
 public class AvatarServiceImpl implements AvatarService {
     @Override

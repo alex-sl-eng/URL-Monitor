@@ -7,14 +7,12 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import org.urlMonitor.model.User;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Repository
-@Transactional
 public class UserDAO extends AbstractDAO<User, Long> {
     protected UserDAO() {
         super(User.class);

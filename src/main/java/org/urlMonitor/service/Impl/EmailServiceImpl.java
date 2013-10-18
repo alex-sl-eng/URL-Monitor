@@ -22,7 +22,6 @@ import org.urlMonitor.service.EmailService;
 import org.urlMonitor.util.DateUtil;
 
 @Service
-@Scope("singleton")
 @Slf4j
 public class EmailServiceImpl implements EmailService {
     @Autowired

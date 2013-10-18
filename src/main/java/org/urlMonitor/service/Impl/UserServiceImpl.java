@@ -8,7 +8,6 @@ import lombok.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Service;
-import org.urlMonitor.component.Identity;
 import org.urlMonitor.component.dao.UserDAO;
 import org.urlMonitor.model.User;
 import org.urlMonitor.model.UserRole;
@@ -32,18 +30,15 @@ import com.google.common.collect.Sets;
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
  */
 @Service
-@Scope("singleton")
 public class UserServiceImpl implements
         AuthenticationUserDetailsService<OpenIDAuthenticationToken>,
         UserDetailsService, UserService {
+
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private AppConfiguration appConfiguration;
-
-    @Autowired
-    private Identity identity;
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -143,9 +138,6 @@ public class UserServiceImpl implements
 
             if (changed) {
                 userDAO.saveOrUpdate(user);
-                if (identity.getEmail().equals(email)) {
-                    identity.refresh();
-                }
             }
         }
         return user;

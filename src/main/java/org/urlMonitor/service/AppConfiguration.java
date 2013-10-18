@@ -15,7 +15,6 @@ import lombok.Getter;
  *
  */
 @Service
-@Scope("singleton")
 public class AppConfiguration
 {
    @Getter

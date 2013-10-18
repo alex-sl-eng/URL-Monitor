@@ -26,15 +26,14 @@ import org.apache.commons.mail.EmailException;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.urlMonitor.component.quartz.CronTrigger;
+import org.urlMonitor.events.MonitorUpdateEvent;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.MonitorInfo;
 import org.urlMonitor.model.type.StatusType;
-import org.urlMonitor.events.MonitorUpdateEvent;
-import org.urlMonitor.component.quartz.CronTrigger;
 import org.urlMonitor.util.MonitorEntityBuilder;
 
 import com.google.common.collect.Lists;
@@ -46,7 +45,6 @@ import com.google.common.collect.Sets;
  * 
  */
 @Service
-@Scope("singleton")
 @Slf4j
 public class UrlMonitorService implements
         ApplicationListener<MonitorUpdateEvent> {
@@ -203,7 +201,7 @@ public class UrlMonitorService implements
                             .getRetryCount()) {
                 monitorFailedMap.remove(id);
                 emailServiceImpl.sendSuccessEmail(monitor,
-                    monitor.getLastChanged());
+                        monitor.getLastChanged());
             }
         } else if (monitor.getStatus() == StatusType.Unknown
                 || monitor.getStatus() == StatusType.Failed) {

@@ -79,6 +79,8 @@ public class AuthController extends BaseController {
                         profileForm.isUser());
         refreshData(profileForm, user);
 
+        identity.refresh();
+
         model.put("profileForm", profileForm);
         addMessages("info", messageResource.getMessage("jsp.Profile.Updated"),
                 model);
