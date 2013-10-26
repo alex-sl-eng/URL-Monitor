@@ -19,6 +19,8 @@
     <security:intercept-url pattern="/auth/settings/**"
       access="isAuthenticated()" />
     <security:intercept-url pattern="/auth/**" access="permitAll" />
+    <security:intercept-url pattern="/action/**"
+      access="isAuthenticated()" />
     <security:intercept-url pattern="/**" access="permitAll" />
 
     <!-- Adding the openid-login tag activates Spring Security's support for OpenID  -->

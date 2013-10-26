@@ -31,7 +31,7 @@
             <spring:message code="Application.name"/>
         </a>
 
-        <a class="l--float-right nav-item dropdown-toggle icon-list-2"></a>
+        <a class="l--float-right nav-item dropdown-toggle icon-list"></a>
         <ul class="dropdown-menu">
             <sec:authorize access="isAuthenticated()">
                 <sec:authentication property="principal.username"

@@ -3,6 +3,7 @@ package org.urlMonitor.controller;
 import lombok.Getter;
 
 import org.springframework.ui.ModelMap;
+import org.urlMonitor.model.type.SeverityType;
 import org.urlMonitor.util.CronHelper;
 
 /**
@@ -16,7 +17,7 @@ public abstract class BaseController {
         model.put("cronHelper", getCronHelper());
     }
 
-    protected void addMessages(String severity, String message, ModelMap model) {
+    protected void addMessages(SeverityType severity, String message, ModelMap model) {
         model.put("messages", message);
         model.put("severity", severity);
     }

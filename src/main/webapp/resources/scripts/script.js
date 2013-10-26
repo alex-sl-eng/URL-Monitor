@@ -20,10 +20,11 @@ $(document).ready(
 
       $("#filter_text").change(function() {
         var filterText = $('#filter_text').val();
-        if (filterText) {
-          //replace url here
-        }
-        $(".content").html(getLargeLoadingHtml());
+        filterList(filterText);
+      });
+
+      $("#filter_text_button").click(function() {
+        var filterText = $('#filter_text').val();
         filterList(filterText);
       });
 
@@ -36,6 +37,8 @@ $(document).ready(
     })
 
 function filterList(filterText) {
+  $(".content").html(getLargeLoadingHtml());
+
   $.ajax({
     url : contextPath + '/filterList',
     cache : false,

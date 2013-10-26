@@ -37,9 +37,9 @@ public class HomeController extends BaseController {
     @RequestMapping(value = "/filterList", method = RequestMethod.GET)
     public String filterList(@RequestParam(required = false) String filterText,
             ModelMap model) {
-        model.addAttribute("monitorList",
-                urlMonitorService.getMonitorList(filterText));
+        model.addAttribute("publicMonitorList",
+                urlMonitorService.getPublicMonitorList(filterText));
         insertUtilInSession(model);
-        return "view/index_content";
+        return "view/public_content";
     }
 }

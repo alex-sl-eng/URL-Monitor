@@ -1,10 +1,19 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${empty monitorList}">
+<c:if test="${empty publicMonitorList}">
     <h3><spring:message code="jsp.NoEntry"/></h3>
 </c:if>
-<c:if test="${not empty monitorList}">
-    <c:forEach var="monitor" items="${monitorList}">
+
+<div class="input-group l--push-v-half l--push-h-1">
+    <input type="text" id="filter_text" title="Search by tag or name."
+            value="${filterText}" class="form-control"/>
+    <span class="button-control">
+        <button class="button-primary" id="filter_text_button">Go</button>
+    </span>
+</div>
+
+<c:if test="${not empty publicMonitorList}">
+    <c:forEach var="monitor" items="${publicMonitorList}">
         <div id="${monitor.hashCode()}-container"
                 class="l--pad-v-half l--pad-h-quarter section container ${monitor.status}">
             <ul class="list-h">

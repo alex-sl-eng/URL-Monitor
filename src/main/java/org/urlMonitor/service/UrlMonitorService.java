@@ -123,14 +123,14 @@ public class UrlMonitorService implements
         return result;
     }
 
-    public List<Monitor> getMonitorList() {
+    public List<Monitor> getPublicMonitorList() {
         List<Monitor> monitorList = Lists.newArrayList(monitorMap.values());
         Collections.sort(monitorList, MonitorComparator);
         return monitorList;
     }
 
-    public List<Monitor> getMonitorList(String filterText) {
-        List<Monitor> list = getMonitorList();
+    public List<Monitor> getPublicMonitorList(String filterText) {
+        List<Monitor> list = getPublicMonitorList();
         if (StringUtils.isEmpty(filterText)) {
             return list;
         }
@@ -149,7 +149,7 @@ public class UrlMonitorService implements
 
     public List<MonitorInfo> getMonitorInfoList() {
         List<MonitorInfo> result = Lists.newArrayList();
-        for (Monitor monitor : getMonitorList()) {
+        for (Monitor monitor : getPublicMonitorList()) {
             MonitorInfo info =
                     new MonitorInfo(monitor.hashCode(), monitor.getStatus(),
                             monitor.getLastChanged(), monitor.getLastFailed());
