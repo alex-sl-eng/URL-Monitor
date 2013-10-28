@@ -15,7 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -50,6 +49,8 @@ import com.google.common.collect.Sets;
         "cron" })
 public class Monitor extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public static final String SEPARATOR = ";";
 
     @NotNull
     @Size(max = 100)
@@ -103,7 +104,7 @@ public class Monitor extends ModelBase implements Serializable {
     @Transient
     public List<String> getEmailToList() {
         if (!StringUtils.isEmpty(emailToList)) {
-            return Arrays.asList(emailToList.split(";"));
+            return Arrays.asList(emailToList.split(SEPARATOR));
         }
         return Lists.newArrayList();
     }
@@ -111,7 +112,7 @@ public class Monitor extends ModelBase implements Serializable {
     @Transient
     public List<String> getTagList() {
         if (!StringUtils.isEmpty(tag)) {
-            return Arrays.asList(tag.split(";"));
+            return Arrays.asList(tag.split(SEPARATOR));
         }
         return Lists.newArrayList();
     }

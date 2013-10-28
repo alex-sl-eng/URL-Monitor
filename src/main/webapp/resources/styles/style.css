@@ -28,6 +28,10 @@
   .l--w-1-2 {
     width: 100% !important;
   }
+
+  .list-h>li {
+    margin-bottom: 0.5em;
+  }
 }
 
 /* ============== HTML Element ===============*/
@@ -676,7 +680,6 @@ button:active, input[type="submit"]:active, .button:active {
 .list-h>li {
   display: inline-block;
   vertical-align: middle;
-  margin-bottom: 0.5em;
 }
 
 .list-v>li {

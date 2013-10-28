@@ -8,13 +8,14 @@
     <div class="content-wrapper-small">
         <h3>Create new monitor</h3>
         <form:form method="post" action="action/new-monitor"
-                commandName="monitorForm" cssClass="section l--pad-v-half l--pad-h-half">
+                commandName="monitorForm"
+                cssClass="section l--pad-v-half l--pad-h-half">
             <ul class="txt--align-left list-no-bullet">
                 <li class="l--pad-v-quarter">
                     <div class="input-group">
-                        <label for="name"
-                                class="form-label label-highlight"><spring:message
-                                code="jsp.Name"/></label>
+                        <label for="name" class="form-label label-highlight">
+                            <spring:message code="jsp.Name"/>*
+                        </label>
                         <form:input id="name" path="name" class="form-control"
                                 maxlength="100"
                                 onblur="validateName(this.value)"/>
@@ -38,11 +39,17 @@
                 <li class="l--pad-v-quarter">
                     <div class="input-group">
                         <label for="url" class="form-label label-highlight">
-                            <spring:message code="jsp.Url"/>
+                            <spring:message code="jsp.Url"/>*
                         </label>
                         <form:input id="url" path="url" class="form-control"
-                                maxlength="2083"/>
+                                maxlength="2083"
+                                onblur="validateUrl(this.value)"/>
                     </div>
+                    <form:errors path="url"
+                            cssClass="l--pad-h-eighth l--pad-v-eighth error"/>
+                    <span id="url_error"
+                            class="l--pad-h-eighth l--pad-v-eighth l--display-none error">
+                    </span>
                 </li>
                 <li class="l--pad-v-quarter">
                     <ul class="list-h">
@@ -67,7 +74,8 @@
                         </li>
                         <li class="l--w-1-2">
                             <div class="input-group">
-                                <label for="visibility" class="form-label label-highlight">
+                                <label for="visibility"
+                                        class="form-label label-highlight">
                                     <spring:message code="jsp.Visibility"/>
                                 </label>
 
@@ -120,9 +128,16 @@
                                         class="form-label label-highlight">
                                     <spring:message code="jsp.EmailList"/>
                                 </label>
-                                <form:input path="emailToList" id="email" maxlength="255"
-                                        cssClass="form-control"/>
+                                <form:input path="emailToList" id="email"
+                                        maxlength="255"
+                                        cssClass="form-control"
+                                        onblur="validateEmailList(this.value)"/>
                             </div>
+                            <form:errors path="email"
+                                    cssClass="l--pad-h-eighth l--pad-v-eighth error"/>
+                            <span id="emailList_error"
+                                    class="l--pad-h-eighth l--pad-v-eighth l--display-none error">
+                            </span>
                         </li>
                     </ul>
                 </li>

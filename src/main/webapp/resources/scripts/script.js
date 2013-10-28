@@ -173,3 +173,45 @@ function validateName(name) {
     }
   });
 }
+
+function validateUrl(url) {
+  $.ajax({
+    type : "POST",
+    url : contextPath + "/validateUrl",
+    data : "url=" + url,
+    success : function(response) {
+      if (response.status == "Failed") {
+        $('#url_error').html(response.result);
+        $('#url_error').addClass("l--display-inline-block")
+      } else {
+        $('#url_error').html('');
+        $('#url_error').removeClass("l--display-inline-block")
+      }
+    },
+    error : function(XMLHttpRequest, textStatus, errorThrown) {
+      displayMessage('error', getErrorMessageHeader(), errorThrown);
+      $('#refresh_status').html("");
+    }
+  });
+}
+
+function validateEmailList(emailToList) {
+  $.ajax({
+    type : "POST",
+    url : contextPath + "/validateEmailList",
+    data : "emailToList=" + emailToList,
+    success : function(response) {
+      if (response.status == "Failed") {
+        $('#emailList_error').html(response.result);
+        $('#emailList_error').addClass("l--display-inline-block")
+      } else {
+        $('#emailList_error').html('');
+        $('#emailList_error').removeClass("l--display-inline-block")
+      }
+    },
+    error : function(XMLHttpRequest, textStatus, errorThrown) {
+      displayMessage('error', getErrorMessageHeader(), errorThrown);
+      $('#refresh_status').html("");
+    }
+  });
+}

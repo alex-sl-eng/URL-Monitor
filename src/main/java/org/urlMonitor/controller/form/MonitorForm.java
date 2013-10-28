@@ -31,7 +31,7 @@ public class MonitorForm {
     private String url;
 
     @Size(max = 20)
-    private String visibility;
+    private String visibility = "Public";
 
     @NotNull
     @Size(max = 100)

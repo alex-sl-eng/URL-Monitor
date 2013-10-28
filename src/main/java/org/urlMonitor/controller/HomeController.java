@@ -17,7 +17,7 @@ import org.urlMonitor.service.UrlMonitorService;
 public class HomeController extends BaseController {
 
     @Autowired
-    private UrlMonitorService urlMonitorService;
+    private UrlMonitorService urlMonitorServiceImpl;
 
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String getIndexPage(
@@ -31,14 +31,14 @@ public class HomeController extends BaseController {
 
     @RequestMapping(value = "/updateStatus", method = RequestMethod.GET)
     public @ResponseBody List<MonitorInfo> refreshPage() {
-        return urlMonitorService.getMonitorInfoList();
+        return urlMonitorServiceImpl.getMonitorInfoList();
     }
 
     @RequestMapping(value = "/filterList", method = RequestMethod.GET)
     public String filterList(@RequestParam(required = false) String filterText,
             ModelMap model) {
         model.addAttribute("publicMonitorList",
-                urlMonitorService.getPublicMonitorList(filterText));
+            urlMonitorServiceImpl.getPublicMonitorList(filterText));
         insertUtilInSession(model);
         return "view/public_content";
     }

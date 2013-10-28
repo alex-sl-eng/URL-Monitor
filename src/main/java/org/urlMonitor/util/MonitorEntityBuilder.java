@@ -4,10 +4,27 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.UrlValidator;
+import org.urlMonitor.controller.form.MonitorForm;
 import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.Monitor;
+import org.urlMonitor.model.type.VisibilityType;
 
 public final class MonitorEntityBuilder {
+    public static Monitor builderFromMonitorForm(MonitorForm monitorForm) {
+        Monitor monitor = new Monitor();
+        monitor.setName(monitorForm.getName());
+        monitor.setDescription(monitorForm.getDescription());
+        monitor.setUrl(monitorForm.getUrl());
+        monitor.setCron(CronHelper.getExpressionFromDisplay(monitorForm
+                .getCron()));
+        monitor.setContentRegex(monitorForm.getContentRegex());
+        monitor.setVisibility(VisibilityType.valueOf(monitorForm
+                .getVisibility()));
+        monitor.setTag(monitorForm.getTag());
+        monitor.setEmailToList(monitorForm.getEmailToList());
+        return monitor;
+    }
+
     public static Monitor buildFromProperties(Properties properties)
             throws InvalidMonitorFileException {
         isMandatoryFieldsPresent(properties);
@@ -67,7 +84,8 @@ public final class MonitorEntityBuilder {
 
         if (!org.quartz.CronExpression.isValidExpression(cronType
                 .getExpression())) {
-            throw new InvalidMonitorFileException("Invalid cron expression-" + cronType);
-      }
-   }
+            throw new InvalidMonitorFileException("Invalid cron expression-"
+                    + cronType);
+        }
+    }
 }
