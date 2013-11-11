@@ -27,7 +27,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.model.type.VisibilityType;
@@ -45,8 +44,7 @@ import com.google.common.collect.Sets;
 @Access(AccessType.FIELD)
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false, of = { "name", "url", "contentRegex",
-        "cron" })
+@EqualsAndHashCode(callSuper = false, of = { "name", "url", "contentRegex" })
 public class Monitor extends ModelBase implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -65,11 +63,9 @@ public class Monitor extends ModelBase implements Serializable {
     private String url;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 20)
     private StatusType status = StatusType.Unknown;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 20)
     private VisibilityType visibility = VisibilityType.Public;
 
     /**

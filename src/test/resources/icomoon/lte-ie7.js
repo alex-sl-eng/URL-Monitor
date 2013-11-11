@@ -19,7 +19,8 @@ window.onload = function() {
 			'icon-yahoo' : '&#xe008;',
 			'icon-cog' : '&#xe00a;',
 			'icon-menu' : '&#xe00b;',
-			'icon-plus' : '&#xe00c;'
+			'icon-plus' : '&#xe00c;',
+			'icon-locked' : '&#xe000;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;

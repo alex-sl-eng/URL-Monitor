@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.urlMonitor.component.MessageResource;
 import org.urlMonitor.controller.form.MonitorForm;
-import org.urlMonitor.model.Monitor;
+import org.urlMonitor.model.User;
 import org.urlMonitor.model.type.SeverityType;
 import org.urlMonitor.service.UrlMonitorService;
-import org.urlMonitor.util.MonitorEntityBuilder;
+import org.urlMonitor.service.UserService;
 
 /**
  * @author Alex Eng <a href="mailto:aeng@redhat.com">aeng@redhat.com</a>
@@ -28,6 +28,9 @@ public class ActionController extends BaseController {
 
     @Autowired
     private UrlMonitorService urlMonitorServiceImpl;
+
+    @Autowired
+    private UserService userServiceImpl;
 
     @RequestMapping(value = "/new-monitor", method = RequestMethod.GET)
     public String getNewMonitorPage(ModelMap model) {
@@ -46,16 +49,15 @@ public class ActionController extends BaseController {
             return "action/new-monitor";
         }
 
-        Monitor monitor =
-                MonitorEntityBuilder.builderFromMonitorForm(monitorForm);
+        User user = userServiceImpl.findByEmail(getUserDetails().getUsername());
 
-        urlMonitorServiceImpl.createMonitor(monitor);
+        urlMonitorServiceImpl.createMonitor(monitorForm, user);
 
         addMessages(
-            SeverityType.info,
-            messageResource.getMessage("jsp.Monitor.created",
-                monitor.getName()), model);
+                SeverityType.info,
+                messageResource.getMessage("jsp.MonitorCreated",
+                        monitorForm.getName()), model);
 
-        return "/home";
+        return "/index";
     }
 }

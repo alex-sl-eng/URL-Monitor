@@ -5,16 +5,21 @@ package org.urlMonitor.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.transaction.annotation.Transactional;
+import org.urlMonitor.controller.form.MonitorForm;
 import org.urlMonitor.events.MonitorUpdateEvent;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.MonitorInfo;
+import org.urlMonitor.model.User;
 
 /**
  * @author Alex Eng(aeng) loones1595@gmail.com
  * 
  */
+@Transactional
 public interface UrlMonitorService extends
         ApplicationListener<MonitorUpdateEvent> {
 
@@ -26,11 +31,13 @@ public interface UrlMonitorService extends
                 }
             };
 
-    void createMonitor(Monitor monitor);
+    void createMonitor(MonitorForm monitorForm, User maintainer);
 
-    List<MonitorInfo> getMonitorInfoList();
+    List<MonitorInfo> getPublicMonitorInfoList();
 
-    List<Monitor> getPublicMonitorList();
+    Set<Monitor> getPublicMonitorList();
 
-    List<Monitor> getPublicMonitorList(String filterText);
+    Set<Monitor> getPublicMonitorList(String filterText);
+
+    Set<Monitor> getPrivateMonitorList(String filterText, String email);
 }

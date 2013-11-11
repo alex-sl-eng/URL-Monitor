@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.User;
 import org.urlMonitor.service.Impl.UserServiceImpl;
 import org.urlMonitor.service.UserService;
@@ -64,7 +65,7 @@ public class Identity {
         return userDetails;
     }
 
-    private User getUser() {
+    public User getUser() {
         if (user == null) {
             user = userServiceImpl.findByEmail(getEmail());
         }
@@ -73,5 +74,9 @@ public class Identity {
 
     public void refresh() {
         this.user = null;
+    }
+
+    public boolean isMaintainer(Monitor monitor) {
+        return getUser().getMaintainerMonitor().contains(monitor);
     }
 }

@@ -24,36 +24,20 @@
                         class="txt--smaller txt--smaller-spacing l--pad-h-quarter"></span>
             </li>
             <li class="l--float-right">
-                <a href="action/new-monitor" class="icon-plus button button-primary"
-                        title="Create new monitor"> Create new monitor
+                <a href="action/new-monitor" class="button-icon button-primary"
+                        title="Create new monitor">
+                    <span class="icon-plus"></span>
+                    <span class="l--push-bottom-eighth"><spring:message
+                            code="jsp.CreateNewMonitor"/></span>
                 </a>
             </li>
         </ul>
     </div>
-    <ul class="list-tab content-wrapper-small">
-        <li>
-            <input type="radio" name="tabs" id="tab_public" checked>
-            <label class="tab animated" for="tab_public">
-                <spring:message code="jsp.All"/>
-            </label>
-
-            <div class="section content  l--pad-h-half l--pad-v-half l--display-none">
-                <jsp:include page="view/public_content.jsp"/>
-            </div>
-        </li>
-        <sec:authorize access="isAuthenticated()">
-            <li>
-                <input type="radio" name="tabs" id="tab_private">
-                <label class="tab animated" for="tab_private">
-                    <spring:message code="jsp.MyMonitor"/>
-                </label>
-
-                <div class="section l--pad-h-half l--pad-v-half l--display-none">
-                    my monitor list
-                </div>
-            </li>
-        </sec:authorize>
-    </ul>
+    <div class="content-wrapper-small">
+        <div class="section content l--pad-h-half l--pad-v-half">
+            <jsp:include page="view/content.jsp"/>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="includes/footer.jsp"/>

@@ -1,10 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:if test="${empty publicMonitorList}">
-    <h3><spring:message code="jsp.NoEntry"/></h3>
-</c:if>
 
-<div class="input-group l--push-v-half l--push-h-1">
+<div class="inline-input-group input-group l--push-v-half l--push-h-1">
     <input type="text" id="filter_text" title="Search by tag or name."
             value="${filterText}" class="form-control"/>
     <span class="button-control">
@@ -12,8 +9,12 @@
     </span>
 </div>
 
-<c:if test="${not empty publicMonitorList}">
-    <c:forEach var="monitor" items="${publicMonitorList}">
+<c:if test="${empty monitorList}">
+    <h3><spring:message code="jsp.NoEntry"/></h3>
+</c:if>
+
+<c:if test="${not empty monitorList}">
+    <c:forEach var="monitor" items="${monitorList}">
         <div id="${monitor.hashCode()}-container"
                 class="l--pad-v-half l--pad-h-quarter section container ${monitor.status}">
             <ul class="list-h">
@@ -42,13 +43,18 @@
                                 </span>
                             </strong>
                         </li>
-                        <li class="link l--pad-h-eighth l--pad-v-eighth icon-menu txt--larger hover-toggle">
-                            <ul class="hover-menu">
-                                <li>
-                                    <a class="l--pad-v-half l--pad-h-half">Share</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <c:if test="${monitor.visibility == 'Private'}">
+                            private
+                        </c:if>
+                        <c:if test="${identity.isMaintainer(monitor)}">
+                            <li class="link l--pad-h-eighth l--pad-v-eighth icon-menu txt--larger hover-toggle">
+                                <ul class="hover-menu">
+                                    <li>
+                                        <a class="l--pad-v-half l--pad-h-half">Edit</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </c:if>
                     </ul>
                 </li>
             </ul>

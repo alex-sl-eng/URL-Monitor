@@ -3,23 +3,16 @@
  */
 package org.urlMonitor.service.Impl;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.quartz.SchedulerException;
@@ -27,11 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.urlMonitor.component.dao.MonitorDAO;
 import org.urlMonitor.component.quartz.CronTrigger;
+import org.urlMonitor.controller.form.MonitorForm;
 import org.urlMonitor.events.MonitorUpdateEvent;
-import org.urlMonitor.exception.InvalidMonitorFileException;
 import org.urlMonitor.model.FailedStates;
 import org.urlMonitor.model.Monitor;
 import org.urlMonitor.model.MonitorInfo;
+import org.urlMonitor.model.User;
 import org.urlMonitor.model.type.StatusType;
 import org.urlMonitor.service.AppConfiguration;
 import org.urlMonitor.service.EmailService;
@@ -59,80 +53,43 @@ public class UrlMonitorServiceImpl implements UrlMonitorService {
     @Autowired
     private MonitorDAO monitorDAO;
 
-    private final static String REGEX_PROPERTIES = "*.properties";
-
-    private CronTrigger cronTrigger;
     private Map<Long, Monitor> monitorMap = Maps.newHashMap();
     private Map<Long, FailedStates> monitorFailedMap = Maps.newHashMap();
 
     @PostConstruct
-    public void init() throws SchedulerException, FileNotFoundException,
-            IOException {
+    public void init() throws SchedulerException {
         log.info("==================================================");
         log.info("================= URL Monitor ====================");
         log.info("==================================================");
 
         log.info("Initialising jobs...");
 
-        cronTrigger = new CronTrigger();
-
-        for (Monitor monitor : loadMonitorFiles()) {
+        List<Monitor> monitorList = monitorDAO.getAllActiveMonitor();
+        CronTrigger cronTrigger = new CronTrigger();
+        for (Monitor monitor : monitorList) {
             if (cronTrigger.scheduleMonitor(monitor)) {
                 monitorMap.put(monitor.getId(), monitor);
             }
         }
+        log.info("Initialised {0} jobs.", monitorList.size());
     }
 
-    private Set<Monitor> loadMonitorFiles() throws FileNotFoundException,
-            IOException {
-        Set<Monitor> result = Sets.newHashSet();
-
-        File dir = new File(appConfiguration.getFilesPath());
-        if (dir.exists()) {
-            FileFilter fileFilter = new WildcardFileFilter(REGEX_PROPERTIES);
-            File[] files = dir.listFiles(fileFilter);
-            if (!ArrayUtils.isEmpty(files)) {
-                for (File file : files) {
-                    if (!file.isDirectory()) {
-                        Properties prop = new Properties();
-                        prop.load(new FileInputStream(file));
-                        try {
-                            Monitor monitor =
-                                    MonitorEntityBuilder
-                                            .buildFromProperties(prop);
-                            if (!result.contains(monitor)) // remove duplicate
-                            {
-                                result.add(monitor);
-                            }
-                        } catch (InvalidMonitorFileException e) {
-                            log.info("Ingoring incomplete monitor info: "
-                                    + file.getName());
-                        }
-
-                    }
-                }
-            }
-        } else {
-            log.warn("Monitor files not found {0}",
-                    appConfiguration.getFilesPath());
-        }
-        return result;
+    public Set<Monitor> getPublicMonitorList() {
+        return Sets.newHashSet(monitorMap.values());
     }
 
-    public List<Monitor> getPublicMonitorList() {
-        List<Monitor> monitorList = Lists.newArrayList(monitorMap.values());
-        Collections.sort(monitorList, MonitorComparator);
-        return monitorList;
+    public Set<Monitor> getUserMonitorList(@NonNull String email) {
+        return Sets.newHashSet(monitorDAO.getUserMonitor(email));
     }
 
     @Override
-    public List<Monitor> getPublicMonitorList(String filterText) {
-        List<Monitor> list = getPublicMonitorList();
+    public Set<Monitor> getPublicMonitorList(String filterText) {
+        Set<Monitor> list = getPublicMonitorList();
         if (StringUtils.isEmpty(filterText)) {
             return list;
         }
 
-        List<Monitor> filteredList = Lists.newArrayList();
+        Set<Monitor> filteredList = Sets.newHashSet();
         String[] filters = filterText.split(";");
 
         for (Monitor monitor : list) {
@@ -145,7 +102,26 @@ public class UrlMonitorServiceImpl implements UrlMonitorService {
     }
 
     @Override
-    public List<MonitorInfo> getMonitorInfoList() {
+    public Set<Monitor> getPrivateMonitorList(String filterText, String email) {
+        Set<Monitor> list = getUserMonitorList(email);
+        if (StringUtils.isEmpty(filterText)) {
+            return list;
+        }
+
+        Set<Monitor> filteredList = Sets.newHashSet();
+        String[] filters = filterText.split(";");
+
+        for (Monitor monitor : list) {
+            if (isMatchTagOrName(monitor.getName(), monitor.getTagList(),
+                    filters)) {
+                filteredList.add(monitor);
+            }
+        }
+        return filteredList;
+    }
+
+    @Override
+    public List<MonitorInfo> getPublicMonitorInfoList() {
         List<MonitorInfo> result = Lists.newArrayList();
         for (Monitor monitor : getPublicMonitorList()) {
             MonitorInfo info =
@@ -219,7 +195,12 @@ public class UrlMonitorServiceImpl implements UrlMonitorService {
     }
 
     @Override
-    public void createMonitor(Monitor monitor) {
+    public void createMonitor(MonitorForm monitorForm, User maintainer) {
+        Monitor monitor =
+                MonitorEntityBuilder.builderFromMonitorForm(monitorForm);
+        monitor.addMaintainer(maintainer);
+
         monitorDAO.saveOrUpdate(monitor);
+        monitorMap.put(monitor.getId(), monitor);
     }
 }

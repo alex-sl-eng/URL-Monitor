@@ -82,17 +82,19 @@
                                 <div class="group-control" id="visibility">
                                     <label for="chk-isPublic">
                                         <spring:message code="jsp.Public"/>
-                                    </label>
+
                                     <form:radiobutton path="visibility"
                                             id="chk-isPublic"
                                             value="Public"/>
+                                    </label>
 
                                     <label for="chk-isPrivate">
                                         <spring:message code="jsp.Private"/>
-                                    </label>
+
                                     <form:radiobutton path="visibility"
                                             id="chk-isPrivate"
                                             value="Private"/>
+                                    </label>
                                 </div>
 
                             </div>
@@ -133,7 +135,7 @@
                                         cssClass="form-control"
                                         onblur="validateEmailList(this.value)"/>
                             </div>
-                            <form:errors path="email"
+                            <form:errors path="emailToList"
                                     cssClass="l--pad-h-eighth l--pad-v-eighth error"/>
                             <span id="emailList_error"
                                     class="l--pad-h-eighth l--pad-v-eighth l--display-none error">

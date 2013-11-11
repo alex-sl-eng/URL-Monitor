@@ -54,10 +54,6 @@ public class AppConfiguration
    @Value("${email.password}")
    private String emailPassword;
 
-   @Getter
-   @Value("${monitor.files.path}")
-   private String filesPath;
-
    @Value("${retry.count}")
    private String retryCount;
 
